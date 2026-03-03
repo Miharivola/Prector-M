@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Last Predictor VIP</title>
     <style>
-        /* --- STYLE TSOTRA SY MAFY --- */
+        /* 1. ENDRIKA ANKAPOBENY (TSY NIOVA) */
         body {
             background-color: #0a0a0a;
             color: #d4af37;
@@ -16,6 +16,24 @@
             min-height: 100vh;
             margin: 0;
             text-transform: uppercase;
+        }
+
+        /* LERA MITSINGEVANA (FLOATING CLOCK) */
+        #floating-clock {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: rgba(40, 40, 40, 0.8);
+            border: 1px solid #d4af37;
+            padding: 5px 12px;
+            border-radius: 8px;
+            color: #fff;
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
         }
 
         .container {
@@ -113,6 +131,8 @@
 </head>
 <body>
 
+    <div id="floating-clock">00:00:00</div>
+
     <div id="page1" class="container page active">
         <h1>💛 LAST PREDICTOR 💛</h1>
         <p class="subtitle">Choisissez votre jeu de prédiction</p>
@@ -151,6 +171,17 @@
     </div>
 
     <script>
+        // UPDATE NY LERA MITSINGEVANA ISAKY NY SEGONDRA
+        function updateClock() {
+            let now = new Date();
+            let h = String(now.getHours()).padStart(2, '0');
+            let m = String(now.getMinutes()).padStart(2, '0');
+            let s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('floating-clock').innerText = h + ":" + m + ":" + s;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
         function showPage(pageId, title = "") {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -163,7 +194,7 @@
                 let date = new Date();
                 date.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
                 
-                // Manampy 1-5 minitra amin'ny ora nampidirina
+                // Manampy 1-5 minitra aorian'ny lera nampidirina
                 let addMinutes = Math.floor(Math.random() * 5) + 1;
                 let addSeconds = Math.floor(Math.random() * 59);
                 date.setMinutes(date.getMinutes() + addMinutes);
@@ -197,7 +228,6 @@
             }, 2000);
         }
 
-        // Mameno ny lera automatique isaky ny mivoha
         window.onload = function() {
             let n = new Date();
             document.getElementById('input-time').value = n.toTimeString().split(' ')[0];
