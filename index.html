@@ -3,195 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>King Predictor VIP</title>
+    <title>Predictor VIP</title>
     <style>
-        body {
-            background-color: #050505;
-            color: #d4af37;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            text-transform: uppercase;
-        }
-
-        /* LERA MITSINGEVANA - FIXED */
-        #floating-clock {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #f1c40f;
-            padding: 8px 15px;
-            border-radius: 10px;
-            color: #fff;
-            font-family: monospace;
-            font-size: 16px;
-            font-weight: bold;
-            z-index: 9999;
-            box-shadow: 0 0 10px #f1c40f;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 360px;
-            background: #111;
-            padding: 30px;
-            border-radius: 30px;
-            text-align: center;
-            border: 1px solid #333;
-            position: relative;
-        }
-
-        /* SARY LIONA VAOVAO */
-        .top-logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 10px;
-            border-radius: 50%;
-            border: 2px solid #f1c40f;
-        }
-
-        h1 { font-size: 22px; color: #f1c40f; margin: 10px 0; text-shadow: 0 0 5px rgba(241,196,15,0.5); }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            margin: 15px 0;
-            border: none;
-            border-radius: 15px;
-            font-weight: bold;
-            font-size: 16px;
-            background: linear-gradient(180deg, #f1c40f 0%, #d4af37 100%);
-            color: #000;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
-        input {
-            width: 100%;
-            padding: 15px;
-            background: #1a1a1a;
-            border: 1px solid #444;
-            border-radius: 12px;
-            color: #fff;
-            text-align: center;
-            font-size: 18px;
-            margin-top: 5px;
-        }
-
-        .result-card {
-            background: #000;
-            padding: 25px;
-            border: 2px solid #f1c40f;
-            border-radius: 25px;
-            margin-top: 20px;
-        }
-
-        .timer-val { font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 15px; }
-        .row { display: flex; justify-content: space-between; margin: 12px 0; font-size: 15px; }
-        .val-gold { color: #f1c40f; font-size: 24px; font-weight: bold; }
-        
+        body { background: #000; color: #d4af37; font-family: sans-serif; text-align: center; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; text-transform: uppercase; }
+        #floating-clock { position: fixed; top: 10px; left: 10px; background: #111; border: 1px solid #f1c40f; padding: 5px 10px; border-radius: 5px; color: #fff; font-weight: bold; z-index: 100; }
+        .container { width: 90%; max-width: 350px; background: #111; padding: 20px; border-radius: 20px; border: 1px solid #333; }
         .page { display: none; }
         .active { display: block; }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: linear-gradient(#f1c40f, #b8860b); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-sizing: border-box; }
+        input { width: 100%; padding: 12px; margin-top: 5px; background: #222; border: 1px solid #444; color: #fff; border-radius: 8px; text-align: center; box-sizing: border-box; }
+        .result-card { border: 2px solid #f1c40f; padding: 20px; border-radius: 15px; margin-top: 15px; background: #050505; }
+        .timer-val { font-size: 35px; color: #fff; margin-bottom: 10px; }
+        .row { display: flex; justify-content: space-between; margin: 8px 0; font-size: 14px; }
     </style>
 </head>
 <body>
-
     <div id="floating-clock">--:--:--</div>
-
     <div class="container">
-        <div id="page1" class="page active">
-            <img src="https://cdn-icons-png.flaticon.com/512/616/616412.png" class="top-logo" alt="Lion">
-            <h1>👑 KING PREDICTOR 👑</h1>
-            <button class="btn" onclick="showPage('page2', 'AVIATOR')">🚀 AVIATOR</button>
-            <button class="btn" onclick="showPage('page2', 'JETX')">🚀 JETX</button>
-            <button class="btn" onclick="showPage('page2', 'COSMOSX')">🚀 COSMOSX</button>
+        <div id="p1" class="page active">
+            <div style="font-size: 50px;">👑</div>
+            <h2>VIP PREDICTOR</h2>
+            <button class="btn" onclick="go(2, 'AVIATOR')">🚀 AVIATOR</button>
+            <button class="btn" onclick="go(2, 'JETX')">🚀 JETX</button>
+            <button class="btn" onclick="go(2, 'COSMOSX')">🚀 COSMOSX</button>
         </div>
-
-        <div id="page2" class="page">
-            <h1 id="game-name">PRÉDICTION</h1>
-            <div style="text-align:left; margin-bottom:15px;">
-                <label style="font-size:10px;">HEURE ACTUELLE</label>
-                <input type="text" id="input-time">
-            </div>
-            <div style="text-align:left; margin-bottom:20px;">
-                <label style="font-size:10px;">SERVER SEED</label>
-                <input type="text" id="input-seed" value="VIP-777">
-            </div>
-            <button class="btn" id="btn-calc" onclick="startCalculating()">🔥 ANALYSER</button>
-            <div id="loader" style="display:none; color:#fff; margin:20px 0;">CONNECTION...</div>
-            <p style="font-size:12px; color:#555; cursor:pointer;" onclick="showPage('page1')">← RETOUR</p>
+        <div id="p2" class="page">
+            <h2 id="title">PREDICTION</h2>
+            <input type="text" id="time-in">
+            <input type="text" id="seed-in" value="SEED-999">
+            <button class="btn" id="calc-btn" onclick="calc()">🔥 ANALYSER</button>
+            <div id="loading" style="display:none; color:white; margin:10px;">Veuillez patienter...</div>
+            <p onclick="go(1)" style="font-size:12px; cursor:pointer;">← RETOUR</p>
         </div>
-
-        <div id="page3" class="page">
-            <div style="color: #2ecc71; font-weight: bold; margin-bottom: 10px;">✔ SIGNAL IDENTIFIÉ</div>
+        <div id="p3" class="page">
             <div class="result-card">
-                <div class="timer-val" id="res-time">00:00:00</div>
-                <div class="row"><span>CIBLE :</span><span class="val-gold" id="val-base">x0.00</span></div>
-                <div class="row"><span>SÉCU :</span><span style="color:#fff; font-size:24px;" id="val-secu">x0.00</span></div>
-                <div class="row" style="border-top:1px solid #333; padding-top:10px;">
-                    <span style="color:#ff4757;">RISQUE :</span><span style="color:#ff4757; font-size:24px;" id="val-risque">x0.00</span>
-                </div>
+                <div class="timer-val" id="res-t">00:00:00</div>
+                <div class="row"><span>CIBLE:</span><span style="color:#f1c40f;">x2.15</span></div>
+                <div class="row"><span>RISQUE:</span><span style="color:#ff4757;">x15.40</span></div>
             </div>
-            <button class="btn" style="margin-top:20px;" onclick="showPage('page2')">CONTINUER</button>
+            <button class="btn" onclick="go(2)">NOUVEAU</button>
         </div>
     </div>
-
     <script>
-        // LERA MITSINGEVANA - Script tsotra tsy hiraikitra
-        function startClock() {
-            setInterval(function() {
-                const now = new Date();
-                const h = String(now.getHours()).padStart(2, '0');
-                const m = String(now.getMinutes()).padStart(2, '0');
-                const s = String(now.getSeconds()).padStart(2, '0');
-                document.getElementById('floating-clock').innerText = h + ":" + m + ":" + s;
-            }, 1000);
+        function update() {
+            let n = new Date();
+            document.getElementById('floating-clock').innerText = n.toTimeString().split(' ')[0];
         }
-
-        function showPage(pageId, title = "") {
-            const pages = document.getElementsByClassName('page');
-            for(let i=0; i<pages.length; i++) { pages[i].classList.remove('active'); }
-            document.getElementById(pageId).classList.add('active');
-            if(title) document.getElementById('game-name').innerText = title;
+        setInterval(update, 1000);
+        function go(n, t) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('p' + n).classList.add('active');
+            if(t) document.getElementById('title').innerText = t;
         }
-
-        function startCalculating() {
-            const t = document.getElementById('input-time').value;
-            const s = document.getElementById('input-seed').value;
-            
-            document.getElementById('btn-calc').style.display = 'none';
-            document.getElementById('loader').style.display = 'block';
-
-            setTimeout(function() {
-                let seedNum = 0;
-                for(let i=0; i<s.length; i++) seedNum += s.charCodeAt(i);
-                
-                let p = t.split(':');
+        function calc() {
+            document.getElementById('calc-btn').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            setTimeout(() => {
+                let s = document.getElementById('time-in').value.split(':');
                 let d = new Date();
-                d.setHours(p[0], p[1], p[2]);
-                d.setMinutes(d.getMinutes() + (seedNum % 4) + 1);
-                d.setSeconds((seedNum * 3) % 60);
-
-                document.getElementById('res-time').innerText = d.toTimeString().split(' ')[0];
-                document.getElementById('val-base').innerText = 'x' + (1.6 + (seedNum % 10)/10).toFixed(2);
-                document.getElementById('val-secu').innerText = 'x' + (3.5 + (seedNum % 20)/5).toFixed(2);
-                document.getElementById('val-risque').innerText = 'x' + (12 + (seedNum % 40)).toFixed(2);
-
-                document.getElementById('btn-calc').style.display = 'block';
-                document.getElementById('loader').style.display = 'none';
-                showPage('page3');
+                d.setHours(s[0], s[1], s[2]);
+                d.setMinutes(d.getMinutes() + Math.floor(Math.random() * 3) + 1);
+                document.getElementById('res-t').innerText = d.toTimeString().split(' ')[0];
+                document.getElementById('calc-btn').style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+                go(3);
             }, 2000);
         }
-
-        window.onload = function() {
-            startClock();
-            document.getElementById('input-time').value = new Date().toTimeString().split(' ')[0];
-        };
+        window.onload = () => { document.getElementById('time-in').value = new Date().toTimeString().split(' ')[0]; update(); };
     </script>
 </body>
 </html>
