@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Last Predictor VIP</title>
+    <title>Last Predictor VIP + Logo</title>
     <style>
-        /* 1. ENDRIKA ANKAPOBENY (TSY NIOVA) */
+        /* 1. ENDRIKA ANKAPOBENY */
         body {
-            background-color: #0a0a0a;
+            background-color: #050505;
             color: #d4af37;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,12 +18,12 @@
             text-transform: uppercase;
         }
 
-        /* LERA MITSINGEVANA (FLOATING CLOCK) */
+        /* LERA MITSINGEVANA */
         #floating-clock {
             position: fixed;
             top: 15px;
             left: 15px;
-            background: rgba(40, 40, 40, 0.8);
+            background: rgba(0, 0, 0, 0.8);
             border: 1px solid #d4af37;
             padding: 5px 12px;
             border-radius: 8px;
@@ -32,32 +32,49 @@
             font-size: 14px;
             font-weight: bold;
             z-index: 1000;
-            display: flex;
-            align-items: center;
         }
 
         .container {
             width: 90%;
             max-width: 360px;
-            background: #121212;
+            background: #111;
             padding: 25px;
             border-radius: 25px;
             text-align: center;
             border: 1px solid #222;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+            box-shadow: 0 15px 40px rgba(0,0,0,1);
             position: relative;
+            overflow: hidden;
         }
 
-        .page { display: none; animation: fadeIn 0.4s ease; }
+        /* SARY LIONA AO AFARA (BACKGROUND) */
+        .bg-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            opacity: 0.1; /* Ataontsika matsatso mba tsy hanelingelina soratra */
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .page { position: relative; z-index: 1; display: none; animation: fadeIn 0.4s ease; }
         .active { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        h1 { font-size: 22px; margin-bottom: 5px; color: #f1c40f; letter-spacing: 1px; }
-        .subtitle { color: #777; font-size: 11px; margin-bottom: 25px; text-transform: none; }
+        /* LOGO KELY EO AMBONY */
+        .top-logo {
+            width: 60px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 5px #f1c40f);
+        }
+
+        h1 { font-size: 20px; color: #f1c40f; margin-bottom: 5px; }
 
         .btn {
             display: block;
@@ -67,17 +84,12 @@
             border: none;
             border-radius: 12px;
             font-weight: 900;
-            font-size: 16px;
-            cursor: pointer;
             background: linear-gradient(180deg, #f1c40f 0%, #d4af37 100%);
             color: #000;
-            transition: 0.2s;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        .btn:active { transform: scale(0.96); }
-
-        .input-group { text-align: left; margin-bottom: 15px; }
-        label { display: block; color: #b8860b; font-size: 10px; margin-bottom: 6px; font-weight: bold; }
         input {
             width: 100%;
             padding: 14px;
@@ -85,99 +97,73 @@
             border: 1px solid #333;
             border-radius: 10px;
             color: #fff;
-            font-size: 16px;
             text-align: center;
             box-sizing: border-box;
-            outline: none;
+            font-size: 16px;
         }
 
         .result-card {
-            background-color: rgba(15, 15, 15, 0.95);
-            background-image: url('https://i.ibb.co/L6V6RzS/lion-logo.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 60%;
-            background-blend-mode: overlay;
-            padding: 25px 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 20px;
             border: 2px solid #d4af37;
             border-radius: 20px;
             margin-top: 15px;
         }
 
-        .timer-val {
-            font-size: 42px;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-
-        .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 12px 0;
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .val-gold { color: #f1c40f; font-size: 22px; }
-        .val-white { color: #ffffff; font-size: 22px; }
-        .val-red { color: #ff4757; font-size: 22px; }
-
-        .loading { display: none; color: #fff; font-size: 13px; margin: 15px 0; font-style: italic; }
-        .back-link { margin-top: 25px; color: #555; cursor: pointer; font-size: 11px; display: inline-block; }
+        .timer-val { font-size: 40px; font-weight: 900; color: #fff; margin-bottom: 15px; }
+        .row { display: flex; justify-content: space-between; margin: 10px 0; font-weight: bold; }
+        .val-gold { color: #f1c40f; font-size: 20px; }
     </style>
 </head>
 <body>
 
     <div id="floating-clock">00:00:00</div>
 
-    <div id="page1" class="container page active">
-        <h1>💛 LAST PREDICTOR 💛</h1>
-        <p class="subtitle">Choisissez votre jeu de prédiction</p>
-        <button class="btn" onclick="showPage('page2', 'AVIATOR')">🚀 AVIATOR</button>
-        <button class="btn" onclick="showPage('page2', 'JETX')">🚀 JETX</button>
-        <button class="btn" onclick="showPage('page2', 'COSMOSX')">🚀 COSMOSX</button>
-    </div>
+    <div class="container">
+        <img src="https://i.ibb.co/L6V6RzS/lion-logo.png" class="bg-logo" alt="logo">
 
-    <div id="page2" class="container page">
-        <h1 id="game-name">PRÉDICTION</h1>
-        <p class="subtitle">Entrez les données du serveur</p>
-        <div class="input-group">
-            <label>HEURE DE DÉPART</label>
-            <input type="text" id="input-time" placeholder="HH:MM:SS">
+        <div id="page1" class="page active">
+            <img src="https://i.ibb.co/L6V6RzS/lion-logo.png" class="top-logo" alt="logo">
+            <h1>💛 LAST PREDICTOR 💛</h1>
+            <p style="font-size: 10px; color: #666;">ALGORITHM V4.0 VIP</p>
+            <button class="btn" onclick="showPage('page2', 'AVIATOR')">🚀 AVIATOR</button>
+            <button class="btn" onclick="showPage('page2', 'JETX')">🚀 JETX</button>
+            <button class="btn" onclick="showPage('page2', 'COSMOSX')">🚀 COSMOSX</button>
         </div>
-        <div class="input-group">
-            <label>GRAINE DE SERVEUR (6 CARACT)</label>
-            <input type="text" id="input-seed" placeholder="Ex: B2CE53">
-        </div>
-        <button class="btn" id="btn-calc" onclick="startCalculating()">🚀 PREDICTOR 🖤</button>
-        <div id="loader" class="loading">Analyse des algorithmes...</div>
-        <div class="back-link" onclick="showPage('page1')">← RETOUR</div>
-    </div>
 
-    <div id="page3" class="container page">
-        <div style="color: #2ecc71; font-weight: bold; margin-bottom: 10px; font-size: 12px;">■ PRÉDICTION GÉNÉRÉE</div>
-        <div class="result-card">
-            <div class="timer-val" id="res-time">00:00:00</div>
-            <div class="row"><span>🤍 BASE :</span><span class="val-gold" id="val-base">x0.00</span></div>
-            <div class="row"><span>🤍 SÉCURITÉ :</span><span class="val-white" id="val-secu">x0.00</span></div>
-            <div class="row" style="border-top: 1px solid #333; padding-top: 10px; margin-top: 15px;">
-                <span>💜 RISQUE :</span><span class="val-red" id="val-risque">x0.00</span>
+        <div id="page2" class="page">
+            <h1 id="game-name">PRÉDICTION</h1>
+            <div style="text-align:left; margin-bottom:15px;">
+                <label style="font-size:10px; color:#b8860b;">HEURE DE DÉPART</label>
+                <input type="text" id="input-time">
             </div>
+            <div style="text-align:left; margin-bottom:15px;">
+                <label style="font-size:10px; color:#b8860b;">GRAINE (6 CARACT)</label>
+                <input type="text" id="input-seed" value="B2CE53">
+            </div>
+            <button class="btn" id="btn-calc" onclick="startCalculating()">🚀 ANALYSER</button>
+            <div id="loader" style="display:none; color:#fff; font-size:12px; margin:15px 0;">Analyse en cours...</div>
+            <p style="font-size:11px; color:#444; cursor:pointer;" onclick="showPage('page1')">← RETOUR</p>
         </div>
-        <div class="back-link" onclick="showPage('page2')">← NOUVEAU CALCUL</div>
+
+        <div id="page3" class="page">
+            <div style="color: #2ecc71; font-weight: bold; font-size: 11px;">■ ANALYSE TERMINÉE</div>
+            <div class="result-card">
+                <div class="timer-val" id="res-time">00:00:00</div>
+                <div class="row"><span>BASE :</span><span class="val-gold" id="val-base">x0.00</span></div>
+                <div class="row"><span>SÉCURITÉ :</span><span style="color:#fff; font-size:20px;" id="val-secu">x0.00</span></div>
+                <div class="row" style="border-top: 1px solid #333; padding-top:10px;">
+                    <span style="color:#ff4757;">RISQUE :</span><span style="color:#ff4757; font-size:20px;" id="val-risque">x0.00</span>
+                </div>
+            </div>
+            <button class="btn" style="margin-top:15px;" onclick="showPage('page2')">NOUVEAU CALCUL</button>
+        </div>
     </div>
 
     <script>
-        // UPDATE NY LERA MITSINGEVANA ISAKY NY SEGONDRA
         function updateClock() {
             let now = new Date();
-            let h = String(now.getHours()).padStart(2, '0');
-            let m = String(now.getMinutes()).padStart(2, '0');
-            let s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('floating-clock').innerText = h + ":" + m + ":" + s;
+            document.getElementById('floating-clock').innerText = now.toTimeString().split(' ')[0];
         }
         setInterval(updateClock, 1000);
         updateClock();
@@ -188,40 +174,23 @@
             if(title) document.getElementById('game-name').innerText = "PRÉDICTION " + title;
         }
 
-        function calculateFutureTime(startTime) {
-            try {
-                let parts = startTime.split(':');
-                let date = new Date();
-                date.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
-                
-                // Manampy 1-5 minitra aorian'ny lera nampidirina
-                let addMinutes = Math.floor(Math.random() * 5) + 1;
-                let addSeconds = Math.floor(Math.random() * 59);
-                date.setMinutes(date.getMinutes() + addMinutes);
-                date.setSeconds(date.getSeconds() + addSeconds);
-
-                return date.toTimeString().split(' ')[0];
-            } catch (e) { return startTime; }
-        }
-
-        function rand(min, max) { return (Math.random() * (max - min) + min).toFixed(2); }
-
         function startCalculating() {
-            const timeInput = document.getElementById('input-time').value;
-            if(!timeInput || !timeInput.includes(':')) {
-                alert("Format HH:MM:SS svp");
-                return;
-            }
-
+            const timeVal = document.getElementById('input-time').value;
             document.getElementById('btn-calc').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
             setTimeout(() => {
-                document.getElementById('res-time').innerText = calculateFutureTime(timeInput);
-                document.getElementById('val-base').innerText = 'x' + rand(1.5, 3.5);
-                document.getElementById('val-secu').innerText = 'x' + rand(3.6, 9.0);
-                document.getElementById('val-risque').innerText = 'x' + rand(9.1, 45.0);
+                let parts = timeVal.split(':');
+                let d = new Date();
+                d.setHours(parts[0], parts[1], parts[2]);
+                d.setMinutes(d.getMinutes() + Math.floor(Math.random() * 4) + 1);
+                d.setSeconds(Math.floor(Math.random() * 59));
 
+                document.getElementById('res-time').innerText = d.toTimeString().split(' ')[0];
+                document.getElementById('val-base').innerText = 'x' + (Math.random() * 2 + 1.2).toFixed(2);
+                document.getElementById('val-secu').innerText = 'x' + (Math.random() * 5 + 4).toFixed(2);
+                document.getElementById('val-risque').innerText = 'x' + (Math.random() * 30 + 10).toFixed(2);
+                
                 document.getElementById('btn-calc').style.display = 'block';
                 document.getElementById('loader').style.display = 'none';
                 showPage('page3');
@@ -229,8 +198,7 @@
         }
 
         window.onload = function() {
-            let n = new Date();
-            document.getElementById('input-time').value = n.toTimeString().split(' ')[0];
+            document.getElementById('input-time').value = new Date().toTimeString().split(' ')[0];
         };
     </script>
 </body>
