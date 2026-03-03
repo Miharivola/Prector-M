@@ -3,47 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor VIP V7</title>
+    <title>Predictor VIP V8</title>
     <style>
-        body { background: #000; color: #d4af37; font-family: sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; text-transform: uppercase; }
+        body { background: #000; color: #d4af37; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; text-transform: uppercase; }
         
-        /* LERA NGEZA BE SY MATANJAKA */
-        #floating-clock { 
-            position: fixed; 
-            top: 5px; 
-            left: 0;
-            right: 0;
+        /* LERA NGEZA BE SY MANAITRA - VOALOHANY FOANA */
+        #top-clock { 
+            width: 100%;
             background: #000; 
-            border-bottom: 2px solid #00ff00; 
-            padding: 15px; 
+            border-bottom: 3px solid #00ff00; 
+            padding: 15px 0; 
             color: #00ff00; 
             font-family: monospace; 
-            font-size: 40px; 
+            font-size: 50px; 
             font-weight: bold;
             text-align: center;
-            z-index: 1000; 
-            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 255, 0, 0.4);
+            margin-bottom: 20px;
         }
 
-        .container { width: 90%; max-width: 360px; background: #111; padding: 20px; border-radius: 20px; border: 1px solid #333; margin-top: 80px; text-align: center; }
+        .container { width: 90%; max-width: 360px; background: #111; padding: 25px; border-radius: 25px; border: 1px solid #333; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .page { display: none; }
         .active { display: block; }
         
-        .btn { display: block; width: 100%; padding: 18px; margin: 10px 0; background: #f1c40f; border: none; border-radius: 12px; font-weight: 900; font-size: 18px; color: #000; cursor: pointer; }
-        input { width: 100%; padding: 15px; margin-top: 5px; background: #222; border: 1px solid #444; color: #fff; border-radius: 10px; text-align: center; font-size: 18px; box-sizing: border-box; }
+        .lion-icon { font-size: 60px; margin-bottom: 10px; filter: drop-shadow(0 0 10px #f1c40f); }
+        h1 { font-size: 20px; color: #f1c40f; margin-bottom: 20px; }
+
+        .btn { display: block; width: 100%; padding: 18px; margin: 12px 0; background: linear-gradient(#f1c40f, #d4af37); border: none; border-radius: 12px; font-weight: 900; font-size: 16px; color: #000; cursor: pointer; transition: 0.2s; }
+        .btn:active { transform: scale(0.96); }
+
+        input { width: 100%; padding: 15px; margin-top: 5px; background: #1a1a1a; border: 1px solid #444; color: #fff; border-radius: 10px; text-align: center; font-size: 18px; box-sizing: border-box; }
         
-        .result-card { border: 2px solid #00ff00; padding: 20px; border-radius: 15px; margin-top: 15px; background: #000; }
-        .timer-val { font-size: 40px; font-weight: bold; color: #fff; }
-        .row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 15px; }
+        .result-card { border: 2px solid #00ff00; padding: 25px 15px; border-radius: 20px; margin-top: 20px; background: rgba(0,0,0,0.9); }
+        .timer-val { font-size: 45px; font-weight: 900; color: #fff; margin-bottom: 15px; }
+        .row { display: flex; justify-content: space-between; margin: 12px 0; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div id="floating-clock">00:00:00</div>
+    <div id="top-clock">00:00:00</div>
 
     <div class="container">
         <div id="p1" class="page active">
-            <h1 style="color:#f1c40f;">👑 VIP MENU</h1>
+            <div class="lion-icon">🦁</div>
+            <h1>KING PREDICTOR VIP</h1>
             <button class="btn" onclick="go(2, 'AVIATOR')">🚀 AVIATOR</button>
             <button class="btn" onclick="go(2, 'JETX')">🚀 JETX</button>
             <button class="btn" onclick="go(2, 'COSMOSX')">🚀 COSMOSX</button>
@@ -51,44 +54,42 @@
 
         <div id="p2" class="page">
             <h2 id="title" style="color:#f1c40f;">PREDICTION</h2>
-            <div style="text-align:left; margin-bottom:10px;">
-                <label style="font-size:10px;">HEURE ACTUELLE</label>
+            <div style="text-align:left; margin-bottom:15px;">
+                <label style="font-size:10px; color:#f1c40f;">HEURE DE DEPART</label>
                 <input type="text" id="time-in">
             </div>
-            <div style="text-align:left; margin-bottom:15px;">
-                <label style="font-size:10px;">SEED (6 CHARS)</label>
-                <input type="text" id="seed-in" value="VIP777">
+            <div style="text-align:left; margin-bottom:20px;">
+                <label style="font-size:10px; color:#f1c40f;">SERVER SEED (6 CHARS)</label>
+                <input type="text" id="seed-in" value="KING77">
             </div>
-            <button class="btn" id="calc-btn" onclick="calc()">🔥 ANALYSER</button>
-            <div id="loading" style="display:none; color:#00ff00; margin:15px;">CALCUL...</div>
-            <p onclick="go(1)" style="font-size:12px; color:#666; cursor:pointer;">← RETOUR</p>
+            <button class="btn" id="calc-btn" onclick="calc()">🔥 DECODER L'ALGO</button>
+            <div id="loading" style="display:none; color:#00ff00; margin:15px;">ANALYSE EN COURS...</div>
+            <p onclick="go(1)" style="font-size:11px; color:#555; cursor:pointer; margin-top:10px;">← RETOUR AU MENU</p>
         </div>
 
         <div id="p3" class="page">
-            <h3 style="color:#00ff00;">✔ SIGNAL OK</h3>
+            <div style="color:#00ff00; font-weight:bold; letter-spacing:1px;">✔ SIGNAL IDENTIFIÉ</div>
             <div class="result-card">
                 <div class="timer-val" id="res-t">00:00:00</div>
-                <hr style="border:0; border-top:1px solid #333;">
-                <div class="row"><span>CIBLE:</span><span style="color:#f1c40f; font-size:20px;">x2.10</span></div>
-                <div class="row"><span>RISQUE:</span><span style="color:#ff4757; font-size:20px;">x12.50</span></div>
+                <div class="row"><span>CIBLE :</span><span style="color:#f1c40f; font-size:22px;">x2.10</span></div>
+                <div class="row"><span>SÉCU :</span><span style="color:#fff; font-size:22px;">x4.50</span></div>
+                <div style="border-top:1px solid #333; margin-top:15px; padding-top:10px;">
+                    <div class="row" style="color:#ff4757;"><span>RISQUE :</span><span style="font-size:22px;">x15.00</span></div>
+                </div>
             </div>
-            <button class="btn" style="margin-top:15px;" onclick="go(2)">RESTART</button>
+            <button class="btn" style="margin-top:20px;" onclick="go(2)">NOUVELLE ANALYSE</button>
         </div>
     </div>
 
     <script>
-        // Lera mandeha ho azy
         function updateClock() {
             var now = new Date();
-            var h = String(now.getHours()).padStart(2, '0');
-            var m = String(now.getMinutes()).padStart(2, '0');
-            var s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('floating-clock').innerHTML = h + ":" + m + ":" + s;
+            var time = now.toTimeString().split(' ')[0];
+            document.getElementById('top-clock').innerHTML = time;
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Navigasiona
         function go(n, t) {
             var pages = document.getElementsByClassName('page');
             for(var i=0; i<pages.length; i++) { pages[i].style.display = 'none'; }
@@ -96,20 +97,21 @@
             if(t) document.getElementById('title').innerHTML = t;
         }
 
-        // Algorithm tsotra
         function calc() {
             document.getElementById('calc-btn').style.display = 'none';
             document.getElementById('loading').style.display = 'block';
 
             setTimeout(function() {
-                var timeVal = document.getElementById('time-in').value;
-                var p = timeVal.split(':');
+                var s = document.getElementById('seed-in').value || "777";
+                var t = document.getElementById('time-in').value;
+                var seedVal = 0;
+                for(var i=0; i<s.length; i++) seedVal += s.charCodeAt(i);
+
+                var p = t.split(':');
                 var d = new Date();
                 d.setHours(p[0], p[1], p[2]);
-                
-                // Manampy 1 ka hatramin'ny 3 minitra
-                d.setMinutes(d.getMinutes() + Math.floor(Math.random() * 3) + 1);
-                d.setSeconds(Math.floor(Math.random() * 59));
+                d.setMinutes(d.getMinutes() + (seedVal % 3) + 1);
+                d.setSeconds((seedVal * 7) % 60);
 
                 document.getElementById('res-t').innerHTML = d.toTimeString().split(' ')[0];
                 document.getElementById('calc-btn').style.display = 'block';
