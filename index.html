@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Last Predictor VIP Fix</title>
+    <title>King Predictor VIP</title>
     <style>
         body {
             background-color: #050505;
             color: #d4af37;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
             text-transform: uppercase;
-            overflow: hidden;
         }
 
-        /* LERA MITSINGEVANA */
+        /* LERA MITSINGEVANA - FIXED */
         #floating-clock {
             position: fixed;
             top: 15px;
             left: 15px;
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid #f1c40f;
-            padding: 5px 15px;
-            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #f1c40f;
+            padding: 8px 15px;
+            border-radius: 10px;
             color: #fff;
             font-family: monospace;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
             z-index: 9999;
+            box-shadow: 0 0 10px #f1c40f;
         }
 
         .container {
@@ -41,76 +41,72 @@
             padding: 30px;
             border-radius: 30px;
             text-align: center;
-            border: 1px solid #222;
+            border: 1px solid #333;
             position: relative;
         }
 
-        .bg-logo {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            opacity: 0.08;
-            pointer-events: none;
+        /* SARY LIONA VAOVAO */
+        .top-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            border: 2px solid #f1c40f;
         }
 
-        .page { display: none; position: relative; z-index: 1; }
-        .active { display: block; }
-
-        .top-logo { width: 70px; margin-bottom: 10px; }
-
-        h1 { font-size: 20px; color: #f1c40f; margin: 10px 0; }
+        h1 { font-size: 22px; color: #f1c40f; margin: 10px 0; text-shadow: 0 0 5px rgba(241,196,15,0.5); }
 
         .btn {
             display: block;
             width: 100%;
-            padding: 16px;
-            margin: 12px 0;
+            padding: 18px;
+            margin: 15px 0;
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             font-weight: bold;
             font-size: 16px;
             background: linear-gradient(180deg, #f1c40f 0%, #d4af37 100%);
             color: #000;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
         input {
             width: 100%;
-            padding: 14px;
+            padding: 15px;
             background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 10px;
+            border: 1px solid #444;
+            border-radius: 12px;
             color: #fff;
             text-align: center;
-            box-sizing: border-box;
+            font-size: 18px;
             margin-top: 5px;
         }
 
         .result-card {
-            background: rgba(0,0,0,0.8);
-            padding: 20px;
-            border: 1px solid #f1c40f;
-            border-radius: 20px;
-            margin-top: 15px;
+            background: #000;
+            padding: 25px;
+            border: 2px solid #f1c40f;
+            border-radius: 25px;
+            margin-top: 20px;
         }
 
-        .timer-val { font-size: 40px; font-weight: bold; color: #fff; margin-bottom: 15px; }
-        .row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 14px; }
-        .val-gold { color: #f1c40f; font-size: 22px; font-weight: bold; }
+        .timer-val { font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 15px; }
+        .row { display: flex; justify-content: space-between; margin: 12px 0; font-size: 15px; }
+        .val-gold { color: #f1c40f; font-size: 24px; font-weight: bold; }
+        
+        .page { display: none; }
+        .active { display: block; }
     </style>
 </head>
 <body>
 
-    <div id="floating-clock">00:00:00</div>
+    <div id="floating-clock">--:--:--</div>
 
     <div class="container">
-        <img src="https://i.ibb.co/L6V6RzS/lion-logo.png" class="bg-logo">
-
         <div id="page1" class="page active">
-            <img src="https://i.ibb.co/L6V6RzS/lion-logo.png" class="top-logo">
-            <h1>KING PREDICTOR</h1>
+            <img src="https://cdn-icons-png.flaticon.com/512/616/616412.png" class="top-logo" alt="Lion">
+            <h1>👑 KING PREDICTOR 👑</h1>
             <button class="btn" onclick="showPage('page2', 'AVIATOR')">🚀 AVIATOR</button>
             <button class="btn" onclick="showPage('page2', 'JETX')">🚀 JETX</button>
             <button class="btn" onclick="showPage('page2', 'COSMOSX')">🚀 COSMOSX</button>
@@ -118,76 +114,84 @@
 
         <div id="page2" class="page">
             <h1 id="game-name">PRÉDICTION</h1>
-            <div style="text-align:left; margin-bottom:10px;">
-                <label style="font-size:10px;">HEURE DE DÉPART</label>
+            <div style="text-align:left; margin-bottom:15px;">
+                <label style="font-size:10px;">HEURE ACTUELLE</label>
                 <input type="text" id="input-time">
             </div>
-            <div style="text-align:left; margin-bottom:15px;">
-                <label style="font-size:10px;">SEED (6 CHARS)</label>
-                <input type="text" id="input-seed" value="Z9K2L5">
+            <div style="text-align:left; margin-bottom:20px;">
+                <label style="font-size:10px;">SERVER SEED</label>
+                <input type="text" id="input-seed" value="VIP-777">
             </div>
             <button class="btn" id="btn-calc" onclick="startCalculating()">🔥 ANALYSER</button>
-            <div id="loader" style="display:none; color:#fff; margin:15px 0;">CALCUL EN COURS...</div>
-            <p style="font-size:11px; color:#444; cursor:pointer;" onclick="showPage('page1')">← RETOUR</p>
+            <div id="loader" style="display:none; color:#fff; margin:20px 0;">CONNECTION...</div>
+            <p style="font-size:12px; color:#555; cursor:pointer;" onclick="showPage('page1')">← RETOUR</p>
         </div>
 
         <div id="page3" class="page">
-            <div style="color: #2ecc71; font-size: 12px; font-weight: bold;">✔ ANALYSE TERMINÉE</div>
+            <div style="color: #2ecc71; font-weight: bold; margin-bottom: 10px;">✔ SIGNAL IDENTIFIÉ</div>
             <div class="result-card">
                 <div class="timer-val" id="res-time">00:00:00</div>
-                <div class="row"><span>🎯 CIBLE :</span><span class="val-gold" id="val-base">x0.00</span></div>
-                <div class="row"><span>🛡️ SÉCU :</span><span style="color:#fff; font-size:20px;" id="val-secu">x0.00</span></div>
+                <div class="row"><span>CIBLE :</span><span class="val-gold" id="val-base">x0.00</span></div>
+                <div class="row"><span>SÉCU :</span><span style="color:#fff; font-size:24px;" id="val-secu">x0.00</span></div>
                 <div class="row" style="border-top:1px solid #333; padding-top:10px;">
-                    <span style="color:#ff4757;">⚡ RISQUE :</span><span style="color:#ff4757; font-size:20px;" id="val-risque">x0.00</span>
+                    <span style="color:#ff4757;">RISQUE :</span><span style="color:#ff4757; font-size:24px;" id="val-risque">x0.00</span>
                 </div>
             </div>
-            <button class="btn" style="margin-top:20px;" onclick="showPage('page2')">NOUVELLE ANALYSE</button>
+            <button class="btn" style="margin-top:20px;" onclick="showPage('page2')">CONTINUER</button>
         </div>
     </div>
 
     <script>
-        // Update lera mitsingevana
-        function updateClock() {
-            const now = new Date();
-            const time = now.toTimeString().split(' ')[0];
-            document.getElementById('floating-clock').innerText = time;
+        // LERA MITSINGEVANA - Script tsotra tsy hiraikitra
+        function startClock() {
+            setInterval(function() {
+                const now = new Date();
+                const h = String(now.getHours()).padStart(2, '0');
+                const m = String(now.getMinutes()).padStart(2, '0');
+                const s = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('floating-clock').innerText = h + ":" + m + ":" + s;
+            }, 1000);
         }
-        setInterval(updateClock, 1000);
-        updateClock();
 
-        // Navigasiona
         function showPage(pageId, title = "") {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const pages = document.getElementsByClassName('page');
+            for(let i=0; i<pages.length; i++) { pages[i].classList.remove('active'); }
             document.getElementById(pageId).classList.add('active');
             if(title) document.getElementById('game-name').innerText = title;
         }
 
-        // Algorithm
         function startCalculating() {
-            const timeVal = document.getElementById('input-time').value;
-            const seed = document.getElementById('input-seed').value || "123456";
-
+            const t = document.getElementById('input-time').value;
+            const s = document.getElementById('input-seed').value;
+            
             document.getElementById('btn-calc').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            setTimeout(() => {
+            setTimeout(function() {
                 let seedNum = 0;
-                for(let i=0; i<seed.length; i++) seedNum += seed.charCodeAt(i);
-
-                let parts = timeVal.split(':');
-                let d = new Date();
-                d.setHours(parts[0], parts[1], parts[2]);
+                for(let i=0; i<s.length; i++) seedNum += s.charCodeAt(i);
                 
-                // Add 1-4 minutes based on seed
+                let p = t.split(':');
+                let d = new Date();
+                d.setHours(p[0], p[1], p[2]);
                 d.setMinutes(d.getMinutes() + (seedNum % 4) + 1);
                 d.setSeconds((seedNum * 3) % 60);
 
                 document.getElementById('res-time').innerText = d.toTimeString().split(' ')[0];
-                document.getElementById('val-base').innerText = 'x' + (1.5 + (seedNum % 15)/10).toFixed(2);
-                document.getElementById('val-secu').innerText = 'x' + (2.5 + (seedNum % 25)/5).toFixed(2);
-                document.getElementById('val-risque').innerText = 'x' + (10 + (seedNum % 50)).toFixed(2);
+                document.getElementById('val-base').innerText = 'x' + (1.6 + (seedNum % 10)/10).toFixed(2);
+                document.getElementById('val-secu').innerText = 'x' + (3.5 + (seedNum % 20)/5).toFixed(2);
+                document.getElementById('val-risque').innerText = 'x' + (12 + (seedNum % 40)).toFixed(2);
 
                 document.getElementById('btn-calc').style.display = 'block';
                 document.getElementById('loader').style.display = 'none';
                 showPage('page3');
             }, 2000);
+        }
+
+        window.onload = function() {
+            startClock();
+            document.getElementById('input-time').value = new Date().toTimeString().split(' ')[0];
+        };
+    </script>
+</body>
+</html>
