@@ -3,122 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KING PREDICTOR V1</title>
+    <title>KING PREDICTOR V2</title>
     <style>
-        body {
-            background-color: #121212;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 400px;
-            margin: auto;
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 10px rgba(0,255,0,0.5);
-        }
-        h1 { color: #00ff00; }
-        .clock {
-            font-size: 30px;
-            margin-bottom: 20px;
-            color: #00ff00;
-        }
-        input {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: none;
-            text-align: center;
-        }
-        button {
-            background-color: #00ff00;
-            color: black;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 85%;
-        }
-        .result {
-            margin-top: 20px;
-            font-size: 25px;
-            padding: 15px;
-            border: 2px dashed #00ff00;
-            display: none;
-        }
+        body { background-color: #0d0d0d; color: #00ff00; font-family: 'Courier New', Courier, monospace; text-align: center; padding: 20px; }
+        .box { border: 2px solid #00ff00; border-radius: 20px; padding: 20px; max-width: 350px; margin: auto; box-shadow: 0 0 15px #00ff00; }
+        h1 { font-size: 22px; text-shadow: 2px 2px #000; }
+        .clock { font-size: 35px; font-weight: bold; margin: 15px 0; color: #fff; }
+        input { width: 90%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #00ff00; color: #fff; border-radius: 8px; text-align: center; }
+        button { background-color: #00ff00; color: #000; padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; }
+        button:active { background-color: #008800; transform: scale(0.98); }
+        .result-box { margin-top: 25px; padding: 15px; border-top: 1px solid #333; display: none; }
+        .target { font-size: 40px; color: #fff; display: block; margin: 10px 0; }
+        .history { font-size: 12px; color: #666; margin-top: 15px; text-align: left; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>KING PREDICTOR</h1>
-        <div class="clock" id="clock">00:00:00</div>
+    <div class="box">
+        <h1>V2: ALGO DETECTOR</h1>
+        <div class="clock" id="liveClock">00:00:00</div>
 
-        <p>Ampidiro ny lera farany (H:M):</p>
-        <input type="text" id="timeInput" placeholder="Ohatra: 14:05">
-        
-        <p>Seed (Ohatra: a1b2c3):</p>
-        <input type="text" id="seedInput" placeholder="6 litera na isa">
+        <div style="text-align: left; font-size: 11px;">LERA FARANY (H:M:S):</div>
+        <input type="text" id="lastTime" placeholder="12:30:45">
 
-        <button onclick="calculate()">ANALYSE</button>
+        <div style="text-align: left; font-size: 11px;">SEED HASH (6 CHARS):</div>
+        <input type="text" id="seed" placeholder="Ex: f4e2a1">
 
-        <div class="result" id="resultBox">
-            Lera hidirana: <br>
-            <strong id="predictedTime" style="color: #00ff00;">00:00</strong> <br>
-            Cote: <strong id="predictedCote" style="color: #00ff00;">x2.00</strong>
+        <button onclick="detect()">HANAO ANALYSE V2</button>
+
+        <div id="res" class="result-box">
+            <span style="font-size: 12px;">LERA HANOMPOHANA:</span>
+            <span class="target" id="nextTime">00:00:00</span>
+            <span style="color: #ffcc00;">COTE PREVUE: <strong id="nextCote">x2.10</strong></span>
         </div>
+
+        <div class="history" id="logs"></div>
     </div>
 
     <script>
-        // Clock function
         function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
+            document.getElementById('liveClock').innerText = new Date().toTimeString().split(' ')[0];
         }
         setInterval(updateClock, 1000);
 
-        function calculate() {
-            const timeIn = document.getElementById('timeInput').value;
-            const seedIn = document.getElementById('seedInput').value;
+        function detect() {
+            const timeIn = document.getElementById('lastTime').value;
+            const seedIn = document.getElementById('seed').value;
 
-            if (timeIn === "" || seedIn === "") {
-                alert("Fenoy ny banga azafady!");
-                return;
-            }
+            if(!timeIn.includes(':')) { alert("Hamarino ny lera!"); return; }
 
-            // Simple Logic Algorithm
-            let seedValue = 0;
-            for(let i=0; i<seedIn.length; i++) {
-                seedValue += seedIn.charCodeAt(i);
-            }
+            // Algo V2 Logic
+            let hash = 0;
+            for(let i=0; i<seedIn.length; i++) hash += seedIn.charCodeAt(i);
 
-            let timeParts = timeIn.split(':');
-            let hour = parseInt(timeParts[0]);
-            let minute = parseInt(timeParts[1]);
+            let parts = timeIn.split(':');
+            let d = new Date();
+            d.setHours(parts[0], parts[1], parts[2] || 0);
 
-            // Prediction: Manampy 3 hatramin'ny 7 minitra
-            let newMinute = minute + (seedValue % 5) + 3;
-            if (newMinute >= 60) {
-                newMinute -= 60;
-                hour += 1;
-            }
+            // Manampy 2 ka hatramin'ny 4 minitra ny V2
+            let shift = (hash % 3) + 2;
+            d.setMinutes(d.getMinutes() + shift);
+            d.setSeconds((hash * 7) % 60);
 
-            // Formatage
-            let fHour = hour < 10 ? "0" + hour : hour;
-            let fMinute = newMinute < 10 ? "0" + newMinute : newMinute;
-            
-            let finalCote = (1.5 + (seedValue % 10) / 5).toFixed(2);
+            const resultTime = d.toTimeString().split(' ')[0];
+            const resultCote = (1.8 + (hash % 12) / 10).toFixed(2);
 
-            document.getElementById('predictedTime').innerText = fHour + ":" + fMinute;
-            document.getElementById('predictedCote').innerText = "x" + finalCote;
-            document.getElementById('resultBox').style.display = "block";
+            document.getElementById('nextTime').innerText = resultTime;
+            document.getElementById('nextCote').innerText = "x" + resultCote;
+            document.getElementById('res').style.display = "block";
+
+            // Add to mini logs
+            const log = document.getElementById('logs');
+            log.innerHTML = "• Prediction: " + resultTime + " (OK)<br>" + log.innerHTML;
         }
+
+        window.onload = () => {
+            document.getElementById('lastTime').value = new Date().toTimeString().split(' ')[0];
+        };
     </script>
 </body>
 </html>
