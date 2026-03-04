@@ -3,40 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor VIP V8</title>
+    <title>Predictor VIP V10</title>
     <style>
         body { background: #000; color: #d4af37; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; text-transform: uppercase; }
-        
-        /* LERA NGEZA BE SY MANAITRA - VOALOHANY FOANA */
-        #top-clock { 
-            width: 100%;
-            background: #000; 
-            border-bottom: 3px solid #00ff00; 
-            padding: 15px 0; 
-            color: #00ff00; 
-            font-family: monospace; 
-            font-size: 50px; 
-            font-weight: bold;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 255, 0, 0.4);
-            margin-bottom: 20px;
-        }
-
-        .container { width: 90%; max-width: 360px; background: #111; padding: 25px; border-radius: 25px; border: 1px solid #333; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        #top-clock { width: 100%; background: #000; border-bottom: 3px solid #00ff00; padding: 12px 0; color: #00ff00; font-family: monospace; font-size: 45px; font-weight: bold; text-align: center; box-shadow: 0 5px 20px rgba(0, 255, 0, 0.4); margin-bottom: 20px; }
+        .container { width: 92%; max-width: 380px; background: #111; padding: 20px; border-radius: 25px; border: 1px solid #333; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .page { display: none; }
         .active { display: block; }
-        
-        .lion-icon { font-size: 60px; margin-bottom: 10px; filter: drop-shadow(0 0 10px #f1c40f); }
-        h1 { font-size: 20px; color: #f1c40f; margin-bottom: 20px; }
-
-        .btn { display: block; width: 100%; padding: 18px; margin: 12px 0; background: linear-gradient(#f1c40f, #d4af37); border: none; border-radius: 12px; font-weight: 900; font-size: 16px; color: #000; cursor: pointer; transition: 0.2s; }
-        .btn:active { transform: scale(0.96); }
-
+        .btn { display: block; width: 100%; padding: 16px; margin: 10px 0; background: linear-gradient(#f1c40f, #d4af37); border: none; border-radius: 12px; font-weight: 900; font-size: 16px; color: #000; cursor: pointer; transition: 0.2s; }
         input { width: 100%; padding: 15px; margin-top: 5px; background: #1a1a1a; border: 1px solid #444; color: #fff; border-radius: 10px; text-align: center; font-size: 18px; box-sizing: border-box; }
-        
-        .result-card { border: 2px solid #00ff00; padding: 25px 15px; border-radius: 20px; margin-top: 20px; background: rgba(0,0,0,0.9); }
-        .timer-val { font-size: 45px; font-weight: 900; color: #fff; margin-bottom: 15px; }
-        .row { display: flex; justify-content: space-between; margin: 12px 0; font-weight: bold; }
+        .result-card { border: 2px solid #00ff00; padding: 20px; border-radius: 20px; margin-top: 15px; background: rgba(0,0,0,0.9); }
+        .timer-val { font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 10px; }
+        .row { display: flex; justify-content: space-between; margin: 12px 0; font-weight: bold; font-size: 14px; }
+        .history-box { width: 92%; max-width: 380px; background: #0a0a0a; border-radius: 20px; border: 1px solid #222; padding: 15px; margin-bottom: 40px; }
+        .hist-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #1a1a1a; font-size: 12px; font-family: monospace; }
     </style>
 </head>
 <body>
@@ -45,55 +25,53 @@
 
     <div class="container">
         <div id="p1" class="page active">
-            <div class="lion-icon">🦁</div>
-            <h1>KING PREDICTOR VIP</h1>
+            <div style="font-size:50px;">🦁</div>
+            <h1 style="font-size:18px;">KING PREDICTOR VIP</h1>
             <button class="btn" onclick="go(2, 'AVIATOR')">🚀 AVIATOR</button>
             <button class="btn" onclick="go(2, 'JETX')">🚀 JETX</button>
             <button class="btn" onclick="go(2, 'COSMOSX')">🚀 COSMOSX</button>
         </div>
 
         <div id="p2" class="page">
-            <h2 id="title" style="color:#f1c40f;">PREDICTION</h2>
-            <div style="text-align:left; margin-bottom:15px;">
-                <label style="font-size:10px; color:#f1c40f;">HEURE DE DEPART</label>
-                <input type="text" id="time-in">
-            </div>
-            <div style="text-align:left; margin-bottom:20px;">
-                <label style="font-size:10px; color:#f1c40f;">SERVER SEED (6 CHARS)</label>
-                <input type="text" id="seed-in" value="KING77">
-            </div>
-            <button class="btn" id="calc-btn" onclick="calc()">🔥 DECODER L'ALGO</button>
-            <div id="loading" style="display:none; color:#00ff00; margin:15px;">ANALYSE EN COURS...</div>
-            <p onclick="go(1)" style="font-size:11px; color:#555; cursor:pointer; margin-top:10px;">← RETOUR AU MENU</p>
+            <h2 id="title" style="color:#f1c40f; margin:0 0 15px 0;">PREDICTION</h2>
+            <div style="text-align:left;"><label style="font-size:10px;">LERA (H:M:S)</label></div>
+            <input type="text" id="time-in">
+            <div style="text-align:left; margin-top:10px;"><label style="font-size:10px;">SERVER SEED (6-HASH)</label></div>
+            <input type="text" id="seed-in" value="7af2d5">
+            <button class="btn" id="calc-btn" onclick="calc()">🔥 ANALYSE LOGIQUE</button>
+            <div id="loading" style="display:none; color:#00ff00; margin:15px;">CALCUL EN COURS...</div>
+            <p onclick="go(1)" style="font-size:11px; color:#555; cursor:pointer;">← MENU</p>
         </div>
 
         <div id="p3" class="page">
-            <div style="color:#00ff00; font-weight:bold; letter-spacing:1px;">✔ SIGNAL IDENTIFIÉ</div>
+            <div style="color:#00ff00; font-weight:bold; margin-bottom:5px;">✔ SIGNAL IDENTIFIÉ</div>
             <div class="result-card">
                 <div class="timer-val" id="res-t">00:00:00</div>
-                <div class="row"><span>CIBLE :</span><span style="color:#f1c40f; font-size:22px;">x2.10</span></div>
-                <div class="row"><span>SÉCU :</span><span style="color:#fff; font-size:22px;">x4.50</span></div>
-                <div style="border-top:1px solid #333; margin-top:15px; padding-top:10px;">
-                    <div class="row" style="color:#ff4757;"><span>RISQUE :</span><span style="font-size:22px;">x15.00</span></div>
+                <div class="row"><span>CIBLE :</span><span style="color:#f1c40f; font-size:22px;" id="v-base">x0.00</span></div>
+                <div class="row"><span>SÉCU :</span><span style="color:#fff; font-size:22px;" id="v-secu">x0.00</span></div>
+                <div style="border-top:1px solid #333; margin-top:10px; padding-top:10px;">
+                    <div class="row" style="color:#ff4757;"><span>RISQUE :</span><span style="font-size:22px;" id="v-risk">x0.00</span></div>
                 </div>
             </div>
             <button class="btn" style="margin-top:20px;" onclick="go(2)">NOUVELLE ANALYSE</button>
         </div>
     </div>
 
+    <div class="history-box">
+        <div style="color:#444; font-size:10px; border-bottom:1px solid #222; padding-bottom:5px; margin-bottom:10px;">📜 HISTORIQUE DES SIGNAUX</div>
+        <div id="hist-list"></div>
+    </div>
+
     <script>
         function updateClock() {
             var now = new Date();
-            var time = now.toTimeString().split(' ')[0];
-            document.getElementById('top-clock').innerHTML = time;
+            document.getElementById('top-clock').innerHTML = now.toTimeString().split(' ')[0];
         }
         setInterval(updateClock, 1000);
-        updateClock();
 
         function go(n, t) {
-            var pages = document.getElementsByClassName('page');
-            for(var i=0; i<pages.length; i++) { pages[i].style.display = 'none'; }
-            document.getElementById('p' + n).style.display = 'block';
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('p' + n).classList.add('active');
             if(t) document.getElementById('title').innerHTML = t;
         }
 
@@ -102,18 +80,43 @@
             document.getElementById('loading').style.display = 'block';
 
             setTimeout(function() {
-                var s = document.getElementById('seed-in').value || "777";
+                var s = document.getElementById('seed-in').value || "abc123";
                 var t = document.getElementById('time-in').value;
-                var seedVal = 0;
-                for(var i=0; i<s.length; i++) seedVal += s.charCodeAt(i);
-
-                var p = t.split(':');
+                
+                // --- LOGIC CALCUL ---
+                var hashVal = 0;
+                for(var i=0; i<s.length; i++) hashVal += s.charCodeAt(i);
+                
+                var timeParts = t.split(':');
                 var d = new Date();
-                d.setHours(p[0], p[1], p[2]);
-                d.setMinutes(d.getMinutes() + (seedVal % 3) + 1);
-                d.setSeconds((seedVal * 7) % 60);
+                d.setHours(timeParts[0], timeParts[1], timeParts[2]);
+                
+                // Fotoana: Miampy 1-3 minitra miankina amin'ny Seed
+                var addMin = (hashVal % 3) + 1;
+                var addSec = (hashVal * 7) % 60;
+                d.setMinutes(d.getMinutes() + addMin);
+                d.setSeconds(addSec);
 
-                document.getElementById('res-t').innerHTML = d.toTimeString().split(' ')[0];
+                // Cotes: Miovaova manaraka ny Seed (tsy kisendrasendra fotsiny)
+                var base = 1.5 + ((hashVal % 15) / 10);
+                var secu = base + 1.2 + ((hashVal % 10) / 5);
+                var risk = 10 + (hashVal % 40);
+
+                var fTime = d.toTimeString().split(' ')[0];
+                var fBase = 'x' + base.toFixed(2);
+
+                document.getElementById('res-t').innerHTML = fTime;
+                document.getElementById('v-base').innerHTML = fBase;
+                document.getElementById('v-secu').innerHTML = 'x' + secu.toFixed(2);
+                document.getElementById('v-risk').innerHTML = 'x' + risk.toFixed(2);
+
+                // Add to History
+                var hList = document.getElementById('hist-list');
+                var item = document.createElement('div');
+                item.className = 'hist-item';
+                item.innerHTML = '<span style="color:#00ff00;">' + fTime + '</span><span>TARGET: ' + fBase + '</span>';
+                hList.prepend(item);
+
                 document.getElementById('calc-btn').style.display = 'block';
                 document.getElementById('loading').style.display = 'none';
                 go(3);
@@ -122,6 +125,7 @@
 
         window.onload = function() {
             document.getElementById('time-in').value = new Date().toTimeString().split(' ')[0];
+            updateClock();
         };
     </script>
 </body>
