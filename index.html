@@ -3,111 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KING PREDICTOR PRO V11</title>
+    <title>MATRIX PREDICTOR VIP V12</title>
     <style>
-        :root { --gold: #d4af37; --neon-g: #00ff00; --bg: #050505; --card: #121212; }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #020202; }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; text-transform: uppercase; }
         
-        /* HEADER PRO */
-        #top-header { width: 100%; background: #000; border-bottom: 2px solid var(--neon-g); padding: 15px 0; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,255,0,0.2); }
-        #top-clock { font-family: 'Courier New', monospace; font-size: 42px; font-weight: 900; color: var(--neon-g); text-shadow: 0 0 10px rgba(0,255,0,0.5); }
+        #header { width: 100%; background: #000; border-bottom: 2px solid var(--neon); padding: 10px 0; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 0 15px var(--neon); }
+        #clock { font-size: 45px; font-weight: 900; color: var(--neon); font-family: 'Courier New', monospace; }
 
-        .container { width: 92%; max-width: 400px; margin-top: 20px; }
-        .card { background: var(--card); border-radius: 20px; border: 1px solid #222; padding: 25px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
+        .wrapper { width: 90%; max-width: 400px; margin-top: 20px; }
+        .main-card { background: #0a0a0a; border-radius: 25px; border: 1px solid #1a1a1a; padding: 25px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative; }
         
-        /* ANIMATION LOADING */
-        .loader-bar { width: 0%; height: 4px; background: var(--neon-g); position: absolute; top: 0; left: 0; transition: 0.3s; }
+        .progress-container { width: 100%; height: 5px; background: #111; margin-bottom: 20px; border-radius: 10px; overflow: hidden; }
+        #bar { width: 0%; height: 100%; background: var(--neon); box-shadow: 0 0 10px var(--neon); transition: 0.1s; }
 
-        .page { display: none; animation: slideUp 0.4s ease-out; }
+        .page { display: none; }
         .active { display: block; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .lion-head { font-size: 60px; margin-bottom: 10px; filter: drop-shadow(0 0 15px var(--gold)); }
-        h1 { font-size: 22px; color: var(--gold); letter-spacing: 2px; margin-bottom: 25px; font-weight: 800; }
-
-        /* BUTTONS & INPUTS */
-        .btn { width: 100%; padding: 18px; margin: 12px 0; background: linear-gradient(135deg, var(--gold), #8a6d3b); border: none; border-radius: 12px; font-weight: 900; font-size: 16px; color: #000; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .btn:active { transform: scale(0.96); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+        h1 { color: var(--gold); font-size: 20px; letter-spacing: 3px; margin-bottom: 20px; }
+        .btn { width: 100%; padding: 18px; margin: 10px 0; background: linear-gradient(135deg, #ffcc00, #d4af37); border: none; border-radius: 15px; font-weight: 900; font-size: 16px; color: #000; cursor: pointer; }
         
-        .input-group { text-align: left; margin-bottom: 15px; }
-        label { font-size: 11px; color: var(--gold); font-weight: bold; margin-left: 5px; }
-        input { width: 100%; padding: 16px; margin-top: 5px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 12px; text-align: center; font-size: 18px; box-sizing: border-box; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--neon-g); box-shadow: 0 0 10px rgba(0,255,0,0.1); }
+        .input-box { text-align: left; margin-bottom: 15px; }
+        label { font-size: 10px; color: #555; margin-left: 5px; }
+        input { width: 100%; padding: 16px; background: #111; border: 1px solid #222; color: #fff; border-radius: 12px; text-align: center; font-size: 18px; box-sizing: border-box; outline: none; }
+        input:focus { border-color: var(--neon); }
 
-        /* RESULT DISPLAY */
-        .res-box { background: #000; border: 2px solid var(--neon-g); border-radius: 20px; padding: 25px 15px; margin: 20px 0; }
-        .res-time { font-size: 48px; font-weight: 900; margin-bottom: 15px; letter-spacing: 2px; }
-        .res-row { display: flex; justify-content: space-between; padding: 10px 5px; border-bottom: 1px solid #222; }
-        .val { font-weight: 900; font-size: 20px; }
+        .res-display { background: #000; border: 1px solid #333; border-radius: 20px; padding: 20px; margin: 15px 0; border-left: 5px solid var(--neon); }
+        .res-time { font-size: 45px; font-weight: 900; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+        .stat-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; border-bottom: 1px solid #111; }
+        .gold-val { color: var(--gold); font-weight: 900; font-size: 20px; }
 
-        /* HISTORY PRO */
-        .history-container { margin-top: 30px; width: 100%; }
-        .history-header { font-size: 12px; color: #555; border-bottom: 1px solid #222; padding-bottom: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; }
-        .hist-card { background: #0f0f0f; border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--neon-g); }
-        .hist-info { text-align: left; }
-        .hist-time { font-weight: 900; font-size: 16px; display: block; }
-        .hist-date { font-size: 10px; color: #444; }
-        .hist-target { font-weight: 900; color: var(--gold); font-size: 18px; }
+        .history-list { margin-top: 25px; width: 100%; }
+        .hist-item { background: #080808; border: 1px solid #111; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-right: 3px solid var(--gold); }
     </style>
 </head>
 <body>
 
-    <div id="top-header">
-        <div id="top-clock">00:00:00</div>
-    </div>
+    <div id="header"><div id="clock">00:00:00</div></div>
 
-    <div class="container">
-        <div class="card">
-            <div id="l-bar" class="loader-bar"></div>
+    <div class="wrapper">
+        <div class="main-card">
+            <div class="progress-container"><div id="bar"></div></div>
 
             <div id="p1" class="page active">
-                <div class="lion-head">🦁</div>
-                <h1>PREDICTOR PRO</h1>
-                <button class="btn" onclick="go(2, '🚀 AVIATOR')">🚀 AVIATOR</button>
-                <button class="btn" onclick="go(2, '🚀 JETX')">🚀 JETX</button>
-                <button class="btn" onclick="go(2, '🚀 COSMOSX')">🚀 COSMOSX</button>
+                <div style="font-size:50px; margin-bottom:10px;">🛡️</div>
+                <h1>PRO MATRIX V12</h1>
+                <button class="btn" onclick="go(2, 'AVIATOR')">ANALYSY AVIATOR</button>
+                <button class="btn" onclick="go(2, 'JETX')">ANALYSY JETX</button>
+                <p style="font-size:10px; color:#333;">ENCRYPTED BY KING_ALGO</p>
             </div>
 
             <div id="p2" class="page">
-                <h2 id="title" style="color:var(--gold); margin-top:0;">ANALYSE</h2>
-                <div class="input-group">
-                    <label>HEURE DE DÉPART (H:M:S)</label>
+                <h2 id="title" style="color:var(--neon); margin:0;">SYSTEM SCAN</h2>
+                <div class="input-box">
+                    <label>LERA TAMIN'NY HISTORY (H:M:S)</label>
                     <input type="text" id="time-in">
                 </div>
-                <div class="input-group">
-                    <label>SERVER SEED (HASH)</label>
-                    <input type="text" id="seed-in" placeholder="Ex: a7f2d5">
+                <div class="input-box">
+                    <label>SERVER HASH (6 CHARS)</label>
+                    <input type="text" id="seed-in" placeholder="Ex: f4a1c2">
                 </div>
-                <button class="btn" id="calc-btn" onclick="startAnalyse()">🔥 DECODER L'ALGORITHM</button>
-                <div id="load-text" style="display:none; color:var(--neon-g); margin-top:10px; font-weight:bold; font-style:italic;">Scanning Server...</div>
-                <p onclick="go(1)" style="font-size:11px; color:#555; cursor:pointer; margin-top:20px;">← RETOUR AU DASHBOARD</p>
+                <button class="btn" id="calc-btn" onclick="runMatrix()">🚀 DECODER L'ALGO</button>
+                <div id="status" style="display:none; color:var(--neon); font-size:12px;">CONVERTING HASH...</div>
+                <p onclick="go(1)" style="font-size:11px; color:#444; cursor:pointer;">← MENU</p>
             </div>
 
             <div id="p3" class="page">
-                <div style="color:var(--neon-g); font-weight:bold; font-size:12px; letter-spacing:2px;">✔ SIGNAL IDENTIFIÉ</div>
-                <div class="res-box">
+                <div style="color:var(--neon); font-size:11px; font-weight:bold;">✔ SIGNAL DECODED</div>
+                <div class="res-display">
                     <div class="res-time" id="res-t">00:00:00</div>
-                    <div class="res-row"><span>CIBLE</span><span class="val" style="color:var(--gold);" id="v-base">x0.00</span></div>
-                    <div class="res-row"><span>SÉCURITÉ</span><span class="val" id="v-secu">x0.00</span></div>
-                    <div class="res-row" style="border:none; color:#ff4757;"><span>RISQUE</span><span class="val" id="v-risk">x0.00</span></div>
+                    <div class="stat-row"><span>TARGET</span><span class="gold-val" id="v-base">x0.00</span></div>
+                    <div class="stat-row"><span>SÉCU</span><span style="font-weight:900;" id="v-secu">x0.00</span></div>
                 </div>
-                <button class="btn" onclick="go(2)">NOUVELLE ANALYSE</button>
+                <button class="btn" onclick="go(2)">RESCANNER</button>
             </div>
         </div>
 
-        <div class="history-container">
-            <div class="history-header">
-                <span>📜 HISTORIQUE DES SIGNAUX</span>
-                <span id="hist-count">0</span>
-            </div>
-            <div id="hist-list"></div>
+        <div class="history-list">
+            <div style="font-size:10px; color:#444; margin-bottom:10px;">📜 LOGS DERNIERS SIGNALS</div>
+            <div id="hist-content"></div>
         </div>
     </div>
 
     <script>
         function updateClock() {
-            const now = new Date();
-            document.getElementById('top-clock').innerText = now.toTimeString().split(' ')[0];
+            document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0];
         }
         setInterval(updateClock, 1000);
 
@@ -115,73 +95,65 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('p' + n).classList.add('active');
             if(t) document.getElementById('title').innerText = t;
-            document.getElementById('l-bar').style.width = '0%';
+            document.getElementById('bar').style.width = "0%";
         }
 
-        function startAnalyse() {
+        function runMatrix() {
             const btn = document.getElementById('calc-btn');
-            const loadText = document.getElementById('load-text');
-            const lBar = document.getElementById('l-bar');
+            const status = document.getElementById('status');
+            const bar = document.getElementById('bar');
             
             btn.style.display = 'none';
-            loadText.style.display = 'block';
+            status.style.display = 'block';
             
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 20;
-                if(progress >= 100) {
-                    clearInterval(interval);
-                    lBar.style.width = '100%';
-                    setTimeout(finalizeCalc, 500);
-                } else {
-                    lBar.style.width = progress + '%';
+            let p = 0;
+            const iv = setInterval(() => {
+                p += Math.random() * 15;
+                bar.style.width = p + "%";
+                if(p >= 100) {
+                    clearInterval(iv);
+                    setTimeout(matrixLogic, 400);
                 }
-            }, 300);
+            }, 200);
         }
 
-        function finalizeCalc() {
-            const seed = document.getElementById('seed-in').value || "king77";
+        function matrixLogic() {
+            const seed = document.getElementById('seed-in').value || "pro123";
             const timeVal = document.getElementById('time-in').value;
             
-            // Logic Algorithm
-            let hash = 0;
-            for(let i=0; i<seed.length; i++) hash += seed.charCodeAt(i);
+            // --- ALGO PRO V12 (Sine Wave Logic) ---
+            let seedSum = 0;
+            for(let i=0; i<seed.length; i++) seedSum += seed.charCodeAt(i);
             
-            let p = timeVal.split(':');
+            let t = timeVal.split(':');
             let d = new Date();
-            d.setHours(p[0], p[1], p[2]);
+            d.setHours(t[0], t[1], t[2]);
             
-            d.setMinutes(d.getMinutes() + (hash % 4) + 1);
-            d.setSeconds((hash * 13) % 60);
+            // Elanelana fotoana miankina amin'ny hash
+            let shift = (seedSum % 5) + 2; 
+            d.setMinutes(d.getMinutes() + shift);
+            d.setSeconds((seedSum * 3) % 60);
 
-            const fTime = d.toTimeString().split(' ')[0];
-            const baseCote = (1.6 + (hash % 15) / 10).toFixed(2);
-            const secuCote = (parseFloat(baseCote) + 1.5 + (hash % 10) / 5).toFixed(2);
-            const riskCote = (12 + (hash % 50)).toFixed(2);
+            // Kajy ny Cote (Calcul Sinusoidal)
+            let baseCote = 1.6 + (Math.abs(Math.sin(seedSum)) * 2.5);
+            let secuCote = baseCote * 0.7;
 
-            document.getElementById('res-t').innerText = fTime;
-            document.getElementById('v-base').innerText = 'x' + baseCote;
-            document.getElementById('v-secu').innerText = 'x' + secuCote;
-            document.getElementById('v-risk').innerText = 'x' + riskCote;
+            const finalT = d.toTimeString().split(' ')[0];
+            const finalC = 'x' + baseCote.toFixed(2);
 
-            // Add to History
-            const hList = document.getElementById('hist-list');
-            const item = document.createElement('div');
-            item.className = 'hist-item';
-            item.innerHTML = `
-                <div class="hist-card">
-                    <div class="hist-info">
-                        <span class="hist-time">${fTime}</span>
-                        <span class="hist-date">ID: ${seed.substring(0,3).toUpperCase()}</span>
-                    </div>
-                    <div class="hist-target">x${baseCote}</div>
-                </div>
-            `;
-            hList.prepend(item);
-            document.getElementById('hist-count').innerText = hList.children.length;
+            document.getElementById('res-t').innerText = finalT;
+            document.getElementById('v-base').innerText = finalC;
+            document.getElementById('v-secu').innerText = 'x' + secuCote.toFixed(2);
+
+            // History Update
+            const hList = document.getElementById('hist-content');
+            const div = document.createElement('div');
+            div.className = 'hist-item';
+            div.innerHTML = `<span>🕒 ${finalT}</span><span style="color:#ffcc00; font-weight:900;">${finalC}</span>`;
+            hList.prepend(div);
 
             document.getElementById('calc-btn').style.display = 'block';
-            document.getElementById('load-text').style.display = 'none';
+            document.getElementById('status').style.display = 'none';
             go(3);
         }
 
