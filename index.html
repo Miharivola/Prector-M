@@ -3,38 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATRIX PREDICTOR VIP V12</title>
+    <title>ELITE PREDICTOR V14</title>
     <style>
-        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #020202; }
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; --accent: #ff3e3e; }
         body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; text-transform: uppercase; }
         
-        #header { width: 100%; background: #000; border-bottom: 2px solid var(--neon); padding: 10px 0; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 0 15px var(--neon); }
-        #clock { font-size: 45px; font-weight: 900; color: var(--neon); font-family: 'Courier New', monospace; }
+        #header { width: 100%; background: #000; border-bottom: 2px solid var(--neon); padding: 12px 0; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 0 20px rgba(0,255,65,0.3); }
+        #clock { font-size: 45px; font-weight: 900; color: var(--neon); font-family: 'monospace'; }
 
-        .wrapper { width: 90%; max-width: 400px; margin-top: 20px; }
-        .main-card { background: #0a0a0a; border-radius: 25px; border: 1px solid #1a1a1a; padding: 25px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative; }
+        .wrapper { width: 92%; max-width: 400px; margin-top: 20px; }
+        .main-card { background: #080808; border-radius: 30px; border: 1px solid #222; padding: 25px; text-align: center; box-shadow: 0 15px 50px rgba(0,0,0,0.9); position: relative; }
         
-        .progress-container { width: 100%; height: 5px; background: #111; margin-bottom: 20px; border-radius: 10px; overflow: hidden; }
-        #bar { width: 0%; height: 100%; background: var(--neon); box-shadow: 0 0 10px var(--neon); transition: 0.1s; }
+        .loader { width: 0%; height: 4px; background: var(--neon); position: absolute; top: 0; left: 0; transition: 0.2s; box-shadow: 0 0 10px var(--neon); }
 
-        .page { display: none; }
+        .page { display: none; animation: fadeIn 0.3s; }
         .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        h1 { color: var(--gold); font-size: 20px; letter-spacing: 3px; margin-bottom: 20px; }
-        .btn { width: 100%; padding: 18px; margin: 10px 0; background: linear-gradient(135deg, #ffcc00, #d4af37); border: none; border-radius: 15px; font-weight: 900; font-size: 16px; color: #000; cursor: pointer; }
+        h1 { color: var(--gold); font-size: 22px; letter-spacing: 4px; margin-bottom: 25px; font-weight: 900; }
         
-        .input-box { text-align: left; margin-bottom: 15px; }
-        label { font-size: 10px; color: #555; margin-left: 5px; }
-        input { width: 100%; padding: 16px; background: #111; border: 1px solid #222; color: #fff; border-radius: 12px; text-align: center; font-size: 18px; box-sizing: border-box; outline: none; }
+        /* BOKOTRA PRO */
+        .btn { width: 100%; padding: 18px; margin: 10px 0; background: linear-gradient(135deg, var(--gold), #b8860b); border: none; border-radius: 15px; font-weight: 900; font-size: 16px; color: #000; cursor: pointer; transition: 0.3s; }
+        .btn:active { transform: scale(0.96); }
+        .btn-cosmos { background: linear-gradient(135deg, #a020f0, #6a0dad); color: #fff; }
+
+        .input-group { text-align: left; margin-bottom: 15px; }
+        label { font-size: 10px; color: #666; font-weight: bold; padding-left: 5px; }
+        input { width: 100%; padding: 16px; background: #111; border: 1px solid #333; color: #fff; border-radius: 12px; text-align: center; font-size: 19px; box-sizing: border-box; outline: none; }
         input:focus { border-color: var(--neon); }
 
-        .res-display { background: #000; border: 1px solid #333; border-radius: 20px; padding: 20px; margin: 15px 0; border-left: 5px solid var(--neon); }
-        .res-time { font-size: 45px; font-weight: 900; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
-        .stat-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; border-bottom: 1px solid #111; }
-        .gold-val { color: var(--gold); font-weight: 900; font-size: 20px; }
+        /* VOKATRA */
+        .res-display { background: #000; border: 2px solid #222; border-radius: 20px; padding: 25px 15px; margin: 20px 0; position: relative; }
+        .res-time { font-size: 50px; font-weight: 900; color: #fff; letter-spacing: 2px; }
+        .stat-grid { display: flex; justify-content: space-around; margin-top: 15px; border-top: 1px solid #1a1a1a; padding-top: 15px; }
+        .stat-val { font-size: 22px; font-weight: 900; color: var(--gold); }
+        .stat-label { font-size: 10px; color: #555; display: block; }
 
-        .history-list { margin-top: 25px; width: 100%; }
-        .hist-item { background: #080808; border: 1px solid #111; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-right: 3px solid var(--gold); }
+        /* HISTORY */
+        .history { width: 100%; margin-top: 30px; margin-bottom: 40px; }
+        .hist-item { background: #0a0a0a; padding: 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-left: 4px solid var(--neon); }
     </style>
 </head>
 <body>
@@ -43,45 +50,47 @@
 
     <div class="wrapper">
         <div class="main-card">
-            <div class="progress-container"><div id="bar"></div></div>
+            <div id="loader" class="loader"></div>
 
             <div id="p1" class="page active">
-                <div style="font-size:50px; margin-bottom:10px;">🛡️</div>
-                <h1>PRO MATRIX V12</h1>
-                <button class="btn" onclick="go(2, 'AVIATOR')">ANALYSY AVIATOR</button>
-                <button class="btn" onclick="go(2, 'JETX')">ANALYSY JETX</button>
-                <p style="font-size:10px; color:#333;">ENCRYPTED BY KING_ALGO</p>
+                <div style="font-size:60px; margin-bottom:10px;">👑</div>
+                <h1>ELITE SYSTEM</h1>
+                <button class="btn" onclick="go(2, '🚀 AVIATOR PRO')">🚀 AVIATOR</button>
+                <button class="btn btn-cosmos" onclick="go(2, '🌌 COSMOSX PRO')">🌌 COSMOSX</button>
+                <div style="font-size:9px; color:#333; margin-top:15px;">ALGO: DYNAMIC_PRIME_V14</div>
             </div>
 
             <div id="p2" class="page">
-                <h2 id="title" style="color:var(--neon); margin:0;">SYSTEM SCAN</h2>
-                <div class="input-box">
-                    <label>LERA TAMIN'NY HISTORY (H:M:S)</label>
+                <h2 id="title" style="color:var(--neon); margin:0 0 15px 0;">SCANNING</h2>
+                <div class="input-group">
+                    <label>LERA FARANY NIVOAKA (H:M:S)</label>
                     <input type="text" id="time-in">
                 </div>
-                <div class="input-box">
-                    <label>SERVER HASH (6 CHARS)</label>
-                    <input type="text" id="seed-in" placeholder="Ex: f4a1c2">
+                <div class="input-group">
+                    <label>SERVER SEED HASH</label>
+                    <input type="text" id="seed-in" placeholder="Ex: 8b2f5c">
                 </div>
-                <button class="btn" id="calc-btn" onclick="runMatrix()">🚀 DECODER L'ALGO</button>
-                <div id="status" style="display:none; color:var(--neon); font-size:12px;">CONVERTING HASH...</div>
-                <p onclick="go(1)" style="font-size:11px; color:#444; cursor:pointer;">← MENU</p>
+                <button class="btn" id="calc-btn" onclick="startEliteAnalyse()">🔥 DECODER L'ALGORITHME</button>
+                <div id="status" style="display:none; color:var(--neon); font-size:12px; margin-top:10px; font-weight:bold;">ANALYZING WAVE PATTERNS...</div>
+                <p onclick="go(1)" style="font-size:11px; color:#444; cursor:pointer; margin-top:20px;">← RETOUR MENU</p>
             </div>
 
             <div id="p3" class="page">
-                <div style="color:var(--neon); font-size:11px; font-weight:bold;">✔ SIGNAL DECODED</div>
+                <div style="color:var(--neon); font-size:12px; font-weight:900;">✔ SIGNAL STABLE IDENTIFIÉ</div>
                 <div class="res-display">
                     <div class="res-time" id="res-t">00:00:00</div>
-                    <div class="stat-row"><span>TARGET</span><span class="gold-val" id="v-base">x0.00</span></div>
-                    <div class="stat-row"><span>SÉCU</span><span style="font-weight:900;" id="v-secu">x0.00</span></div>
+                    <div class="stat-grid">
+                        <div><span class="stat-label">CIBLE</span><span class="stat-val" id="v-base">x0.00</span></div>
+                        <div><span class="stat-label">SÉCURITÉ</span><span class="stat-val" style="color:#fff;" id="v-secu">x0.00</span></div>
+                    </div>
                 </div>
-                <button class="btn" onclick="go(2)">RESCANNER</button>
+                <button class="btn" onclick="go(2)">NOUVELLE ANALYSE</button>
             </div>
         </div>
 
-        <div class="history-list">
-            <div style="font-size:10px; color:#444; margin-bottom:10px;">📜 LOGS DERNIERS SIGNALS</div>
-            <div id="hist-content"></div>
+        <div class="history">
+            <div style="font-size:11px; color:#444; border-bottom:1px solid #222; padding-bottom:10px; margin-bottom:15px;">📜 LOGS DERNIERS SIGNAUX</div>
+            <div id="hist-list"></div>
         </div>
     </div>
 
@@ -95,62 +104,65 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('p' + n).classList.add('active');
             if(t) document.getElementById('title').innerText = t;
-            document.getElementById('bar').style.width = "0%";
+            document.getElementById('loader').style.width = '0%';
         }
 
-        function runMatrix() {
+        function startEliteAnalyse() {
             const btn = document.getElementById('calc-btn');
             const status = document.getElementById('status');
-            const bar = document.getElementById('bar');
+            const loader = document.getElementById('loader');
             
             btn.style.display = 'none';
             status.style.display = 'block';
             
             let p = 0;
             const iv = setInterval(() => {
-                p += Math.random() * 15;
-                bar.style.width = p + "%";
+                p += Math.random() * 25;
+                loader.style.width = p + "%";
                 if(p >= 100) {
                     clearInterval(iv);
-                    setTimeout(matrixLogic, 400);
+                    setTimeout(eliteLogic, 400);
                 }
-            }, 200);
+            }, 300);
         }
 
-        function matrixLogic() {
-            const seed = document.getElementById('seed-in').value || "pro123";
+        function eliteLogic() {
+            const seed = document.getElementById('seed-in').value || "elite";
             const timeVal = document.getElementById('time-in').value;
             
-            // --- ALGO PRO V12 (Sine Wave Logic) ---
-            let seedSum = 0;
-            for(let i=0; i<seed.length; i++) seedSum += seed.charCodeAt(i);
+            // --- ALGO ELITE V14 (Prime Modulo Logic) ---
+            let seedValue = 0;
+            for(let i=0; i<seed.length; i++) seedValue += seed.charCodeAt(i) * (i + 1);
             
             let t = timeVal.split(':');
             let d = new Date();
             d.setHours(t[0], t[1], t[2]);
             
-            // Elanelana fotoana miankina amin'ny hash
-            let shift = (seedSum % 5) + 2; 
-            d.setMinutes(d.getMinutes() + shift);
-            d.setSeconds((seedSum * 3) % 60);
+            // Prime-based time shifting
+            let primeOffset = [17, 31, 67, 127];
+            let shiftMin = (seedValue % 4) + 2; 
+            let shiftSec = (seedValue * primeOffset[seedValue % 4]) % 60;
+            
+            d.setMinutes(d.getMinutes() + shiftMin);
+            d.setSeconds(shiftSec);
 
-            // Kajy ny Cote (Calcul Sinusoidal)
-            let baseCote = 1.6 + (Math.abs(Math.sin(seedSum)) * 2.5);
-            let secuCote = baseCote * 0.7;
+            // Dynamic Multiplier
+            let baseCote = 1.75 + ((seedValue % 25) / 10);
+            let secuCote = baseCote * 0.75;
 
-            const finalT = d.toTimeString().split(' ')[0];
-            const finalC = 'x' + baseCote.toFixed(2);
+            const fTime = d.toTimeString().split(' ')[0];
+            const fCote = 'x' + baseCote.toFixed(2);
 
-            document.getElementById('res-t').innerText = finalT;
-            document.getElementById('v-base').innerText = finalC;
+            document.getElementById('res-t').innerText = fTime;
+            document.getElementById('v-base').innerText = fCote;
             document.getElementById('v-secu').innerText = 'x' + secuCote.toFixed(2);
 
-            // History Update
-            const hList = document.getElementById('hist-content');
-            const div = document.createElement('div');
-            div.className = 'hist-item';
-            div.innerHTML = `<span>🕒 ${finalT}</span><span style="color:#ffcc00; font-weight:900;">${finalC}</span>`;
-            hList.prepend(div);
+            // History Pro
+            const hList = document.getElementById('hist-list');
+            const item = document.createElement('div');
+            item.className = 'hist-item';
+            item.innerHTML = `<div><b style="font-size:16px;">🕒 ${fTime}</b><br><small style="color:#444;">ID:${seed.substring(0,3)}</small></div><div style="color:var(--gold); font-weight:900; font-size:20px;">${fCote}</div>`;
+            hList.prepend(item);
 
             document.getElementById('calc-btn').style.display = 'block';
             document.getElementById('status').style.display = 'none';
