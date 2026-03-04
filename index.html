@@ -3,45 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELITE PREDICTOR V14</title>
+    <title>ELITE MOTION V15</title>
     <style>
-        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; --accent: #ff3e3e; }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; text-transform: uppercase; }
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; }
         
-        #header { width: 100%; background: #000; border-bottom: 2px solid var(--neon); padding: 12px 0; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 0 20px rgba(0,255,65,0.3); }
+        /* BACKGROUND MIETSIKETSIKA */
+        body { 
+            background: radial-gradient(circle at center, #0a1a0a 0%, #000 70%);
+            color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; 
+            display: flex; flex-direction: column; align-items: center; 
+            min-height: 100vh; text-transform: uppercase; overflow-x: hidden;
+        }
+
+        #header { 
+            width: 100%; background: rgba(0,0,0,0.8); border-bottom: 2px solid var(--neon); 
+            padding: 15px 0; text-align: center; position: sticky; top: 0; z-index: 1000;
+            backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(0,255,65,0.4);
+        }
+
         #clock { font-size: 45px; font-weight: 900; color: var(--neon); font-family: 'monospace'; }
 
-        .wrapper { width: 92%; max-width: 400px; margin-top: 20px; }
-        .main-card { background: #080808; border-radius: 30px; border: 1px solid #222; padding: 25px; text-align: center; box-shadow: 0 15px 50px rgba(0,0,0,0.9); position: relative; }
-        
-        .loader { width: 0%; height: 4px; background: var(--neon); position: absolute; top: 0; left: 0; transition: 0.2s; box-shadow: 0 0 10px var(--neon); }
+        .wrapper { width: 92%; max-width: 400px; margin-top: 25px; }
 
-        .page { display: none; animation: fadeIn 0.3s; }
+        /* CARD MISY EFFET GLASS */
+        .main-card { 
+            background: rgba(15, 15, 15, 0.9); border-radius: 30px; 
+            border: 1px solid rgba(255,255,255,0.1); padding: 30px; 
+            text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            position: relative; overflow: hidden;
+        }
+
+        /* ANIMATION LOADER MAZAVA */
+        .loader { 
+            width: 0%; height: 5px; background: linear-gradient(90deg, transparent, var(--neon)); 
+            position: absolute; top: 0; left: 0; transition: 0.2s; box-shadow: 0 0 15px var(--neon); 
+        }
+
+        .page { display: none; animation: slideIn 0.5s ease-out; }
         .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1 { color: var(--gold); font-size: 22px; letter-spacing: 4px; margin-bottom: 25px; font-weight: 900; }
+        h1 { color: var(--gold); font-size: 22px; letter-spacing: 5px; margin-bottom: 30px; font-weight: 900; text-shadow: 0 0 10px rgba(255,204,0,0.3); }
         
-        /* BOKOTRA PRO */
-        .btn { width: 100%; padding: 18px; margin: 10px 0; background: linear-gradient(135deg, var(--gold), #b8860b); border: none; border-radius: 15px; font-weight: 900; font-size: 16px; color: #000; cursor: pointer; transition: 0.3s; }
-        .btn:active { transform: scale(0.96); }
-        .btn-cosmos { background: linear-gradient(135deg, #a020f0, #6a0dad); color: #fff; }
+        /* BOKOTRA MIETSIKETSIKA (PULSE) */
+        .btn { 
+            width: 100%; padding: 20px; margin: 12px 0; 
+            background: linear-gradient(135deg, var(--gold), #b8860b); 
+            border: none; border-radius: 18px; font-weight: 900; 
+            font-size: 16px; color: #000; cursor: pointer; 
+            transition: 0.3s; position: relative;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(212,175,55,0.4); }
+        .btn:active { transform: scale(0.95); }
 
-        .input-group { text-align: left; margin-bottom: 15px; }
-        label { font-size: 10px; color: #666; font-weight: bold; padding-left: 5px; }
-        input { width: 100%; padding: 16px; background: #111; border: 1px solid #333; color: #fff; border-radius: 12px; text-align: center; font-size: 19px; box-sizing: border-box; outline: none; }
-        input:focus { border-color: var(--neon); }
+        /* PULSE ANIMATION REHEFA MIVOAKA NY VALINY */
+        .pulse-effect { animation: pulse 1.5s infinite; }
+        @keyframes pulse { 
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.4); } 
+            70% { box-shadow: 0 0 0 20px rgba(0, 255, 65, 0); } 
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0); } 
+        }
 
-        /* VOKATRA */
-        .res-display { background: #000; border: 2px solid #222; border-radius: 20px; padding: 25px 15px; margin: 20px 0; position: relative; }
-        .res-time { font-size: 50px; font-weight: 900; color: #fff; letter-spacing: 2px; }
-        .stat-grid { display: flex; justify-content: space-around; margin-top: 15px; border-top: 1px solid #1a1a1a; padding-top: 15px; }
-        .stat-val { font-size: 22px; font-weight: 900; color: var(--gold); }
-        .stat-label { font-size: 10px; color: #555; display: block; }
+        input { 
+            width: 100%; padding: 18px; background: #111; border: 1px solid #333; 
+            color: #fff; border-radius: 15px; text-align: center; font-size: 20px; 
+            box-sizing: border-box; outline: none; transition: 0.3s; margin-top: 5px;
+        }
+        input:focus { border-color: var(--neon); background: #000; box-shadow: 0 0 15px rgba(0,255,65,0.1); }
 
-        /* HISTORY */
-        .history { width: 100%; margin-top: 30px; margin-bottom: 40px; }
-        .hist-item { background: #0a0a0a; padding: 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-left: 4px solid var(--neon); }
+        .res-display { 
+            background: #000; border: 2px solid var(--neon); border-radius: 25px; 
+            padding: 30px 15px; margin: 25px 0; position: relative;
+        }
+        .res-time { font-size: 55px; font-weight: 950; color: #fff; letter-spacing: 3px; }
+
+        .history { width: 100%; margin-top: 40px; margin-bottom: 50px; }
+        .hist-item { 
+            background: rgba(10,10,10,0.8); padding: 18px; border-radius: 20px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 12px; border-left: 5px solid var(--neon);
+            animation: fadeIn 0.5s ease-in;
+        }
     </style>
 </head>
 <body>
@@ -53,35 +95,35 @@
             <div id="loader" class="loader"></div>
 
             <div id="p1" class="page active">
-                <div style="font-size:60px; margin-bottom:10px;">👑</div>
-                <h1>ELITE SYSTEM</h1>
-                <button class="btn" onclick="go(2, '🚀 AVIATOR PRO')">🚀 AVIATOR</button>
-                <button class="btn btn-cosmos" onclick="go(2, '🌌 COSMOSX PRO')">🌌 COSMOSX</button>
-                <div style="font-size:9px; color:#333; margin-top:15px;">ALGO: DYNAMIC_PRIME_V14</div>
+                <div style="font-size:70px; margin-bottom:10px; filter: drop-shadow(0 0 10px var(--gold));">🦁</div>
+                <h1>KING MOTION</h1>
+                <button class="btn" onclick="go(2, '🚀 AVIATOR')">🚀 AVIATOR</button>
+                <button class="btn" style="background: linear-gradient(135deg, #a020f0, #6a0dad); color:white;" onclick="go(2, '🌌 COSMOSX')">🌌 COSMOSX</button>
             </div>
 
             <div id="p2" class="page">
-                <h2 id="title" style="color:var(--neon); margin:0 0 15px 0;">SCANNING</h2>
-                <div class="input-group">
-                    <label>LERA FARANY NIVOAKA (H:M:S)</label>
+                <h2 id="title" style="color:var(--neon); margin-bottom:20px;">SYSTEM SCAN</h2>
+                <div style="text-align:left; margin-bottom:15px;">
+                    <label style="font-size:10px; color:#666;">LERA HISTORY (H:M:S)</label>
                     <input type="text" id="time-in">
                 </div>
-                <div class="input-group">
-                    <label>SERVER SEED HASH</label>
-                    <input type="text" id="seed-in" placeholder="Ex: 8b2f5c">
+                <div style="text-align:left; margin-bottom:20px;">
+                    <label style="font-size:10px; color:#666;">SERVER HASH (6 CHARS)</label>
+                    <input type="text" id="seed-in" placeholder="Ex: 99b1ec">
                 </div>
-                <button class="btn" id="calc-btn" onclick="startEliteAnalyse()">🔥 DECODER L'ALGORITHME</button>
-                <div id="status" style="display:none; color:var(--neon); font-size:12px; margin-top:10px; font-weight:bold;">ANALYZING WAVE PATTERNS...</div>
-                <p onclick="go(1)" style="font-size:11px; color:#444; cursor:pointer; margin-top:20px;">← RETOUR MENU</p>
+                <button class="btn" id="calc-btn" onclick="startMotionAnalyse()">🔥 DECODER L'ALGO</button>
+                <div id="status" style="display:none; color:var(--neon); font-size:12px; font-weight:bold; margin-top:15px;">
+                    <span style="display:inline-block; animation: rotate 1s infinite linear;">⚙️</span> CALCULATING...
+                </div>
             </div>
 
             <div id="p3" class="page">
-                <div style="color:var(--neon); font-size:12px; font-weight:900;">✔ SIGNAL STABLE IDENTIFIÉ</div>
-                <div class="res-display">
+                <div style="color:var(--neon); font-size:12px; font-weight:900; letter-spacing:2px;">✔ SIGNAL TROUVÉ</div>
+                <div class="res-display pulse-effect">
                     <div class="res-time" id="res-t">00:00:00</div>
-                    <div class="stat-grid">
-                        <div><span class="stat-label">CIBLE</span><span class="stat-val" id="v-base">x0.00</span></div>
-                        <div><span class="stat-label">SÉCURITÉ</span><span class="stat-val" style="color:#fff;" id="v-secu">x0.00</span></div>
+                    <div style="display:flex; justify-content:space-around; margin-top:20px; border-top:1px solid #222; padding-top:15px;">
+                        <div><span style="font-size:10px; color:#555;">CIBLE</span><br><span style="color:var(--gold); font-size:24px; font-weight:900;" id="v-base">x0.00</span></div>
+                        <div><span style="font-size:10px; color:#555;">SÉCU</span><br><span style="color:#fff; font-size:24px; font-weight:900;" id="v-secu">x0.00</span></div>
                     </div>
                 </div>
                 <button class="btn" onclick="go(2)">NOUVELLE ANALYSE</button>
@@ -89,7 +131,7 @@
         </div>
 
         <div class="history">
-            <div style="font-size:11px; color:#444; border-bottom:1px solid #222; padding-bottom:10px; margin-bottom:15px;">📜 LOGS DERNIERS SIGNAUX</div>
+            <div style="font-size:11px; color:#444; border-bottom:1px solid #222; padding-bottom:10px; margin-bottom:15px;">📜 RECENT LOGS</div>
             <div id="hist-list"></div>
         </div>
     </div>
@@ -107,61 +149,48 @@
             document.getElementById('loader').style.width = '0%';
         }
 
-        function startEliteAnalyse() {
+        function startMotionAnalyse() {
             const btn = document.getElementById('calc-btn');
             const status = document.getElementById('status');
             const loader = document.getElementById('loader');
-            
             btn.style.display = 'none';
             status.style.display = 'block';
             
             let p = 0;
             const iv = setInterval(() => {
-                p += Math.random() * 25;
+                p += Math.random() * 10;
                 loader.style.width = p + "%";
                 if(p >= 100) {
                     clearInterval(iv);
-                    setTimeout(eliteLogic, 400);
+                    setTimeout(motionLogic, 500);
                 }
-            }, 300);
+            }, 100);
         }
 
-        function eliteLogic() {
-            const seed = document.getElementById('seed-in').value || "elite";
+        function motionLogic() {
+            const seed = document.getElementById('seed-in').value || "motion";
             const timeVal = document.getElementById('time-in').value;
-            
-            // --- ALGO ELITE V14 (Prime Modulo Logic) ---
-            let seedValue = 0;
-            for(let i=0; i<seed.length; i++) seedValue += seed.charCodeAt(i) * (i + 1);
+            let seedVal = 0;
+            for(let i=0; i<seed.length; i++) seedVal += seed.charCodeAt(i) * (i + 1);
             
             let t = timeVal.split(':');
             let d = new Date();
             d.setHours(t[0], t[1], t[2]);
             
-            // Prime-based time shifting
-            let primeOffset = [17, 31, 67, 127];
-            let shiftMin = (seedValue % 4) + 2; 
-            let shiftSec = (seedValue * primeOffset[seedValue % 4]) % 60;
-            
-            d.setMinutes(d.getMinutes() + shiftMin);
-            d.setSeconds(shiftSec);
-
-            // Dynamic Multiplier
-            let baseCote = 1.75 + ((seedValue % 25) / 10);
-            let secuCote = baseCote * 0.75;
+            d.setMinutes(d.getMinutes() + (seedVal % 5) + 2);
+            d.setSeconds((seedVal * 17) % 60);
 
             const fTime = d.toTimeString().split(' ')[0];
-            const fCote = 'x' + baseCote.toFixed(2);
+            const fCote = 'x' + (1.8 + (seedVal % 20) / 10).toFixed(2);
 
             document.getElementById('res-t').innerText = fTime;
             document.getElementById('v-base').innerText = fCote;
-            document.getElementById('v-secu').innerText = 'x' + secuCote.toFixed(2);
+            document.getElementById('v-secu').innerText = 'x' + (parseFloat(fCote.substring(1)) * 0.7).toFixed(2);
 
-            // History Pro
             const hList = document.getElementById('hist-list');
             const item = document.createElement('div');
             item.className = 'hist-item';
-            item.innerHTML = `<div><b style="font-size:16px;">🕒 ${fTime}</b><br><small style="color:#444;">ID:${seed.substring(0,3)}</small></div><div style="color:var(--gold); font-weight:900; font-size:20px;">${fCote}</div>`;
+            item.innerHTML = `<div><b style="font-size:18px;">🕒 ${fTime}</b><br><small style="color:#444;">ID: ${seed.substring(0,3)}</small></div><div style="color:var(--gold); font-weight:900; font-size:22px;">${fCote}</div>`;
             hList.prepend(item);
 
             document.getElementById('calc-btn').style.display = 'block';
@@ -174,5 +203,6 @@
             updateClock();
         };
     </script>
+    <style>@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }</style>
 </body>
 </html>
