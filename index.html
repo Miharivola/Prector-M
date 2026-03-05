@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor App - Harivola</title>
+    <title>Predictor VIP - Harivola</title>
     <style>
         body {
-            background-color: #0d0d0d;
+            background-color: #050505;
             color: white;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,130 +16,127 @@
             margin: 0;
         }
 
-        .app-container {
-            width: 90%;
-            max-width: 380px;
-            text-align: center;
-        }
+        .container { width: 90%; max-width: 380px; text-align: center; }
 
-        /* Miafina ny pejy faharoa amin'ny voalohany */
+        /* Pejy fizarana */
         #menu-page { display: block; }
         #predict-page { display: none; }
 
-        h1 {
+        .title-gold {
             color: #FFD700;
-            font-size: 26px;
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            font-weight: 900;
+            font-size: 24px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+            margin-bottom: 30px;
         }
 
-        .subtitle { color: #888; font-size: 14px; margin-bottom: 35px; }
-
+        /* Bokotra Menu tahaka ny sary 1 */
         .btn-menu {
-            background: linear-gradient(180deg, #FFD700 0%, #B8860B 100%);
-            border: none;
-            border-radius: 12px;
+            background: linear-gradient(180deg, #FFD700 0%, #8A6D3B 100%);
+            border: 2px solid #555;
+            border-radius: 15px;
             color: black;
             width: 100%;
-            padding: 18px;
+            padding: 20px;
             margin: 10px 0;
-            font-size: 17px;
             font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* Pejy Predictor (tahaka ny ao amin'ny sary faharoa) */
-        .predict-box {
-            border: 2px solid #FFD700;
-            background: rgba(255, 215, 0, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 20px;
+        /* Ilay cadre mavo manjelatra tahaka ny sary 2 sy 5 */
+        .card-vip {
+            border: 3px solid #FFD700;
+            border-radius: 25px;
+            padding: 40px 20px;
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            position: relative;
+            animation: border-glow 2s infinite alternate;
         }
 
-        #result-display {
-            font-size: 55px;
+        @keyframes border-glow {
+            from { border-color: #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+            to { border-color: #FFF; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); }
+        }
+
+        .result-text {
+            font-size: 65px;
+            font-weight: 900;
             color: #FFD700;
-            font-weight: bold;
             margin: 20px 0;
+            letter-spacing: -2px;
         }
 
-        .btn-action {
+        .btn-predict-action {
             background: #FFD700;
             border: none;
-            padding: 15px;
-            border-radius: 10px;
-            width: 100%;
+            border-radius: 12px;
+            padding: 15px 40px;
             font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
+            box-shadow: 0 5px 0 #8A6D3B;
         }
 
-        .back-link { 
-            color: #555; 
-            text-decoration: none; 
-            font-size: 13px; 
-            cursor: pointer; 
-            display: block; 
-            margin-top: 30px; 
-        }
+        .btn-predict-action:active { transform: translateY(4px); box-shadow: 0 1px 0 #8A6D3B; }
+
+        .back { color: #444; margin-top: 40px; font-size: 13px; cursor: pointer; text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <div class="container">
         
         <div id="menu-page">
-            <h1>💛 LAST PREDICTOR 💛</h1>
-            <p class="subtitle">Choisissez votre jeu de prédiction</p>
-            
-            <button class="btn-menu" onclick="switchPage('AVIATOR')">🚀 AVIATOR</button>
-            <button class="btn-menu" onclick="switchPage('JETX')">🚀 JETX</button>
-            <button class="btn-menu" onclick="switchPage('COSMOSX')">🚀 COSMOSX</button>
-            
-            <div class="back-link">← Retour au menu</div>
+            <div class="title-gold">💛 LAST PREDICTOR 💛</div>
+            <button class="btn-menu" onclick="show('AVIATOR')">🚀 AVIATOR</button>
+            <button class="btn-menu" onclick="show('JETX')">🚀 JETX</button>
+            <button class="btn-menu" onclick="show('COSMOSX')">🚀 COSMOSX</button>
         </div>
 
         <div id="predict-page">
-            <h1 id="game-title">PREDICTION</h1>
+            <div class="title-gold" id="game-name">PREDICTION</div>
             
-            <div class="predict-box">
-                <p style="font-size: 14px; color: #aaa;">PROCHAIN SIGNAL À :</p>
-                <div id="result-display">--.--x</div>
-                <button class="btn-action" onclick="runPrediction()">PREDICTOR 💛</button>
+            <div class="card-vip">
+                <div style="color: #aaa; font-size: 13px;">PROCHAIN SIGNAL À :</div>
+                <div id="display" class="result-text">--.--X</div>
+                <button class="btn-predict-action" onclick="startPredict()">PREDICTOR 💛</button>
             </div>
             
-            <div class="back-link" onclick="goToMenu()">← Retour au menu</div>
+            <div class="back" onclick="home()">← Retour au menu</div>
         </div>
 
     </div>
 
     <script>
-        // Mifindra amin'ny pejy predictor
-        function switchPage(name) {
+        function show(name) {
             document.getElementById('menu-page').style.display = 'none';
             document.getElementById('predict-page').style.display = 'block';
-            document.getElementById('game-title').innerText = "PREDICTION " + name;
+            document.getElementById('game-name').innerText = "PREDICTION " + name;
         }
 
-        // Miverina amin'ny menu
-        function goToMenu() {
+        function home() {
             document.getElementById('predict-page').style.display = 'none';
             document.getElementById('menu-page').style.display = 'block';
-            document.getElementById('result-display').innerText = "--.--x";
         }
 
-        // Mampiseho isa (Prediction)
-        function runPrediction() {
-            const display = document.getElementById('result-display');
-            display.innerText = "Wait..."; 
+        function startPredict() {
+            const display = document.getElementById('display');
+            let counter = 0;
             
-            setTimeout(() => {
-                const val = (Math.random() * 5 + 1.1).toFixed(2);
-                display.innerText = val + "x";
-            }, 800);
+            // Animation kely mialoha ny hamoahany ny isa
+            const interval = setInterval(() => {
+                display.innerText = (Math.random() * 10).toFixed(2) + "X";
+                counter++;
+                if(counter > 10) {
+                    clearInterval(interval);
+                    // Ny vokatra farany (kisendrasendra)
+                    display.innerText = (Math.random() * 5 + 1.2).toFixed(2) + "X";
+                }
+            }, 50);
         }
     </script>
-
 </body>
 </html>
