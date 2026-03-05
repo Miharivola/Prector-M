@@ -3,96 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor App</title>
+    <title>Predictor App - Harivola</title>
     <style>
-        /* Ity no mamaritra ny loko sy ny endriny (Design) */
+        /* Stylisme ankapobeny */
         body {
-            background-color: #121212; /* Loko mainty antitra */
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d0d0d;
+            color: white;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
 
-        .container {
+        .app-container {
             width: 90%;
-            max-width: 400px;
+            max-width: 380px;
             text-align: center;
         }
 
+        /* Pejy Menu */
+        #menu-page { display: block; }
+        #predict-page { display: none; }
+
         h1 {
-            color: #FFD700; /* Loko volamena */
-            font-size: 28px;
-            letter-spacing: 2px;
+            color: #FFD700;
+            font-size: 26px;
             margin-bottom: 5px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        .subtitle {
-            color: #aaaaaa;
-            font-size: 14px;
-            margin-bottom: 40px;
-        }
+        .subtitle { color: #888; font-size: 14px; margin-bottom: 35px; }
 
-        /* Ny endriky ny bokotra */
-        .btn {
-            background: linear-gradient(180deg, #E6B800 0%, #B8860B 100%);
+        /* Bokotra Menu */
+        .btn-menu {
+            background: linear-gradient(180deg, #FFD700 0%, #B8860B 100%);
             border: none;
-            border-radius: 15px;
-            color: #000000;
+            border-radius: 12px;
+            color: black;
             width: 100%;
-            padding: 20px;
-            margin: 12px 0;
-            font-size: 18px;
+            padding: 18px;
+            margin: 10px 0;
+            font-size: 17px;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        .btn:active {
-            transform: scale(0.98); /* Mihetsika kely rehefa tsindriana */
+        /* Pejy Predictor */
+        .predict-box {
+            border: 2px solid #FFD700;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
         }
 
-        .emoji {
-            margin-right: 15px;
-            font-size: 22px;
+        #result-display {
+            font-size: 55px;
+            color: #FFD700;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
         }
 
-        footer {
-            margin-top: 50px;
-            font-size: 12px;
-            color: #555;
+        .btn-action {
+            background: #FFD700;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            width: 100%;
+            font-weight: bold;
+            margin-bottom: 20px;
+            cursor: pointer;
         }
+
+        .back-link { color: #555; text-decoration: none; font-size: 13px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>💛 LAST PREDICTOR 💛</h1>
-        <p class="subtitle">Choisissez votre jeu de prédiction</p>
-
-        <div class="btn">
-            <span class="emoji">🚀</span> AVIATOR
+    <div class="app-container">
+        
+        <div id="menu-page">
+            <h1>💛 LAST PREDICTOR 💛</h1>
+            <p class="subtitle">Choisissez votre jeu de prédiction</p>
+            
+            <button class="btn-menu" onclick="showPredictor('AVIATOR')">🚀 AVIATOR</button>
+            <button class="btn-menu" onclick="showPredictor('JETX')">🚀 JETX</button>
+            <button class="btn-menu" onclick="showPredictor('COSMOSX')">🚀 COSMOSX</button>
+            
+            <div class="back-link" style="margin-top: 40px;">← Retour au menu</div>
         </div>
 
-        <div class="btn">
-            <span class="emoji">🚀</span> JETX
+        <div id="predict-page">
+            <h1 id="game-title">PREDICTION</h1>
+            
+            <div class="predict-box">
+                <p style="font-size: 14px; color: #aaa;">PROCHAIN SIGNAL À :</p>
+                <div id="result-display">--.--x</div>
+                <button class="btn-action" onclick="getPrediction()">PREDICTOR 💛</button>
+            </div>
+            
+            <div class="back-link" style="margin-top: 30px;" onclick="showMenu()">← Retour au menu</div>
         </div>
 
-        <div class="btn">
-            <span class="emoji">🚀</span> COSMOSX
-        </div>
-
-        <footer>← Retour au menu</footer>
     </div>
+
+    <script>
+        // Fonction hanovana pejy
+        function showPredictor(gameName) {
+            document.getElementById('menu-page').style.display = 'none';
+            document.getElementById('predict-page').style.display = 'block';
+            document.getElementById('game-title').innerText = "PREDICTION " + gameName;
+            document.getElementById('result-display').innerText = "--.--x";
+        }
+
+        function showMenu() {
+            document.getElementById('predict-page').style.display = 'none';
+            document.getElementById('menu-page').style.display = 'block';
+        }
+
+        // Fonction mamoaka isa kisendrasendra
+        function getPrediction() {
+            const resultDiv = document.getElementById('result-display');
+            resultDiv.innerText = "Wait..."; // Miandry kely aloha
+            
+            setTimeout(() => {
+                const randomVal = (Math.random() * 8 + 1.1).toFixed(2);
+                resultDiv.innerText = randomVal + "x";
+            }, 500);
+        }
+    </script>
 
 </body>
 </html>
