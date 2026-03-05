@@ -5,17 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Predictor App - Harivola</title>
     <style>
-        /* Stylisme ankapobeny */
         body {
             background-color: #0d0d0d;
             color: white;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
         }
 
         .app-container {
@@ -24,7 +22,7 @@
             text-align: center;
         }
 
-        /* Pejy Menu */
+        /* Miafina ny pejy faharoa amin'ny voalohany */
         #menu-page { display: block; }
         #predict-page { display: none; }
 
@@ -37,7 +35,6 @@
 
         .subtitle { color: #888; font-size: 14px; margin-bottom: 35px; }
 
-        /* Bokotra Menu */
         .btn-menu {
             background: linear-gradient(180deg, #FFD700 0%, #B8860B 100%);
             border: none;
@@ -52,7 +49,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* Pejy Predictor */
+        /* Pejy Predictor (tahaka ny ao amin'ny sary faharoa) */
         .predict-box {
             border: 2px solid #FFD700;
             background: rgba(255, 215, 0, 0.05);
@@ -66,7 +63,6 @@
             color: #FFD700;
             font-weight: bold;
             margin: 20px 0;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
         }
 
         .btn-action {
@@ -76,11 +72,17 @@
             border-radius: 10px;
             width: 100%;
             font-weight: bold;
-            margin-bottom: 20px;
             cursor: pointer;
         }
 
-        .back-link { color: #555; text-decoration: none; font-size: 13px; cursor: pointer; }
+        .back-link { 
+            color: #555; 
+            text-decoration: none; 
+            font-size: 13px; 
+            cursor: pointer; 
+            display: block; 
+            margin-top: 30px; 
+        }
     </style>
 </head>
 <body>
@@ -91,11 +93,11 @@
             <h1>💛 LAST PREDICTOR 💛</h1>
             <p class="subtitle">Choisissez votre jeu de prédiction</p>
             
-            <button class="btn-menu" onclick="showPredictor('AVIATOR')">🚀 AVIATOR</button>
-            <button class="btn-menu" onclick="showPredictor('JETX')">🚀 JETX</button>
-            <button class="btn-menu" onclick="showPredictor('COSMOSX')">🚀 COSMOSX</button>
+            <button class="btn-menu" onclick="switchPage('AVIATOR')">🚀 AVIATOR</button>
+            <button class="btn-menu" onclick="switchPage('JETX')">🚀 JETX</button>
+            <button class="btn-menu" onclick="switchPage('COSMOSX')">🚀 COSMOSX</button>
             
-            <div class="back-link" style="margin-top: 40px;">← Retour au menu</div>
+            <div class="back-link">← Retour au menu</div>
         </div>
 
         <div id="predict-page">
@@ -104,37 +106,38 @@
             <div class="predict-box">
                 <p style="font-size: 14px; color: #aaa;">PROCHAIN SIGNAL À :</p>
                 <div id="result-display">--.--x</div>
-                <button class="btn-action" onclick="getPrediction()">PREDICTOR 💛</button>
+                <button class="btn-action" onclick="runPrediction()">PREDICTOR 💛</button>
             </div>
             
-            <div class="back-link" style="margin-top: 30px;" onclick="showMenu()">← Retour au menu</div>
+            <div class="back-link" onclick="goToMenu()">← Retour au menu</div>
         </div>
 
     </div>
 
     <script>
-        // Fonction hanovana pejy
-        function showPredictor(gameName) {
+        // Mifindra amin'ny pejy predictor
+        function switchPage(name) {
             document.getElementById('menu-page').style.display = 'none';
             document.getElementById('predict-page').style.display = 'block';
-            document.getElementById('game-title').innerText = "PREDICTION " + gameName;
+            document.getElementById('game-title').innerText = "PREDICTION " + name;
+        }
+
+        // Miverina amin'ny menu
+        function goToMenu() {
+            document.getElementById('predict-page').style.display = 'none';
+            document.getElementById('menu-page').style.display = 'block';
             document.getElementById('result-display').innerText = "--.--x";
         }
 
-        function showMenu() {
-            document.getElementById('predict-page').style.display = 'none';
-            document.getElementById('menu-page').style.display = 'block';
-        }
-
-        // Fonction mamoaka isa kisendrasendra
-        function getPrediction() {
-            const resultDiv = document.getElementById('result-display');
-            resultDiv.innerText = "Wait..."; // Miandry kely aloha
+        // Mampiseho isa (Prediction)
+        function runPrediction() {
+            const display = document.getElementById('result-display');
+            display.innerText = "Wait..."; 
             
             setTimeout(() => {
-                const randomVal = (Math.random() * 8 + 1.1).toFixed(2);
-                resultDiv.innerText = randomVal + "x";
-            }, 500);
+                const val = (Math.random() * 5 + 1.1).toFixed(2);
+                display.innerText = val + "x";
+            }, 800);
         }
     </script>
 
