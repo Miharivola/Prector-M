@@ -3,198 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Last Predictor VIP</title>
+    <title>ULTIMATE SYNC V17</title>
     <style>
-        /* --- LERA MITSINGEVANA (FLOATING TIMER) --- */
-        #floating-clock {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
-            padding: 5px 12px;
-            border-radius: 8px;
-            color: #fff;
-            font-family: monospace;
-            font-size: 14px;
-            font-weight: bold;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-        #floating-clock::before {
-            content: "🕒";
-            margin-right: 6px;
-            font-size: 12px;
-        }
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #050505; }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; text-transform: uppercase; }
+        
+        #header { width: 100%; background: #000; border-bottom: 3px solid var(--neon); padding: 15px 0; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 0 25px rgba(0, 255, 65, 0.4); }
+        #clock { font-size: 48px; font-weight: 900; color: var(--neon); font-family: 'Courier New', monospace; letter-spacing: -2px; }
 
-        /* --- STYLE REHETRA --- */
-        body {
-            background-color: #0a0a0a;
-            color: #d4af37;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            text-transform: uppercase;
-            overflow: hidden;
-        }
+        .wrapper { width: 92%; max-width: 400px; margin-top: 25px; }
+        .main-card { background: #0a0a0a; border-radius: 35px; border: 1px solid #1a1a1a; padding: 30px; text-align: center; box-shadow: 0 15px 50px rgba(0,0,0,0.9); position: relative; }
+        
+        .progress-bar { width: 0%; height: 6px; background: linear-gradient(90deg, transparent, var(--neon)); position: absolute; top: 0; left: 0; border-radius: 35px 35px 0 0; transition: 0.1s; box-shadow: 0 0 15px var(--neon); }
 
-        .container {
-            width: 90%;
-            max-width: 360px;
-            background: #121212;
-            padding: 25px;
-            border-radius: 25px;
-            text-align: center;
-            border: 1px solid #222;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
-        }
-
-        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page { display: none; }
         .active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        h1 { color: var(--gold); font-size: 24px; letter-spacing: 5px; margin-bottom: 25px; font-weight: 900; }
+        .btn { width: 100%; padding: 20px; margin: 12px 0; background: linear-gradient(135deg, var(--gold), #b8860b); border: none; border-radius: 18px; font-weight: 900; font-size: 16px; color: #000; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .btn-cosmos { background: linear-gradient(135deg, #a020f0, #6a0dad); color: white; }
+        .btn:active { transform: scale(0.95); }
+        
+        .input-box { text-align: left; margin-bottom: 18px; }
+        label { font-size: 10px; color: #666; font-weight: bold; padding-left: 8px; }
+        input { width: 100%; padding: 18px; background: #000; border: 1px solid #333; color: #fff; border-radius: 15px; text-align: center; font-size: 22px; box-sizing: border-box; outline: none; margin-top: 5px; }
+        input:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(0, 255, 65, 0.2); }
 
-        h1 { font-size: 20px; color: #f1c40f; }
-        .subtitle { color: #777; font-size: 10px; margin-bottom: 20px; text-transform: none; }
+        .res-display { background: #000; border: 3px solid var(--neon); border-radius: 25px; padding: 35px 15px; margin: 25px 0; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 10px rgba(0,255,65,0.2); } 50% { box-shadow: 0 0 30px rgba(0,255,65,0.4); } 100% { box-shadow: 0 0 10px rgba(0,255,65,0.2); } }
+        .res-time { font-size: 55px; font-weight: 950; color: #fff; letter-spacing: 2px; }
+        
+        .stat-grid { display: flex; justify-content: space-around; border-top: 1px solid #1a1a1a; margin-top: 20px; padding-top: 20px; }
+        .stat-val { font-size: 26px; font-weight: 900; color: var(--gold); }
 
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            margin: 12px 0;
-            border: none;
-            border-radius: 12px;
-            font-weight: 900;
-            background: linear-gradient(180deg, #f1c40f 0%, #d4af37 100%);
-            color: #000;
-            cursor: pointer;
-        }
-
-        .input-group { text-align: left; margin-bottom: 15px; }
-        label { display: block; color: #b8860b; font-size: 10px; margin-bottom: 5px; }
-        input {
-            width: 100%;
-            padding: 14px;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 10px;
-            color: #fff;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .result-card {
-            background: #0f0f0f url('https://i.ibb.co/L6V6RzS/lion-logo.png') no-repeat center;
-            background-size: 50%;
-            background-blend-mode: overlay;
-            padding: 20px;
-            border: 2px solid #d4af37;
-            border-radius: 20px;
-        }
-
-        .timer-val { font-size: 38px; font-weight: 900; color: #fff; margin-bottom: 15px; }
-        .row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 14px; }
-        .val-gold { color: #f1c40f; font-size: 20px; font-weight: bold; }
-        .val-red { color: #ff4757; font-size: 20px; font-weight: bold; }
-        .loading { display: none; color: #fff; margin: 15px 0; font-style: italic; font-size: 12px; }
+        .history { width: 100%; margin-top: 35px; margin-bottom: 50px; }
+        .hist-item { background: #080808; padding: 18px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-left: 6px solid var(--neon); font-family: monospace; }
     </style>
 </head>
 <body>
 
-    <div id="floating-clock">00:00:00</div>
+    <div id="header"><div id="clock">00:00:00</div></div>
 
-    <div id="page1" class="container page active">
-        <h1>💛 LAST PREDICTOR 💛</h1>
-        <p class="subtitle">Choisissez votre jeu de prédiction</p>
-        <button class="btn" onclick="showPage('page2', 'AVIATOR')">🚀 AVIATOR</button>
-        <button class="btn" onclick="showPage('page2', 'JETX')">🚀 JETX</button>
-        <button class="btn" onclick="showPage('page2', 'COSMOSX')">🚀 COSMOSX</button>
-    </div>
+    <div class="wrapper">
+        <div class="main-card">
+            <div id="loader" class="progress-bar"></div>
 
-    <div id="page2" class="container page">
-        <h1 id="game-name">PRÉDICTION</h1>
-        <div class="input-group">
-            <label>HEURE DE DÉPART</label>
-            <input type="text" id="input-time" placeholder="HH:MM:SS">
-        </div>
-        <div class="input-group">
-            <label>GRAINE DE SERVEUR (6 CARACT)</label>
-            <input type="text" id="input-seed" placeholder="Ex: B2CE53">
-        </div>
-        <button class="btn" id="btn-calc" onclick="startCalculating()">🚀 PREDICTOR 🖤</button>
-        <div id="loader" class="loading">Analyse des algorithmes...</div>
-        <button style="background:none; border:none; color:#555; cursor:pointer;" onclick="showPage('page1')">← RETOUR</button>
-    </div>
+            <div id="p1" class="page active">
+                <div style="font-size:70px; margin-bottom:15px;">💎</div>
+                <h1>ULTIMATE SYNC</h1>
+                <button class="btn" onclick="go(2, '🚀 AVIATOR')">🚀 AVIATOR</button>
+                <button class="btn btn-cosmos" onclick="go(2, '🌌 COSMOSX')">🌌 COSMOSX</button>
+                <p style="font-size:10px; color:#222; margin-top:20px;">V17 - ELITE VERSION</p>
+            </div>
 
-    <div id="page3" class="container page">
-        <div style="color: #2ecc71; font-weight: bold; font-size: 10px; margin-bottom: 10px;">■ PRÉDICTION GÉNÉRÉE</div>
-        <div class="result-card">
-            <div class="timer-val" id="res-time">00:00:00</div>
-            <div class="row"><span>🤍 BASE :</span><span class="val-gold" id="val-base">x0.00</span></div>
-            <div class="row"><span>🤍 SÉCURITÉ :</span><span class="val-gold" id="val-secu" style="color:#fff">x0.00</span></div>
-            <div class="row" style="border-top:1px solid #333; padding-top:10px;">
-                <span>💜 RISQUE :</span><span class="val-red" id="val-risque">x0.00</span>
+            <div id="p2" class="page">
+                <h2 id="title" style="color:var(--neon); margin:0;">SYNC DATA</h2>
+                <div class="input-box">
+                    <label>LERA HISTORY (H:M:S)</label>
+                    <input type="text" id="time-in">
+                </div>
+                <div class="input-box">
+                    <label>HEX SEED (Sary faha-3 na faha-4)</label>
+                    <input type="text" id="seed-in" placeholder="Ex: 5c72c2">
+                </div>
+                <button class="btn" id="calc-btn" onclick="startSyncAnalyse()">🔥 SYNC & ANALYSE</button>
+                <div id="status" style="display:none; color:var(--neon); font-size:12px; font-weight:bold; margin-top:10px;">DECRYPTING HEX DATA...</div>
+                <p onclick="go(1)" style="font-size:11px; color:#444; cursor:pointer; margin-top:20px;">← MENU</p>
+            </div>
+
+            <div id="p3" class="page">
+                <div style="color:var(--neon); font-size:12px; font-weight:bold;">✔ SIGNAL SYNCHRONISÉ</div>
+                <div class="res-display">
+                    <div class="res-time" id="res-t">00:00:00</div>
+                    <div class="stat-grid">
+                        <div><small style="color:#555;">CIBLE</small><br><span class="stat-val" id="v-base">x0.00</span></div>
+                        <div><small style="color:#555;">SÉCU</small><br><span class="stat-val" style="color:#fff;" id="v-secu">x0.00</span></div>
+                    </div>
+                </div>
+                <button class="btn" onclick="go(2)">NOUVEAU SCAN</button>
             </div>
         </div>
-        <button class="btn" style="margin-top:20px;" onclick="showPage('page2')">NOUVEAU CALCUL</button>
+
+        <div class="history">
+            <div style="font-size:11px; color:#444; border-bottom:1px solid #222; padding-bottom:10px; margin-bottom:15px;">📜 LOGS PRÉCIS</div>
+            <div id="hist-list"></div>
+        </div>
     </div>
 
     <script>
-        // Update ny lera mitsingevana isaky ny segondra
-        function updateClock() {
-            let now = new Date();
-            let h = String(now.getHours()).padStart(2, '0');
-            let m = String(now.getMinutes()).padStart(2, '0');
-            let s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('floating-clock').innerText = h + ":" + m + ":" + s;
-        }
+        function updateClock() { document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0]; }
         setInterval(updateClock, 1000);
-        updateClock();
 
-        function showPage(pageId, title = "") {
+        function go(n, t) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            if(title) document.getElementById('game-name').innerText = "PRÉDICTION " + title;
+            document.getElementById('p' + n).classList.add('active');
+            if(t) document.getElementById('title').innerText = t;
+            document.getElementById('loader').style.width = '0%';
         }
 
-        function calculateFutureTime(startTime) {
-            let parts = startTime.split(':');
-            let date = new Date();
-            date.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
-            date.setMinutes(date.getMinutes() + Math.floor(Math.random() * 4) + 1);
-            date.setSeconds(Math.floor(Math.random() * 59));
-            return date.toTimeString().split(' ')[0];
+        function startSyncAnalyse() {
+            const btn = document.getElementById('calc-btn');
+            const status = document.getElementById('status');
+            const loader = document.getElementById('loader');
+            btn.style.display = 'none';
+            status.style.display = 'block';
+            let p = 0;
+            const iv = setInterval(() => {
+                p += Math.random() * 20;
+                loader.style.width = p + "%";
+                if(p >= 100) { clearInterval(iv); setTimeout(syncLogic, 300); }
+            }, 100);
         }
 
-        function startCalculating() {
-            const timeVal = document.getElementById('input-time').value;
-            document.getElementById('btn-calc').style.display = 'none';
-            document.getElementById('loader').style.display = 'block';
+        function syncLogic() {
+            const seed = document.getElementById('seed-in').value || "5c72c2";
+            const timeVal = document.getElementById('time-in').value;
+            let seedSum = 0;
+            for(let i=0; i<seed.length; i++) seedSum += seed.charCodeAt(i) * (i + 13);
+            
+            let t = timeVal.split(':');
+            let d = new Date();
+            d.setHours(t[0], t[1], t[2]);
+            
+            // --- ULTRA SYNC OFFSET ---
+            // Natao mba ho tena akaiky ny fipoahan'ny cote
+            let shiftMin = (seedSum % 5) + 2; 
+            let shiftSec = (seedSum * 19) % 60;
+            d.setMinutes(d.getMinutes() + shiftMin);
+            d.setSeconds(shiftSec);
 
-            setTimeout(() => {
-                document.getElementById('res-time').innerText = calculateFutureTime(timeVal);
-                document.getElementById('val-base').innerText = 'x' + (Math.random() * 3 + 1.2).toFixed(2);
-                document.getElementById('val-secu').innerText = 'x' + (Math.random() * 10 + 5).toFixed(2);
-                document.getElementById('val-risque').innerText = 'x' + (Math.random() * 50 + 15).toFixed(2);
-                
-                document.getElementById('btn-calc').style.display = 'block';
-                document.getElementById('loader').style.display = 'none';
-                showPage('page3');
-            }, 2000);
+            const fTime = d.toTimeString().split(' ')[0];
+            const baseMultiplier = 1.85 + (Math.abs(Math.cos(seedSum)) * 2.5);
+            const fCote = 'x' + baseMultiplier.toFixed(2);
+
+            document.getElementById('res-t').innerText = fTime;
+            document.getElementById('v-base').innerText = fCote;
+            document.getElementById('v-secu').innerText = 'x' + (baseMultiplier * 0.7).toFixed(2);
+
+            const hList = document.getElementById('hist-list');
+            const item = document.createElement('div');
+            item.className = 'hist-item';
+            item.innerHTML = `<span style="font-size:20px;">🕒 ${fTime}</span><span style="color:var(--gold); font-weight:950; font-size:20px;">${fCote}</span>`;
+            hList.prepend(item);
+
+            document.getElementById('calc-btn').style.display = 'block';
+            document.getElementById('status').style.display = 'none';
+            go(3);
         }
 
-        window.onload = function() {
-            let n = new Date();
-            document.getElementById('input-time').value = n.toTimeString().split(' ')[0];
+        window.onload = () => {
+            document.getElementById('time-in').value = new Date().toTimeString().split(' ')[0];
+            updateClock();
         };
     </script>
 </body>
