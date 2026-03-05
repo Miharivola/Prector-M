@@ -3,139 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor VIP - Harivola</title>
+    <title>Predictor VIP</title>
     <style>
+        /* Stylisme tahaka ny sary nalefanao */
         body {
-            background-color: #050505;
-            color: white;
-            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Arial Black', sans-serif;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
         }
 
-        .container { width: 90%; max-width: 380px; text-align: center; }
+        .container { width: 90%; max-width: 360px; text-align: center; }
 
-        /* Pejy fizarana */
-        #menu-page { display: block; }
-        #predict-page { display: none; }
+        /* Fizarana Pejy */
+        .page { display: none; animation: fadeIn 0.5s; }
+        .active { display: block; }
 
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Style Menu (Sary 1 & 3) */
         .title-gold {
             color: #FFD700;
-            font-weight: 900;
-            font-size: 24px;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
-            margin-bottom: 30px;
+            font-size: 26px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            margin-bottom: 20px;
         }
 
-        /* Bokotra Menu tahaka ny sary 1 */
         .btn-menu {
             background: linear-gradient(180deg, #FFD700 0%, #8A6D3B 100%);
-            border: 2px solid #555;
-            border-radius: 15px;
-            color: black;
+            border: 1px solid #444;
+            border-radius: 12px;
+            color: #000;
             width: 100%;
-            padding: 20px;
+            padding: 18px;
             margin: 10px 0;
             font-weight: bold;
             font-size: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
             cursor: pointer;
         }
 
-        /* Ilay cadre mavo manjelatra tahaka ny sary 2 sy 5 */
+        /* Style Predictor (Sary 2 & 5) */
         .card-vip {
             border: 3px solid #FFD700;
-            border-radius: 25px;
-            padding: 40px 20px;
-            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
-            position: relative;
-            animation: border-glow 2s infinite alternate;
+            border-radius: 20px;
+            padding: 30px 15px;
+            background: #0a0a0a;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
-        @keyframes border-glow {
-            from { border-color: #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
-            to { border-color: #FFF; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); }
-        }
-
-        .result-text {
-            font-size: 65px;
-            font-weight: 900;
+        .big-num {
+            font-size: 60px;
             color: #FFD700;
+            font-weight: 900;
             margin: 20px 0;
-            letter-spacing: -2px;
         }
 
-        .btn-predict-action {
+        .btn-predict {
             background: #FFD700;
             border: none;
-            border-radius: 12px;
-            padding: 15px 40px;
+            border-radius: 8px;
+            padding: 12px 30px;
             font-weight: bold;
-            font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 5px 0 #8A6D3B;
         }
 
-        .btn-predict-action:active { transform: translateY(4px); box-shadow: 0 1px 0 #8A6D3B; }
-
-        .back { color: #444; margin-top: 40px; font-size: 13px; cursor: pointer; text-decoration: underline; }
+        .footer-link { color: #555; font-size: 12px; margin-top: 30px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div class="container">
         
-        <div id="menu-page">
+        <div id="p1" class="page active">
             <div class="title-gold">💛 LAST PREDICTOR 💛</div>
-            <button class="btn-menu" onclick="show('AVIATOR')">🚀 AVIATOR</button>
-            <button class="btn-menu" onclick="show('JETX')">🚀 JETX</button>
-            <button class="btn-menu" onclick="show('COSMOSX')">🚀 COSMOSX</button>
+            <p style="color: #888; font-size: 13px; margin-bottom: 30px;">Choisissez votre jeu de prédiction</p>
+            
+            <button class="btn-menu" onclick="goTo('p2', 'AVIATOR')">🚀 AVIATOR</button>
+            <button class="btn-menu" onclick="goTo('p2', 'JETX')">🚀 JETX</button>
+            <button class="btn-menu" onclick="goTo('p2', 'COSMOSX')">🚀 COSMOSX</button>
         </div>
 
-        <div id="predict-page">
-            <div class="title-gold" id="game-name">PREDICTION</div>
+        <div id="p2" class="page">
+            <div class="title-gold" id="gt">PREDICTION</div>
             
             <div class="card-vip">
-                <div style="color: #aaa; font-size: 13px;">PROCHAIN SIGNAL À :</div>
-                <div id="display" class="result-text">--.--X</div>
-                <button class="btn-predict-action" onclick="startPredict()">PREDICTOR 💛</button>
+                <div style="font-size: 12px; color: #aaa;">PROCHAIN SIGNAL À :</div>
+                <div id="res" class="big-num">--.--X</div>
+                <button class="btn-predict" onclick="spin()">PREDICTOR 💛</button>
             </div>
             
-            <div class="back" onclick="home()">← Retour au menu</div>
+            <div class="footer-link" onclick="goTo('p1')">← Retour au menu</div>
         </div>
 
     </div>
 
     <script>
-        function show(name) {
-            document.getElementById('menu-page').style.display = 'none';
-            document.getElementById('predict-page').style.display = 'block';
-            document.getElementById('game-name').innerText = "PREDICTION " + name;
+        // Ity script ity no manova pejy nefa tsy mivoaka ny index.html
+        function goTo(id, name) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(name) document.getElementById('gt').innerText = "PREDICTION " + name;
         }
 
-        function home() {
-            document.getElementById('predict-page').style.display = 'none';
-            document.getElementById('menu-page').style.display = 'block';
-        }
-
-        function startPredict() {
-            const display = document.getElementById('display');
-            let counter = 0;
-            
-            // Animation kely mialoha ny hamoahany ny isa
-            const interval = setInterval(() => {
-                display.innerText = (Math.random() * 10).toFixed(2) + "X";
-                counter++;
-                if(counter > 10) {
-                    clearInterval(interval);
-                    // Ny vokatra farany (kisendrasendra)
-                    display.innerText = (Math.random() * 5 + 1.2).toFixed(2) + "X";
-                }
-            }, 50);
+        function spin() {
+            const r = document.getElementById('res');
+            r.innerText = "Wait...";
+            setTimeout(() => {
+                r.innerText = (Math.random() * 8 + 1.1).toFixed(2) + "X";
+            }, 600);
         }
     </script>
 </body>
