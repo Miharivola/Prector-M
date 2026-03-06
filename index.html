@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor VIP</title>
+    <title>Predictor Bot VIP</title>
     <style>
         body { 
             background-color: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; 
@@ -16,7 +16,6 @@
         .input-card { background: #111; border-radius: 20px; padding: 25px; border: 1px solid #222; margin-bottom: 20px; }
         .label { color: #d4af37; font-size: 11px; font-weight: bold; text-align: left; margin-bottom: 8px; text-transform: uppercase; }
         
-        /* Vata fampidirana */
         .entry-field {
             background: #1a1a1a; border: 1px solid #333; border-radius: 12px;
             color: #fff; font-size: 20px; width: 100%; padding: 15px;
@@ -25,10 +24,9 @@
 
         .btn-predict { 
             background: linear-gradient(180deg, #f1c40f, #d4af37); border: none; border-radius: 12px; 
-            color: #000; width: 100%; padding: 18px; font-weight: bold; font-size: 18px; cursor: pointer;
+            color: #000; width: 100%; padding: 18px; font-weight: bold; font-size: 18px; cursor: pointer; text-transform: uppercase;
         }
 
-        /* Valiny */
         #result-area { 
             display: none; border: 1px solid #f1c40f; border-radius: 20px; padding: 20px; 
             background: rgba(15, 15, 15, 0.95); margin-top: 15px;
@@ -36,22 +34,24 @@
         .val-row { font-size: 19px; font-weight: bold; margin: 12px 0; }
         .base { color: #fff; } .secu { color: #2ecc71; } .risk { color: #9b59b6; }
         
-        /* Bokotra Correcte/Fausse */
         .btn-group { display: flex; justify-content: space-between; margin-top: 25px; gap: 10px; }
         .btn-check { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: #fff; cursor: pointer; }
         .correct { background-color: #2ecc71; } .fausse { background-color: #e74c3c; }
 
         #status-text { margin: 15px 0; font-weight: bold; font-size: 16px; padding: 10px; border-radius: 8px; }
-        .back-link { color: #555; display: block; margin-top: 25px; text-decoration: none; font-size: 12px; }
+        .back-link { color: #555; display: block; margin-top: 25px; text-decoration: none; font-size: 12px; text-transform: uppercase; }
+        .logo-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 15px; object-fit: cover; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <div id="page-menu" class="page active">
+            <img src="images.jpeg" class="logo-img">
             <h2 style="color: #d4af37;">LAST PREDICTOR</h2>
             <button class="btn-predict" style="width:100%; margin-bottom:15px;" onclick="openPredictor('AVIATOR')">🚀 AVIATOR</button>
-            <button class="btn-predict" style="width:100%;" onclick="openPredictor('JETX')">🚀 JETX</button>
+            <button class="btn-predict" style="width:100%; margin-bottom:15px;" onclick="openPredictor('JETX')">🚀 JETX</button>
+            <button class="btn-predict" style="width:100%;" onclick="openPredictor('COSMOSX')">🚀 COSMOSX</button>
         </div>
 
         <div id="page-predict" class="page">
@@ -61,7 +61,7 @@
                 <div class="label">HEURE DE DÉPART</div>
                 <input type="text" id="input-time" class="entry-field" placeholder="00:00:00">
 
-                <div class="label">GRAINE DE SERVEUR</div>
+                <div class="label">GRAINE DE SERVEUR (6 CARACT)</div>
                 <input type="text" id="input-seed" class="entry-field" value="P536C5">
 
                 <button class="btn-predict" style="width:100%;" onclick="generatePrediction()">🚀 PREDICTOR 🖤</button>
@@ -78,8 +78,8 @@
                 <div id="status-text"></div>
 
                 <div class="btn-group">
-                    <button class="correct btn-check">✅ Correcte</button>
-                    <button class="fausse btn-check">❌ Fausse</button>
+                    <button class="correct btn-check" onclick="alert('Merci!')">✅ Correcte</button>
+                    <button class="fausse btn-check" onclick="alert('Merci!')">❌ Fausse</button>
                 </div>
             </div>
 
@@ -99,28 +99,27 @@
         }
 
         function generatePrediction() {
-            // 1. Alaina ny lera nosoratanao
-            const timeVal = document.getElementById('input-time').value;
+            // Maka ny lera avy ao anaty input
+            const userTime = document.getElementById('input-time').value;
             
-            // 2. Raha tsy misy soratra dia mampitandrina
-            if(!timeVal || timeVal === "") {
+            if(!userTime || userTime === "") {
                 alert("Ampidiro ny lera azafady!");
                 return;
             }
 
-            // 3. Asehoy ny vata valiny
+            // Mampiseho ny vata valiny
             document.getElementById('result-area').style.display = 'block';
             
-            // 4. Apetraka eo amin'ny valiny ilay lera nosoratanao
-            document.getElementById('res-hour').innerText = timeVal;
+            // Mampiseho ny lera eo amin'ny valiny
+            document.getElementById('res-hour').innerText = userTime;
 
-            // 5. Kajy kisendrasendra ho an'ny isa
-            const b = (Math.random() * 1.2 + 1.1).toFixed(2);
+            // Vinany isa kisendrasendra
+            const b = (Math.random() * 1.5 + 1.1).toFixed(2);
             document.getElementById('v1').innerText = "x" + b;
             document.getElementById('v2').innerText = "x" + (Math.random() * 4 + 4).toFixed(2);
             document.getElementById('v3').innerText = "x" + (Math.random() * 20 + 10).toFixed(2);
 
-            // 6. Tour ho tsara/ratsy
+            // Tour ho tsara/ratsy
             const st = document.getElementById('status-text');
             if(parseFloat(b) > 1.8) {
                 st.innerHTML = "💛 TOUR HO TSARA";
