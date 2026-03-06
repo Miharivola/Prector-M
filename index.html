@@ -6,62 +6,35 @@
     <title>Predictor Bot VIP</title>
     <style>
         body { 
-            background-color: #000; 
-            color: #fff; 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh;
+            background-color: #000; color: #fff; font-family: sans-serif; margin: 0; 
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
             background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('images.jpeg');
-            background-size: cover;
-            background-position: center;
+            background-size: cover; background-position: center;
         }
-
         .container { width: 92%; max-width: 400px; text-align: center; }
-        .page { display: none; }
-        .active { display: block; }
-
-        .gold { color: #d4af37; }
-        
+        .page { display: none; } .active { display: block; }
         .btn-gold { 
-            background: linear-gradient(180deg, #d4af37, #8a6d3b); 
-            border: none; border-radius: 12px; color: #000; 
-            width: 100%; padding: 18px; margin: 12px 0; 
-            font-weight: bold; font-size: 18px; cursor: pointer;
+            background: linear-gradient(180deg, #d4af37, #8a6d3b); border: none; border-radius: 12px; 
+            color: #000; width: 100%; padding: 18px; margin: 12px 0; font-weight: bold; font-size: 18px; 
         }
-
-        /* Vata Mainty tahaka ny amin'ny sary */
-        .input-card { 
-            background: #111; 
-            border-radius: 15px; padding: 25px; 
-            border: 1px solid #333; margin-bottom: 20px;
-        }
-
-        /* Lera 24h tsy misy AM/PM */
-        .clock-display { font-size: 38px; font-weight: bold; margin-bottom: 10px; color: #fff; letter-spacing: 2px; }
-
+        .input-card { background: #111; border-radius: 15px; padding: 25px; border: 1px solid #333; margin-bottom: 20px; }
+        
+        /* Ity ilay Heure du départ eo ambony */
+        .departure-hour { font-size: 42px; font-weight: bold; color: #fff; letter-spacing: 2px; margin-bottom: 5px; }
+        
         .seed-input { 
-            background: #000; border: 1px solid #444; border-radius: 8px; 
-            color: #d4af37; font-size: 22px; letter-spacing: 3px;
-            width: 85%; padding: 12px; text-align: center; text-transform: uppercase;
+            background: #000; border: 1px solid #444; border-radius: 8px; color: #d4af37; 
+            font-size: 22px; letter-spacing: 3px; width: 85%; padding: 12px; text-align: center;
         }
-
         #result-area { 
             display: none; border: 2px solid #d4af37; border-radius: 20px; padding: 20px; 
-            background: rgba(10, 10, 10, 0.95); box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+            background: rgba(10, 10, 10, 0.95);
         }
-
         .val-row { font-size: 20px; font-weight: bold; margin: 15px 0; }
         .base { color: #fff; } .secu { color: #4cd137; } .risk { color: #a55eea; }
-
         .btn-group { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
-        .btn-check { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: #fff; }
-        .correct { background-color: #2ecc71; }
-        .fausse { background-color: #e74c3c; }
-
-        .back { color: #666; font-size: 13px; margin-top: 30px; cursor: pointer; display: block; text-decoration: none; }
+        .btn-check { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: #fff; }
+        .correct { background-color: #2ecc71; } .fausse { background-color: #e74c3c; }
         .logo-img { width: 90px; height: 90px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 15px; object-fit: cover; }
     </style>
 </head>
@@ -69,8 +42,8 @@
 
     <div class="container">
         <div id="page-menu" class="page active">
-            <img src="images.jpeg" class="logo-img" alt="Logo">
-            <h2 class="gold">LAST PREDICTOR</h2>
+            <img src="images.jpeg" class="logo-img">
+            <h2 style="color: #d4af37;">LAST PREDICTOR</h2>
             <button class="btn-gold" onclick="openPredictor('AVIATOR')">🚀 AVIATOR</button>
             <button class="btn-gold" onclick="openPredictor('JETX')">🚀 JETX</button>
             <button class="btn-gold" onclick="openPredictor('COSMOSX')">🚀 COSMOSX</button>
@@ -78,15 +51,18 @@
 
         <div id="page-predict" class="page">
             <div class="input-card">
-                <div id="live-clock" class="clock-display">00:00:00</div>
-                <div style="font-size: 11px; color: #888; margin-bottom: 8px; font-weight: bold; text-transform: uppercase;">Graine de serveur (6 caractères)</div>
+                <div id="top-departure-clock" class="departure-hour">--:--:--</div>
+                
+                <div style="font-size: 11px; color: #888; margin-bottom: 8px; font-weight: bold;">Graine de serveur (6 caractères)</div>
                 <input type="text" id="seed-val" class="seed-input" value="1A6CAC" maxlength="6">
+                
                 <button class="btn-gold" style="margin-top: 20px;" onclick="doPredict()">🚀 PREDICTOR 🖤</button>
             </div>
 
             <div id="result-area">
                 <div style="color: #4cd137; font-size: 14px; font-weight: bold; margin-bottom: 10px;">■ PRÉDICTION <span id="game-name"></span></div>
-                <div id="predict-time" style="font-size: 32px; font-weight: bold; margin-bottom: 15px; color: #d4af37; letter-spacing: 2px;">--:--:--</div>
+                
+                <div id="predict-time-bottom" style="font-size: 32px; font-weight: bold; margin-bottom: 15px; color: #d4af37;">--:--:--</div>
                 
                 <div class="val-row base">🤍 BASE : <span id="v1">x0.00</span></div>
                 <div class="val-row secu">💚 SÉCURITÉ : <span id="v2">x0.00</span></div>
@@ -95,26 +71,15 @@
                 <div id="status-text" style="margin-top: 15px; font-weight: bold; font-size: 16px; padding: 10px; border-radius: 8px;"></div>
 
                 <div class="btn-group">
-                    <button class="correct btn-check" onclick="alert('Noté!')">✅ Correcte</button>
-                    <button class="fausse btn-check" onclick="alert('Noté!')">❌ Fausse</button>
+                    <button class="correct btn-check">✅ Correcte</button>
+                    <button class="fausse btn-check">❌ Fausse</button>
                 </div>
             </div>
-
-            <a href="#" class="back" onclick="location.reload()">← Retour au menu</a>
+            <a href="#" style="color:#666; display:block; margin-top:20px; font-size:12px;" onclick="location.reload()">← Retour au menu</a>
         </div>
     </div>
 
     <script>
-        // Fonction amboarina mba hamoaka lera 24h (tsy misy AM/PM)
-        function getTime24() {
-            const now = new Date();
-            return now.toLocaleTimeString('fr-FR', { hour12: false });
-        }
-
-        setInterval(() => {
-            document.getElementById('live-clock').innerText = getTime24();
-        }, 1000);
-
         function openPredictor(name) {
             document.getElementById('page-menu').style.display = 'none';
             document.getElementById('page-predict').style.display = 'block';
@@ -124,15 +89,23 @@
         function doPredict() {
             document.getElementById('result-area').style.display = 'block';
             
-            // Generate random results
-            const b = (Math.random() * 1.5 + 1.2).toFixed(2);
-            document.getElementById('v1').innerText = "x" + b;
-            document.getElementById('v2').innerText = "x" + (Math.random() * 5 + 4).toFixed(2);
-            document.getElementById('v3').innerText = "x" + (Math.random() * 25 + 15).toFixed(2);
+            // Lera vaovao (Heure du départ)
+            const d = new Date();
+            d.setMinutes(d.getMinutes() + Math.floor(Math.random() * 4) + 1);
+            const heureDep = d.toLocaleTimeString('fr-FR', { hour12: false });
+            
+            // Apetraka eo ambony SY eo ambany ny lera
+            document.getElementById('top-departure-clock').innerText = heureDep;
+            document.getElementById('predict-time-bottom').innerText = heureDep;
 
-            // Logic ho an'ny TOUR HO TSARA/RATSY
+            // Vinany isa
+            const b = (Math.random() * 1.5 + 1.1).toFixed(2);
+            document.getElementById('v1').innerText = "x" + b;
+            document.getElementById('v2').innerText = "x" + (Math.random() * 5 + 3).toFixed(2);
+            document.getElementById('v3').innerText = "x" + (Math.random() * 20 + 10).toFixed(2);
+
             const st = document.getElementById('status-text');
-            if(parseFloat(b) > 2.0) {
+            if(parseFloat(b) > 1.8) {
                 st.innerHTML = "💛 TOUR HO TSARA";
                 st.style.backgroundColor = "rgba(76, 209, 55, 0.15)";
                 st.style.color = "#4cd137";
@@ -141,11 +114,6 @@
                 st.style.backgroundColor = "rgba(231, 76, 60, 0.15)";
                 st.style.color = "#e74c3c";
             }
-
-            // Heure du départ: lera miampy 2 minitra ohatra
-            const d = new Date();
-            d.setMinutes(d.getMinutes() + 2);
-            document.getElementById('predict-time').innerText = d.toLocaleTimeString('fr-FR', { hour12: false });
         }
     </script>
 </body>
