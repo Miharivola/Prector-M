@@ -59,7 +59,7 @@
             
             <div class="input-card">
                 <div class="label">HEURE DE DÉPART</div>
-                <input type="text" id="input-time" class="entry-field" placeholder="00:00:00">
+                <input type="text" id="input-time" class="entry-field" placeholder="10:00:00">
 
                 <div class="label">GRAINE DE SERVEUR (6 CARACT)</div>
                 <input type="text" id="input-seed" class="entry-field" value="P536C5">
@@ -93,33 +93,31 @@
             document.getElementById('page-predict').classList.add('active');
             document.getElementById('game-title').innerText = "PRÉDICTION " + name;
             
-            // Mametraka lera izao ao anaty vata ho fanampiana
             const now = new Date();
             document.getElementById('input-time').value = now.toLocaleTimeString('fr-FR', { hour12: false });
         }
 
         function generatePrediction() {
-            // Maka ny lera avy ao anaty input
             const userTime = document.getElementById('input-time').value;
-            
-            if(!userTime || userTime === "") {
-                alert("Ampidiro ny lera azafady!");
-                return;
-            }
+            if(!userTime) { alert("Ampidiro ny lera!"); return; }
 
-            // Mampiseho ny vata valiny
+            // LOHIKAM-POTOANA: Manampy 2 minitra amin'ilay lera nosoratanao
+            let parts = userTime.split(':');
+            let date = new Date();
+            date.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
+            date.setMinutes(date.getMinutes() + 2); // Eto no manova azy ho any aoriana
+
+            const predictionTime = date.toLocaleTimeString('fr-FR', { hour12: false });
+
             document.getElementById('result-area').style.display = 'block';
-            
-            // Mampiseho ny lera eo amin'ny valiny
-            document.getElementById('res-hour').innerText = userTime;
+            document.getElementById('res-hour').innerText = predictionTime;
 
-            // Vinany isa kisendrasendra
-            const b = (Math.random() * 1.5 + 1.1).toFixed(2);
+            // Vinany isa
+            const b = (Math.random() * 1.6 + 1.1).toFixed(2);
             document.getElementById('v1').innerText = "x" + b;
             document.getElementById('v2').innerText = "x" + (Math.random() * 4 + 4).toFixed(2);
             document.getElementById('v3').innerText = "x" + (Math.random() * 20 + 10).toFixed(2);
 
-            // Tour ho tsara/ratsy
             const st = document.getElementById('status-text');
             if(parseFloat(b) > 1.8) {
                 st.innerHTML = "💛 TOUR HO TSARA";
