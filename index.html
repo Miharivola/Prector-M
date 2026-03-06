@@ -10,7 +10,6 @@
         .page { display: none; }
         .active { display: block; }
 
-        /* Loko volamena */
         .gold { color: #d4af37; }
         .btn-gold { 
             background: linear-gradient(180deg, #d4af37, #8a6d3b); 
@@ -21,9 +20,22 @@
 
         .input-card { background: #151515; border-radius: 15px; padding: 20px; border: 1px solid #333; margin-bottom: 20px; }
         .clock-display { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
-        .seed-box { background: #222; padding: 12px; border-radius: 8px; color: #d4af37; font-size: 20px; letter-spacing: 2px; }
 
-        /* Vata Prediction */
+        /* Ity ilay vata azo anoratana Graine de serveur */
+        .seed-input { 
+            background: #222; 
+            border: 1px solid #444;
+            border-radius: 8px; 
+            color: #d4af37; 
+            font-size: 20px; 
+            letter-spacing: 2px;
+            width: 90%;
+            padding: 12px;
+            text-align: center;
+            text-transform: uppercase;
+            font-family: inherit;
+        }
+
         #result-area { 
             display: none;
             border: 2px solid #d4af37; border-radius: 20px; padding: 20px; 
@@ -33,7 +45,6 @@
         .val-row { font-size: 18px; font-weight: bold; margin: 12px 0; }
         .base { color: #fff; } .secu { color: #4cd137; } .risk { color: #a55eea; }
 
-        /* Bokotra vaovao (Correcte/Fausse) */
         .btn-group { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
         .btn-check { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: #fff; }
         .correct { background-color: #4cd137; }
@@ -55,8 +66,10 @@
         <div id="page-predict" class="page">
             <div class="input-card">
                 <div id="live-clock" class="clock-display">00:00:00</div>
-                <div style="font-size: 11px; color: #888; margin-top: 10px;">Graine de serveur</div>
-                <div id="seed-val" class="seed-box">403245</div>
+                <div style="font-size: 11px; color: #888; margin-top: 10px; margin-bottom: 5px;">Graine de serveur (6 caractères)</div>
+                
+                <input type="text" id="seed-val" class="seed-input" value="403245" maxlength="6">
+                
                 <button class="btn-gold" style="margin-top: 15px;" onclick="doPredict()">🚀 PREDICTOR 🖤</button>
             </div>
 
@@ -92,6 +105,7 @@
         }
 
         function doPredict() {
+            // Rehefa kitihina ny Predictor vao mivoaka ny valiny
             document.getElementById('result-area').style.display = 'block';
             
             const b = (Math.random() * 2 + 1.2).toFixed(2);
@@ -109,7 +123,6 @@
             const d = new Date();
             d.setMinutes(d.getMinutes() + 5);
             document.getElementById('predict-time').innerText = d.toLocaleTimeString();
-            document.getElementById('seed-val').innerText = Math.floor(100000 + Math.random() * 900000);
         }
     </script>
 </body>
