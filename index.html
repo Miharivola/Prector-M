@@ -17,17 +17,13 @@
         .title-gold { color: #f1c40f; font-size: 22px; font-weight: bold; text-transform: uppercase; margin-bottom: 20px; }
         .input-card { background: #111; border-radius: 20px; padding: 25px; border: 1px solid #222; margin-bottom: 20px; }
 
-        /* Style an'ilay Label kely eo ambonin'ny vata */
         .label { color: #d4af37; font-size: 11px; font-weight: bold; text-align: left; margin-bottom: 8px; text-transform: uppercase; }
 
-        /* IREO VATA FAMPIDIRANA (INPUT) - IZAY NO TSY NANDEHA TEZAO */
         .entry-field {
             background: #1a1a1a; border: 1px solid #333; border-radius: 12px;
             color: #fff; font-size: 20px; width: 100%; padding: 15px;
             text-align: center; margin-bottom: 20px; outline: none; box-sizing: border-box;
-            display: block; /* Mba hampiseho azy tsara */
         }
-        .entry-field:focus { border-color: #f1c40f; }
 
         .btn-predict { 
             background: linear-gradient(180deg, #f1c40f, #d4af37); border: none; border-radius: 12px; 
@@ -43,6 +39,14 @@
         .val-row { font-size: 19px; font-weight: bold; margin: 12px 0; }
         .base { color: #fff; } .secu { color: #2ecc71; } .risk { color: #9b59b6; }
         
+        /* Styles ho an'ny bokotra Correcte sy Fausse */
+        .btn-group { display: flex; justify-content: space-between; margin-top: 25px; gap: 10px; }
+        .btn-check { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: #fff; cursor: pointer; }
+        .correct { background-color: #2ecc71; } 
+        .fausse { background-color: #e74c3c; }
+
+        #status-text { margin: 15px 0; font-weight: bold; font-size: 16px; padding: 10px; border-radius: 8px; }
+
         .back-link { color: #555; display: block; margin-top: 25px; text-decoration: none; font-size: 12px; }
         .logo-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 15px; object-fit: cover; }
     </style>
@@ -63,7 +67,7 @@
             
             <div class="input-card">
                 <div class="label">HEURE DE DÉPART</div>
-                <input type="text" id="input-time" class="entry-field" placeholder="10:51:12">
+                <input type="text" id="input-time" class="entry-field" placeholder="00:00:00">
 
                 <div class="label">GRAINE DE SERVEUR (6 CARACT)</div>
                 <input type="text" id="input-seed" class="entry-field" value="B2ce53" maxlength="10">
@@ -78,6 +82,15 @@
                 <div class="val-row base">🤍 BASE : <span id="v1">x0.00</span></div>
                 <div class="val-row secu">💚 SÉCURITÉ : <span id="v2">x0.00</span></div>
                 <div class="val-row risk">💜 RISQUE : <span id="v3">x0.00</span></div>
+
+                <div id="status-text"></div>
+
+                <div style="font-size: 12px; color: #666; margin-top: 20px;">Cette prédiction était-elle correcte ?</div>
+                
+                <div class="btn-group">
+                    <button class="correct btn-check" onclick="alert('Misaotra!')">✅ Correcte</button>
+                    <button class="fausse btn-check" onclick="alert('Misaotra!')">❌ Fausse</button>
+                </div>
             </div>
 
             <a href="#" class="back-link" onclick="location.reload()">← RETOUR AU MENU</a>
@@ -90,22 +103,33 @@
             document.getElementById('page-predict').classList.add('active');
             document.getElementById('game-title').innerText = name;
             
-            // Rehefa misokatra dia fenoina lera mivantana ho fanampiana
             const now = new Date();
             document.getElementById('input-time').value = now.toLocaleTimeString('fr-FR', { hour12: false });
         }
 
         function generatePrediction() {
             const timeVal = document.getElementById('input-time').value;
-            if(!timeVal) { alert("Ampidiro ny lera azafady!"); return; }
+            if(!timeVal) { alert("Ampidiro ny lera!"); return; }
 
             document.getElementById('result-area').style.display = 'block';
             document.getElementById('res-hour').innerText = timeVal;
 
-            // Vinany isa kisendrasendra
-            document.getElementById('v1').innerText = "x" + (Math.random() * 1.5 + 1.1).toFixed(2);
-            document.getElementById('v2').innerText = "x" + (Math.random() * 5 + 3).toFixed(2);
-            document.getElementById('v3').innerText = "x" + (Math.random() * 20 + 10).toFixed(2);
+            const bVal = (Math.random() * 2 + 1.1).toFixed(2);
+            document.getElementById('v1').innerText = "x" + bVal;
+            document.getElementById('v2').innerText = "x" + (Math.random() * 5 + 4).toFixed(2);
+            document.getElementById('v3').innerText = "x" + (Math.random() * 25 + 15).toFixed(2);
+
+            // Logic ho an'ilay soratra miloko
+            const st = document.getElementById('status-text');
+            if(parseFloat(bVal) > 2.0) {
+                st.innerHTML = "💛 TOUR HO TSARA";
+                st.style.backgroundColor = "rgba(76, 209, 55, 0.1)";
+                st.style.color = "#2ecc71";
+            } else {
+                st.innerHTML = "💔 TOUR HO RATSY";
+                st.style.backgroundColor = "rgba(231, 76, 60, 0.1)";
+                st.style.color = "#e74c3c";
+            }
         }
     </script>
 </body>
