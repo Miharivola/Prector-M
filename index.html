@@ -1,4 +1,103 @@
-function generatePrediction() {
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictor Bot VIP</title>
+    <style>
+        body { 
+            background-color: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; 
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('images.jpeg');
+            background-size: cover; background-position: center;
+        }
+        .container { width: 92%; max-width: 400px; text-align: center; }
+        .page { display: none; } .active { display: block; }
+        .input-card { background: #111; border-radius: 20px; padding: 25px; border: 1px solid #222; margin-bottom: 20px; }
+        .label { color: #d4af37; font-size: 11px; font-weight: bold; text-align: left; margin-bottom: 8px; text-transform: uppercase; }
+        
+        .entry-field {
+            background: #1a1a1a; border: 1px solid #333; border-radius: 12px;
+            color: #fff; font-size: 20px; width: 100%; padding: 15px;
+            text-align: center; margin-bottom: 20px; outline: none; box-sizing: border-box;
+        }
+
+        .btn-predict { 
+            background: linear-gradient(180deg, #f1c40f, #d4af37); border: none; border-radius: 12px; 
+            color: #000; width: 100%; padding: 18px; font-weight: bold; font-size: 18px; cursor: pointer; text-transform: uppercase;
+        }
+
+        #result-area { 
+            display: none; border: 1px solid #f1c40f; border-radius: 20px; padding: 20px; 
+            background: rgba(15, 15, 15, 0.95); margin-top: 15px;
+        }
+        .val-row { font-size: 19px; font-weight: bold; margin: 12px 0; }
+        .base { color: #fff; } .secu { color: #2ecc71; } .risk { color: #9b59b6; }
+        
+        .btn-group { display: flex; justify-content: space-between; margin-top: 25px; gap: 10px; }
+        .btn-check { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: #fff; cursor: pointer; }
+        .correct { background-color: #2ecc71; } .fausse { background-color: #e74c3c; }
+
+        #status-text { margin: 15px 0; font-weight: bold; font-size: 16px; padding: 10px; border-radius: 8px; }
+        .back-link { color: #555; display: block; margin-top: 25px; text-decoration: none; font-size: 12px; text-transform: uppercase; }
+        .logo-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 15px; object-fit: cover; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="page-menu" class="page active">
+            <img src="images.jpeg" class="logo-img">
+            <h2 style="color: #d4af37;">LAST PREDICTOR</h2>
+            <button class="btn-predict" style="width:100%; margin-bottom:15px;" onclick="openPredictor('AVIATOR')">🚀 AVIATOR</button>
+            <button class="btn-predict" style="width:100%; margin-bottom:15px;" onclick="openPredictor('JETX')">🚀 JETX</button>
+            <button class="btn-predict" style="width:100%;" onclick="openPredictor('COSMOSX')">🚀 COSMOSX</button>
+        </div>
+
+        <div id="page-predict" class="page">
+            <h2 id="game-title" style="color:#f1c40f; text-transform:uppercase;">PRÉDICTION</h2>
+            
+            <div class="input-card">
+                <div class="label">HEURE DE DÉPART</div>
+                <input type="text" id="input-time" class="entry-field">
+
+                <div class="label">GRAINE DE SERVEUR (6 CARACT)</div>
+                <input type="text" id="input-seed" class="entry-field" value="P536C5">
+
+                <button class="btn-predict" style="width:100%;" onclick="generatePrediction()">🚀 PREDICTOR 🖤</button>
+            </div>
+
+            <div id="result-area">
+                <div style="color: #2ecc71; font-size: 12px; font-weight: bold; margin-bottom: 5px;">■ PRÉDICTION VALIDE</div>
+                <div id="res-hour" style="font-size: 35px; font-weight: bold; margin-bottom: 15px; color: #fff;"></div>
+                
+                <div class="val-row base">🤍 BASE : <span id="v1"></span></div>
+                <div class="val-row secu">💚 SÉCURITÉ : <span id="v2"></span></div>
+                <div class="val-row risk">💜 RISQUE : <span id="v3"></span></div>
+
+                <div id="status-text"></div>
+
+                <div class="btn-group">
+                    <button class="correct btn-check" onclick="alert('Misaotra!')">✅ Correcte</button>
+                    <button class="fausse btn-check" onclick="alert('Misaotra!')">❌ Fausse</button>
+                </div>
+            </div>
+
+            <a href="#" class="back-link" onclick="location.reload()">← RETOUR AU MENU</a>
+        </div>
+    </div>
+
+    <script>
+        function openPredictor(name) {
+            document.getElementById('page-menu').classList.remove('active');
+            document.getElementById('page-predict').classList.add('active');
+            document.getElementById('game-title').innerText = "PRÉDICTION " + name;
+            
+            const now = new Date();
+            document.getElementById('input-time').value = now.toLocaleTimeString('fr-FR', { hour12: false });
+        }
+
+        function generatePrediction() {
             const userTime = document.getElementById('input-time').value;
             const seed = document.getElementById('input-seed').value;
             
@@ -7,19 +106,17 @@ function generatePrediction() {
                 return; 
             }
 
-            // 1. KAJY NY LERA (Lojika miampy 1 hatramin'ny 3 minitra kisendrasendra)
+            // 1. KAJY NY LERA
             let parts = userTime.split(':');
             let date = new Date();
             date.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
             
-            // Manampy elanelana raikitra nefa misy segondra miovaova
             date.setMinutes(date.getMinutes() + 2);
             let secRandom = Math.floor(Math.random() * 60);
             date.setSeconds(secRandom);
             const predictionTime = date.toLocaleTimeString('fr-FR', { hour12: false });
 
-            // 2. ALGORITHM "PROVABLY REALISTIC"
-            // Mampiasa ny 'seed' sy ny 'lera' ho 'hash' tsotra
+            // 2. ALGORITHM PROVABLY REALISTIC
             let hashSeed = 0;
             for (let i = 0; i < seed.length; i++) {
                 hashSeed += seed.charCodeAt(i);
@@ -28,16 +125,15 @@ function generatePrediction() {
 
             let baseVal, secuVal, riskVal;
 
-            // LOJIKA: Mizara ny vintana ho 3 sokajy (toy ny tena lalao)
-            if (combinedFactor < 40) { // 40% Vintana Ratsy (Blue)
+            if (combinedFactor < 40) { 
                 baseVal = (1.01 + (Math.random() * 0.19)).toFixed(2);
                 secuVal = (1.20 + (Math.random() * 0.50)).toFixed(2);
                 riskVal = (2.00 + (Math.random() * 2.00)).toFixed(2);
-            } else if (combinedFactor < 85) { // 45% Vintana Antonony (Purple)
+            } else if (combinedFactor < 85) { 
                 baseVal = (1.20 + (Math.random() * 0.30)).toFixed(2);
                 secuVal = (2.50 + (Math.random() * 4.00)).toFixed(2);
                 riskVal = (8.00 + (Math.random() * 10.00)).toFixed(2);
-            } else { // 15% Vintana Tsara (Rose/High Purple)
+            } else { 
                 baseVal = (1.50 + (Math.random() * 0.40)).toFixed(2);
                 secuVal = (6.00 + (Math.random() * 10.00)).toFixed(2);
                 riskVal = (20.00 + (Math.random() * 80.00)).toFixed(2);
@@ -50,7 +146,6 @@ function generatePrediction() {
             document.getElementById('v2').innerText = "x" + secuVal;
             document.getElementById('v3').innerText = "x" + riskVal;
 
-            // STATUS TEXT (Miankina amin'ny combinedFactor)
             const st = document.getElementById('status-text');
             if(combinedFactor >= 60) {
                 st.innerHTML = "💛 TOUR HO TSARA";
@@ -62,3 +157,6 @@ function generatePrediction() {
                 st.style.backgroundColor = "rgba(231, 76, 60, 0.1)";
             }
         }
+    </script>
+</body>
+</html>
