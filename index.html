@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crystal Predict Pro - Full UI</title>
+    <title>Crystal Predict Pro - Final</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -31,75 +31,62 @@
                 <div class="bg-cyan-500/10 text-cyan-400 px-3 py-1.5 rounded-lg border border-cyan-500/30 text-[11px] font-bold flex items-center gap-1">
                     <i data-lucide="shield" class="w-3 h-3"></i> Admin
                 </div>
-                <button class="text-gray-400 hover:text-white">
-                    <i data-lucide="history" class="w-5 h-5"></i>
-                </button>
-                <button class="text-gray-400 hover:text-white">
-                    <i data-lucide="log-out" class="w-5 h-5"></i>
-                </button>
+                <button class="text-gray-400 hover:text-white"><i data-lucide="history" class="w-5 h-5"></i></button>
+                <button class="text-gray-400 hover:text-white"><i data-lucide="log-out" class="w-5 h-5"></i></button>
             </div>
         </div>
 
-        <div class="glass-card p-6 shadow-2xl relative overflow-hidden">
-            <div class="flex justify-center mb-1">
-                <div class="bg-yellow-500/10 p-2 rounded-lg border border-yellow-500/20">
-                    <i data-lucide="calculator" class="w-6 h-6 text-yellow-500"></i>
-                </div>
-            </div>
-            <h2 class="text-center text-lg font-bold mb-6 tracking-wide text-white">Calculateur de Prédiction</h2>
+        <div class="glass-card p-6 shadow-2xl">
+            <div class="flex justify-center mb-1 text-yellow-500"><i data-lucide="calculator" class="w-6 h-6"></i></div>
+            <h2 class="text-center text-lg font-bold mb-6 tracking-wide">Calculateur de Prédiction</h2>
 
             <div class="space-y-4">
-                <div class="relative">
-                    <label class="text-[10px] text-cyan-400 uppercase font-bold flex items-center gap-1 mb-1">
-                        <i data-lucide="clock" class="w-3 h-3"></i> Heure de départ
-                    </label>
-                    <input id="heure" type="text" class="w-full input-field p-3 rounded-xl text-xl border-white/10" value="08:55:39">
+                <div>
+                    <label class="text-[10px] text-cyan-400 uppercase font-bold mb-1 block">🕒 Heure de départ</label>
+                    <input id="heure" type="text" class="w-full input-field p-3 rounded-xl text-xl" value="08:55:39">
                 </div>
 
-                <div class="grid grid-cols-1 gap-4">
-                    <div>
-                        <label class="text-[10px] text-gray-500 uppercase font-bold mb-1 block">Multiplicateur</label>
-                        <input id="mult" type="number" step="0.01" class="w-full input-field p-2 rounded-lg border-white/5" value="1.87">
-                    </div>
-                    <div>
-                        <label class="text-[10px] text-gray-500 uppercase font-bold mb-1 block">Décimal (Max 10)</label>
-                        <input id="dec" type="number" step="0.1" max="10" class="w-full input-field p-2 rounded-lg border-white/5" value="5.5">
-                    </div>
-                    <div>
-                        <label class="text-[10px] text-gray-500 uppercase font-bold mb-1 block">Constante</label>
-                        <input id="cons" type="number" class="w-full input-field p-2 rounded-lg border-white/5" value="4294967295">
-                    </div>
+                <div class="grid grid-cols-1 gap-3">
+                    <input id="mult" type="number" step="0.01" class="w-full input-field p-2 rounded-lg text-sm" placeholder="Multiplicateur (ex: 1.87)">
+                    <input id="dec" type="number" step="0.1" max="10" class="w-full input-field p-2 rounded-lg text-sm" placeholder="Décimal (Max 10)">
+                    <input id="cons" type="number" class="w-full input-field p-2 rounded-lg text-sm" value="4294967295">
                 </div>
 
-                <div class="flex gap-3 mt-6">
-                    <button onclick="calculate()" class="flex-[2] btn-calc py-4 rounded-xl uppercase text-sm tracking-widest active:scale-95 transition shadow-lg shadow-green-500/10">Calculer</button>
-                    <button onclick="reset()" class="flex-1 bg-black/60 border border-white/10 py-4 rounded-xl uppercase text-[10px] font-bold hover:bg-black">Réinitialiser</button>
+                <div class="flex gap-3 mt-4">
+                    <button onclick="calculate()" class="flex-[2] btn-calc py-4 rounded-xl uppercase text-sm tracking-widest active:scale-95 transition">Calculer</button>
+                    <button onclick="reset()" class="flex-1 bg-black/60 border border-white/10 py-4 rounded-xl uppercase text-[10px] font-bold">Reset</button>
                 </div>
             </div>
 
             <div class="mt-8">
                 <div class="flex items-center gap-2 justify-center mb-4">
-                    <div class="h-[1px] w-10 bg-gradient-to-r from-transparent to-cyan-500/50"></div>
                     <span class="text-[10px] text-cyan-400 font-black tracking-[0.2em]">RÉSULTAT</span>
-                    <div class="h-[1px] w-10 bg-gradient-to-l from-transparent to-cyan-500/50"></div>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-3">
-                    <div class="result-box p-3 text-center border-yellow-500/50 bg-yellow-500/5">
-                        <p class="text-[9px] text-gray-500 font-bold mb-1">PREDICTION</p>
-                        <p id="res-pred" class="text-yellow-500 text-xl font-black">--:--:--</p>
+                    <div class="result-box p-3 text-center border-yellow-500/50 bg-yellow-500/5 col-span-2">
+                        <p class="text-[9px] text-gray-500 font-bold mb-1 uppercase">Prediction Final</p>
+                        <p id="res-pred" class="text-yellow-500 text-2xl font-black">--:--:--</p>
                     </div>
+                    
                     <div class="result-box p-3 text-center">
-                        <p class="text-[9px] text-gray-500 font-bold mb-1">TEMPS RAJOUTÉ</p>
-                        <p id="res-plus" class="text-white text-xl font-bold">--:--:--</p>
+                        <p class="text-[9px] text-gray-500 font-bold mb-1">CÔTE BASE</p>
+                        <p id="res-base" class="text-blue-400 text-xl font-bold">0.00</p>
                     </div>
+
                     <div class="result-box p-3 text-center">
-                        <p class="text-[9px] text-gray-500 font-bold mb-1">COTE MAX/VLV</p>
-                        <p id="res-max" class="text-green-400 text-xl font-bold">0.00</p>
+                        <p class="text-[9px] text-gray-500 font-bold mb-1">TEMPS +</p>
+                        <p id="res-plus" class="text-white text-xl font-bold">--:--</p>
                     </div>
+
                     <div class="result-box p-3 text-center">
                         <p class="text-[9px] text-gray-500 font-bold mb-1">COTE MOYEN</p>
                         <p id="res-moy" class="text-white text-xl font-bold">0.00</p>
+                    </div>
+
+                    <div class="result-box p-3 text-center border-green-500/30">
+                        <p class="text-[9px] text-gray-500 font-bold mb-1">COTE MAX</p>
+                        <p id="res-max" class="text-green-400 text-xl font-bold">0.00</p>
                     </div>
                 </div>
             </div>
@@ -107,48 +94,54 @@
     </div>
 
     <script>
-        // Mampandeha ny Icons
         lucide.createIcons();
 
         function calculate() {
             const hInput = document.getElementById('heure').value;
-            const mult = parseFloat(document.getElementById('mult').value) || 1;
-            let dec = parseFloat(document.getElementById('dec').value) || 1;
-            const cons = parseFloat(document.getElementById('cons').value) || 1;
-
-            if (dec > 10) dec = 10;
+            const mult = parseFloat(document.getElementById('mult').value) || 1.00;
+            const dec = parseFloat(document.getElementById('dec').value) || 1.00;
+            const cons = parseFloat(document.getElementById('cons').value) || 4294967295;
 
             const parts = hInput.split(':');
             const baseSec = (parseInt(parts[0]) * 3600) + (parseInt(parts[1]) * 60) + parseInt(parts[2]);
 
-            // Lojika Decimal Max 10
-            let addedSec = ((cons / 5000000) * dec) / (mult * 1.5);
-            if (addedSec > 600) addedSec = addedSec % 360; 
+            // Logic Algorithm
+            let addedSec = ((cons / 8000000) * dec) / (mult * 1.2);
+            addedSec = addedSec % 400; 
 
             const finalSec = baseSec + addedSec;
-            const d = new Date(0);
-            d.setSeconds(finalSec);
+            const d = new Date(0); d.setSeconds(finalSec);
             const predTime = d.toISOString().substr(11, 8);
 
+            // Time Added format
             const m = Math.floor(addedSec / 60);
             const s = Math.floor(addedSec % 60);
-            const ms = Math.floor((addedSec % 1) * 100);
-            const addedStr = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}:${ms.toString().padStart(2,'0')}`;
+            const addedStr = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
 
-            const cMax = (dec * 4.2) + (mult * 1.5) + (cons % 7);
-            const cMoy = (cMax * 0.48) + (mult / 1.8);
+            // --- KAJY NY COTES ---
+            // 1. Côte Base: Ny farany ambany azo antoka (entre 1.20 sy 2.50)
+            const cBase = 1.20 + (dec * 0.1) + (mult * 0.05);
+            
+            // 2. Côte Max: Ny farany ambony (miankina amin'ny decimal)
+            const cMax = (dec * 5.5) + (mult * 2) + (cons % 10);
+            
+            // 3. Côte Moyen: Ny eo anelanelany
+            const cMoy = (cBase + cMax) / 2.5;
 
+            // Update UI
             document.getElementById('res-pred').innerText = predTime;
             document.getElementById('res-plus').innerText = addedStr;
-            document.getElementById('res-max').innerText = cMax.toFixed(2);
+            document.getElementById('res-base').innerText = cBase.toFixed(2);
             document.getElementById('res-moy').innerText = cMoy.toFixed(2);
+            document.getElementById('res-max').innerText = cMax.toFixed(2);
         }
 
         function reset() {
             document.getElementById('res-pred').innerText = "--:--:--";
-            document.getElementById('res-plus').innerText = "--:--:--";
-            document.getElementById('res-max').innerText = "0.00";
+            document.getElementById('res-plus').innerText = "--:--";
+            document.getElementById('res-base').innerText = "0.00";
             document.getElementById('res-moy').innerText = "0.00";
+            document.getElementById('res-max').innerText = "0.00";
         }
     </script>
 </body>
