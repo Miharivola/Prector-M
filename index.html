@@ -1,161 +1,150 @@
 <!DOCTYPE html>
-<html lang="mg">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor Bot VIP</title>
+    <title>Crystal Predict Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { 
-            background-color: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; 
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
-            background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('images.jpeg');
-            background-size: cover; background-position: center;
+        body {
+            background-color: #05080f;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .container { width: 92%; max-width: 400px; text-align: center; }
-        .page { display: none; } .active { display: block; }
-        .input-card { background: #111; border-radius: 20px; padding: 25px; border: 1px solid #222; margin-bottom: 20px; }
-        .label { color: #d4af37; font-size: 11px; font-weight: bold; text-align: left; margin-bottom: 8px; text-transform: uppercase; }
-        
-        .entry-field {
-            background: #1a1a1a; border: 1px solid #333; border-radius: 12px;
-            color: #fff; font-size: 20px; width: 100%; padding: 15px;
-            text-align: center; margin-bottom: 20px; outline: none; box-sizing: border-box;
+        .glass-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+            border-radius: 15px;
         }
-
-        .btn-predict { 
-            background: linear-gradient(180deg, #f1c40f, #d4af37); border: none; border-radius: 12px; 
-            color: #000; width: 100%; padding: 18px; font-weight: bold; font-size: 18px; cursor: pointer; text-transform: uppercase;
+        .input-field {
+            background: #111827;
+            border: 1px solid #374151;
+            color: white;
+            text-align: center;
         }
-
-        #result-area { 
-            display: none; border: 1px solid #f1c40f; border-radius: 20px; padding: 20px; 
-            background: rgba(15, 15, 15, 0.95); margin-top: 15px;
+        .btn-calculate {
+            background: linear-gradient(90deg, #4ade80 0%, #eab308 100%);
+            color: #000;
+            font-weight: 800;
         }
-        .val-row { font-size: 19px; font-weight: bold; margin: 12px 0; }
-        .base { color: #fff; } .secu { color: #2ecc71; } .risk { color: #9b59b6; }
-        
-        .btn-group { display: flex; justify-content: space-between; margin-top: 25px; gap: 10px; }
-        .btn-check { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: #fff; cursor: pointer; }
-        .correct { background-color: #2ecc71; } .fausse { background-color: #e74c3c; }
-
-        #status-text { margin: 15px 0; font-weight: bold; font-size: 16px; padding: 10px; border-radius: 8px; }
-        .back-link { color: #555; display: block; margin-top: 25px; text-decoration: none; font-size: 12px; text-transform: uppercase; }
-        .logo-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 15px; object-fit: cover; }
+        .result-box {
+            border: 2px solid #eab308;
+            border-radius: 10px;
+        }
     </style>
 </head>
-<body>
+<body class="p-4 flex flex-col items-center">
 
-    <div class="container">
-        <div id="page-menu" class="page active">
-            <img src="images.jpeg" class="logo-img">
-            <h2 style="color: #d4af37;">LAST PREDICTOR</h2>
-            <button class="btn-predict" style="width:100%; margin-bottom:15px;" onclick="openPredictor('AVIATOR')">🚀 AVIATOR</button>
-            <button class="btn-predict" style="width:100%; margin-bottom:15px;" onclick="openPredictor('JETX')">🚀 JETX</button>
-            <button class="btn-predict" style="width:100%;" onclick="openPredictor('COSMOSX')">🚀 COSMOSX</button>
+    <div class="w-full max-w-md flex justify-between items-center mb-6">
+        <div class="flex items-center gap-2">
+            <div class="w-6 h-6 border-2 border-yellow-500 rotate-45"></div>
+            <h1 class="text-yellow-500 font-bold leading-none">Blizzard-<br>Imperial</h1>
+        </div>
+        <div class="bg-cyan-500/20 text-cyan-400 px-4 py-1 rounded-lg border border-cyan-500/50 text-sm font-bold">
+            🛡️ Admin
+        </div>
+    </div>
+
+    <div class="w-full max-w-md glass-card p-6 shadow-2xl">
+        <div class="flex justify-center mb-4 text-yellow-500 text-3xl">🖩</div>
+        <h2 class="text-center text-xl font-bold mb-6 tracking-wide">Calculateur de Prédiction</h2>
+
+        <div class="space-y-4">
+            <div>
+                <label class="text-xs text-cyan-400 block mb-1">🕒 Heure de départ</label>
+                <input id="heure" type="text" class="w-full input-field p-3 rounded-lg text-lg" value="08:55:39">
+            </div>
+
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Multiplicateur</label>
+                <input id="mult" type="number" step="0.01" class="w-full input-field p-2 rounded-lg" value="1.87">
+            </div>
+
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Décimal (max 1000)</label>
+                <input id="dec" type="number" step="0.000001" class="w-full input-field p-2 rounded-lg" value="222.500992">
+            </div>
+
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Constante</label>
+                <input id="cons" type="number" class="w-full input-field p-2 rounded-lg" value="4294967295">
+            </div>
+
+            <div class="flex gap-3 pt-4">
+                <button onclick="calculate()" class="flex-1 btn-calculate py-3 rounded-lg uppercase tracking-tighter">Calculer</button>
+                <button onclick="reset()" class="flex-1 bg-black border border-gray-700 py-3 rounded-lg uppercase text-sm">Réinitialiser</button>
+            </div>
         </div>
 
-        <div id="page-predict" class="page">
-            <h2 id="game-title" style="color:#f1c40f; text-transform:uppercase;">PRÉDICTION</h2>
+        <div class="mt-8">
+            <h3 class="text-center text-cyan-400 text-sm font-bold mb-4 uppercase tracking-widest">Résultat</h3>
             
-            <div class="input-card">
-                <div class="label">HEURE DE DÉPART</div>
-                <input type="text" id="input-time" class="entry-field">
-
-                <div class="label">GRAINE DE SERVEUR (6 CARACT)</div>
-                <input type="text" id="input-seed" class="entry-field" value="P536C5">
-
-                <button class="btn-predict" style="width:100%;" onclick="generatePrediction()">🚀 PREDICTOR 🖤</button>
-            </div>
-
-            <div id="result-area">
-                <div style="color: #2ecc71; font-size: 12px; font-weight: bold; margin-bottom: 5px;">■ PRÉDICTION VALIDE</div>
-                <div id="res-hour" style="font-size: 35px; font-weight: bold; margin-bottom: 15px; color: #fff;"></div>
-                
-                <div class="val-row base">🤍 BASE : <span id="v1"></span></div>
-                <div class="val-row secu">💚 SÉCURITÉ : <span id="v2"></span></div>
-                <div class="val-row risk">💜 RISQUE : <span id="v3"></span></div>
-
-                <div id="status-text"></div>
-
-                <div class="btn-group">
-                    <button class="correct btn-check" onclick="alert('Misaotra!')">✅ Correcte</button>
-                    <button class="fausse btn-check" onclick="alert('Misaotra!')">❌ Fausse</button>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="result-box p-3 text-center bg-black/40">
+                    <p class="text-[10px] text-gray-400">PREDICTION</p>
+                    <p id="res-pred" class="text-yellow-500 text-xl font-bold">--:--:--</p>
+                </div>
+                <div class="bg-gray-800/50 p-3 text-center rounded-lg border border-gray-700">
+                    <p class="text-[10px] text-gray-400">TEMPS RAJOUTÉ</p>
+                    <p id="res-plus" class="text-white text-xl font-bold">--:--:--</p>
+                </div>
+                <div class="bg-gray-800/50 p-3 text-center rounded-lg border border-gray-700">
+                    <p class="text-[10px] text-gray-400">COTE MAX/VLV</p>
+                    <p id="res-max" class="text-green-500 text-xl font-bold">0.00</p>
+                </div>
+                <div class="bg-gray-800/50 p-3 text-center rounded-lg border border-gray-700">
+                    <p class="text-[10px] text-gray-400">COTE MOYEN</p>
+                    <p id="res-moy" class="text-white text-xl font-bold">0.00</p>
                 </div>
             </div>
-
-            <a href="#" class="back-link" onclick="location.reload()">← RETOUR AU MENU</a>
         </div>
     </div>
 
     <script>
-        function openPredictor(name) {
-            document.getElementById('page-menu').classList.remove('active');
-            document.getElementById('page-predict').classList.add('active');
-            document.getElementById('game-title').innerText = "PRÉDICTION " + name;
-            
-            const now = new Date();
-            document.getElementById('input-time').value = now.toLocaleTimeString('fr-FR', { hour12: false });
+        function calculate() {
+            // Get values
+            const heureInput = document.getElementById('heure').value;
+            const mult = parseFloat(document.getElementById('mult').value);
+            const dec = parseFloat(document.getElementById('dec').value);
+            const cons = parseFloat(document.getElementById('cons').value);
+
+            // 1. Convert Time to Seconds
+            const [h, m, s] = heureInput.split(':').map(Number);
+            const baseSeconds = h * 3600 + m * 60 + s;
+
+            // 2. Logic for Added Time (Temps Rajouté)
+            // Lojika: (Constante / Decimal) mod 600 ho an'ny elanelana segondra
+            let addedSec = (cons % (dec * 10)) / (mult * 2.5);
+            if (addedSec > 600) addedSec = addedSec % 300; // Limit to 5-10 mins
+
+            // 3. Final Prediction
+            const finalSec = baseSeconds + addedSec;
+            const date = new Date(0);
+            date.setSeconds(finalSec);
+            const predictionStr = date.toISOString().substr(11, 8);
+
+            // 4. Formatting Temps Rajouté (mm:ss:ms)
+            const rMin = Math.floor(addedSec / 60);
+            const rSeg = Math.floor(addedSec % 60);
+            const rMs = Math.floor((addedSec % 1) * 100);
+            const addedStr = `${rMin.toString().padStart(2,'0')}:${rSeg.toString().padStart(2,'0')}:${rMs.toString().padStart(2,'0')}`;
+
+            // 5. Cotes
+            const cMax = ((cons / (dec * 100)) % 50) + (mult * 2);
+            const cMoy = (cMax / 2) + 1.5;
+
+            // Update UI
+            document.getElementById('res-pred').innerText = predictionStr;
+            document.getElementById('res-plus').innerText = addedStr;
+            document.getElementById('res-max').innerText = cMax.toFixed(2);
+            document.getElementById('res-moy').innerText = cMoy.toFixed(2);
         }
 
-        function generatePrediction() {
-            const userTime = document.getElementById('input-time').value;
-            const seed = document.getElementById('input-seed').value;
-            
-            if(!userTime || !seed) { 
-                alert("Fenoy ny Heure sy ny Graine azafady!"); 
-                return; 
-            }
-
-            // 1. KAJY NY LERA
-            let parts = userTime.split(':');
-            let date = new Date();
-            date.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
-            
-            date.setMinutes(date.getMinutes() + 2);
-            let secRandom = Math.floor(Math.random() * 60);
-            date.setSeconds(secRandom);
-            const predictionTime = date.toLocaleTimeString('fr-FR', { hour12: false });
-
-            // 2. ALGORITHM PROVABLY REALISTIC
-            let hashSeed = 0;
-            for (let i = 0; i < seed.length; i++) {
-                hashSeed += seed.charCodeAt(i);
-            }
-            let combinedFactor = (hashSeed + date.getMinutes() + secRandom) % 100;
-
-            let baseVal, secuVal, riskVal;
-
-            if (combinedFactor < 40) { 
-                baseVal = (1.01 + (Math.random() * 0.19)).toFixed(2);
-                secuVal = (1.20 + (Math.random() * 0.50)).toFixed(2);
-                riskVal = (2.00 + (Math.random() * 2.00)).toFixed(2);
-            } else if (combinedFactor < 85) { 
-                baseVal = (1.20 + (Math.random() * 0.30)).toFixed(2);
-                secuVal = (2.50 + (Math.random() * 4.00)).toFixed(2);
-                riskVal = (8.00 + (Math.random() * 10.00)).toFixed(2);
-            } else { 
-                baseVal = (1.50 + (Math.random() * 0.40)).toFixed(2);
-                secuVal = (6.00 + (Math.random() * 10.00)).toFixed(2);
-                riskVal = (20.00 + (Math.random() * 80.00)).toFixed(2);
-            }
-
-            // 3. ASEHOY NY VALINY
-            document.getElementById('result-area').style.display = 'block';
-            document.getElementById('res-hour').innerText = predictionTime;
-            document.getElementById('v1').innerText = "x" + baseVal;
-            document.getElementById('v2').innerText = "x" + secuVal;
-            document.getElementById('v3').innerText = "x" + riskVal;
-
-            const st = document.getElementById('status-text');
-            if(combinedFactor >= 60) {
-                st.innerHTML = "💛 TOUR HO TSARA";
-                st.style.color = "#2ecc71";
-                st.style.backgroundColor = "rgba(46, 204, 113, 0.1)";
-            } else {
-                st.innerHTML = "💔 TOUR HO RATSY";
-                st.style.color = "#e74c3c";
-                st.style.backgroundColor = "rgba(231, 76, 60, 0.1)";
-            }
+        function reset() {
+            document.getElementById('res-pred').innerText = "--:--:--";
+            document.getElementById('res-plus').innerText = "--:--:--";
+            document.getElementById('res-max').innerText = "0.00";
+            document.getElementById('res-moy').innerText = "0.00";
         }
     </script>
 </body>
