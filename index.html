@@ -1,112 +1,175 @@
-<!DOCTYPE html>
-<html lang="mg">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor VIP V5</title>
-    <style>
-        body { background: #050505; color: #d4af37; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; text-transform: uppercase; overflow: hidden; }
-        #floating-clock { position: fixed; top: 15px; left: 15px; background: rgba(0,0,0,0.8); border: 1px solid #f1c40f; padding: 6px 12px; border-radius: 8px; color: #fff; font-family: monospace; font-size: 15px; z-index: 1000; box-shadow: 0 0 10px rgba(241,196,15,0.4); }
-        .container { width: 92%; max-width: 360px; background: #111; padding: 25px; border-radius: 25px; border: 1px solid #222; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
-        .page { display: none; animation: fadeIn 0.4s ease; }
-        .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        .lion-icon { font-size: 60px; margin-bottom: 10px; display: inline-block; filter: drop-shadow(0 0 10px #f1c40f); }
-        h1 { font-size: 20px; color: #f1c40f; margin-bottom: 20px; letter-spacing: 1px; }
-        .btn { display: block; width: 100%; padding: 16px; margin: 12px 0; background: linear-gradient(180deg, #f1c40f 0%, #d4af37 100%); border: none; border-radius: 12px; font-weight: 900; font-size: 15px; color: #000; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .btn:active { transform: scale(0.97); }
-        input { width: 100%; padding: 14px; margin-top: 8px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 10px; text-align: center; box-sizing: border-box; font-size: 16px; outline: none; }
-        label { font-size: 10px; color: #f1c40f; font-weight: bold; display: block; text-align: left; margin-left: 5px; }
-        .result-card { border: 2px solid #f1c40f; padding: 25px 20px; border-radius: 20px; margin-top: 20px; background: rgba(0,0,0,0.5); }
-        .timer-val { font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 15px; }
-        .row { display: flex; justify-content: space-between; margin: 12px 0; font-weight: bold; }
-        .val-gold { color: #f1c40f; font-size: 22px; }
-    </style>
-</head>
-<body>
-    <div id="floating-clock">00:00:00</div>
-    <div class="container">
-        <div id="p1" class="page active">
-            <div class="lion-icon">🦁</div>
-            <h1>KING PREDICTOR VIP</h1>
-            <button class="btn" onclick="go(2, 'AVIATOR')">🚀 AVIATOR</button>
-            <button class="btn" onclick="go(2, 'JETX')">🚀 JETX</button>
-            <button class="btn" onclick="go(2, 'COSMOSX')">🚀 COSMOSX</button>
-        </div>
+import React, { useState } from 'react';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  TouchableOpacity, 
+  SafeAreaView, 
+  ScrollView, 
+  StatusBar,
+  Dimensions
+} from 'react-native';
 
-        <div id="p2" class="page">
-            <h1 id="title">PREDICTION</h1>
-            <div style="margin-bottom:15px;">
-                <label>LERA IZAO (HEURE)</label>
-                <input type="text" id="time-in">
-            </div>
-            <div style="margin-bottom:20px;">
-                <label>SEED SERVEUR (HASH)</label>
-                <input type="text" id="seed-in" placeholder="Ex: b2ce53">
-            </div>
-            <button class="btn" id="calc-btn" onclick="calc()">🔥 DECODER L'ALGORITHM</button>
-            <div id="loading" style="display:none; color:#fff; margin:15px; font-style:italic;">Analyse du serveur en cours...</div>
-            <p onclick="go(1)" style="font-size:11px; color:#555; cursor:pointer; margin-top:15px;">← RETOUR AU MENU</p>
-        </div>
+const { width } = Dimensions.get('window');
 
-        <div id="p3" class="page">
-            <div style="color:#2ecc71; font-size:12px; font-weight:bold; margin-bottom:5px;">✔ SIGNAL TROUVÉ</div>
-            <div class="result-card">
-                <div class="timer-val" id="res-t">00:00:00</div>
-                <div class="row"><span>CIBLE :</span><span class="val-gold" id="v-base">x0.00</span></div>
-                <div class="row"><span>SECURITE :</span><span style="color:#fff; font-size:22px;" id="v-secu">x0.00</span></div>
-                <div class="row" style="border-top:1px solid #333; padding-top:10px; margin-top:15px;">
-                    <span style="color:#ff4757;">RISQUE MAX :</span><span style="color:#ff4757; font-size:22px;" id="v-risk">x0.00</span>
-                </div>
-            </div>
-            <button class="btn" style="margin-top:20px;" onclick="go(2)">NOUVELLE ANALYSE</button>
-        </div>
-    </div>
+export default function App() {
+  const [currentScreen, setCurrentScreen] = useState('HOME');
 
-    <script>
-        function update() {
-            const now = new Date();
-            document.getElementById('floating-clock').innerText = now.toTimeString().split(' ')[0];
-        }
-        setInterval(update, 1000);
+  // --- COMPONENT: SCREEN HOME ---
+  const HomeScreen = () => (
+    <View style={styles.container}>
+      <Text style={styles.brandTitle}>BOSS BET</Text>
+      <Text style={styles.subBrand}>✅ Analyse Pronostic Sport ✅</Text>
+      <Text style={styles.tagline}>🤍 Virtuel et réel 🖤</Text>
 
-        function go(n, t) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('p' + n).classList.add('active');
-            if(t) document.getElementById('title').innerText = t;
-        }
+      <View style={styles.mainMenuCard}>
+        <Text style={styles.cardHeader}>📋 MENU PRÉDICTIONS</Text>
+        
+        <TouchableOpacity 
+          style={styles.btnSports} 
+          onPress={() => setCurrentScreen('CHOOSE_SPORT')}
+        >
+          <Text style={styles.btnText}>LES SPORTS ⚽🏀🎾</Text>
+        </TouchableOpacity>
 
-        function calc() {
-            const seed = document.getElementById('seed-in').value || "777";
-            const timeVal = document.getElementById('time-in').value;
-            document.getElementById('calc-btn').style.display = 'none';
-            document.getElementById('loading').style.display = 'block';
+        <TouchableOpacity style={styles.btnCombo}>
+          <Text style={styles.btnText}>⚽ PARIS COMBINÉE</Text>
+        </TouchableOpacity>
+      </View>
+      <Text style={styles.footer}>© 2026 BOSS BET – Analyse Pronostic Sport</Text>
+    </View>
+  );
 
-            setTimeout(() => {
-                let seedVal = 0;
-                for(let i=0; i<seed.length; i++) seedVal += seed.charCodeAt(i);
-                
-                let p = timeVal.split(':');
-                let d = new Date();
-                d.setHours(p[0], p[1], p[2]);
-                d.setMinutes(d.getMinutes() + (seedVal % 3) + 1);
-                d.setSeconds((seedVal * 7) % 60);
+  // --- COMPONENT: SCREEN CHOOSE SPORT ---
+  const ChooseSportScreen = () => (
+    <View style={styles.container}>
+      <Text style={styles.brandTitle}>BOSS BET</Text>
+      <View style={styles.mainMenuCard}>
+        <Text style={styles.cardHeader}>🏆 CHOISIR UN SPORT</Text>
+        
+        <TouchableOpacity 
+          style={styles.btnSports} 
+          onPress={() => setCurrentScreen('FOOTBALL_MENU')}
+        >
+          <Text style={styles.btnText}>FOOTBALL ⚽</Text>
+        </TouchableOpacity>
 
-                document.getElementById('res-t').innerText = d.toTimeString().split(' ')[0];
-                document.getElementById('v-base').innerText = 'x' + (1.5 + (seedVal % 15)/10).toFixed(2);
-                document.getElementById('v-secu').innerText = 'x' + (2.8 + (seedVal % 20)/5).toFixed(2);
-                document.getElementById('v-risk').innerText = 'x' + (10 + (seedVal % 40)).toFixed(2);
+        <TouchableOpacity style={styles.btnTennis}>
+          <Text style={styles.btnText}>TENNIS 🎾</Text>
+        </TouchableOpacity>
 
-                document.getElementById('calc-btn').style.display = 'block';
-                document.getElementById('loading').style.display = 'none';
-                go(3);
-            }, 2500);
-        }
+        <TouchableOpacity onPress={() => setCurrentScreen('HOME')}>
+          <Text style={styles.btnBack}>⬅ Miverina</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 
-        window.onload = () => {
-            document.getElementById('time-in').value = new Date().toTimeString().split(' ')[0];
-            update();
-        };
-    </script>
-</body>
-</html>
+  // --- COMPONENT: SCREEN FOOTBALL MENU ---
+  const FootballMenuScreen = () => (
+    <View style={styles.container}>
+      <Text style={styles.sportTitle}>🟢 FOOTBALL 🟢</Text>
+      
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabScroll}>
+        {['Standard 🎲', 'Score Exacte 🏆', 'Score 1er MT 🟩', 'MT/FT ⏱️', 'Total Buts ⚽'].map((item, index) => (
+          <TouchableOpacity 
+            key={index} 
+            style={[styles.tabItem, item.includes('Score Exacte') && styles.tabItemActive]}
+            onPress={() => item.includes('Score Exacte') && setCurrentScreen('MATCH_DETAIL')}
+          >
+            <Text style={styles.tabText}>{item}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+
+      <TouchableOpacity onPress={() => setCurrentScreen('CHOOSE_SPORT')}>
+        <Text style={styles.btnBack}>⬅ Mifidy Sport hafa</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  // --- COMPONENT: SCREEN MATCH DETAIL ---
+  const MatchDetailScreen = () => (
+    <View style={styles.container}>
+      <View style={styles.matchCard}>
+        <View style={styles.teamsHeader}>
+          <View style={styles.teamUnit}>
+            <Text style={styles.teamLabel}>ÉQUIPE 1</Text>
+            <View style={styles.nameBox}><Text style={styles.teamName}>Manchester red</Text></View>
+          </View>
+          <View style={styles.teamUnit}>
+            <Text style={styles.teamLabel}>ÉQUIPE 2</Text>
+            <View style={styles.nameBox}><Text style={styles.teamName}>West Ham</Text></View>
+          </View>
+        </View>
+
+        <View style={styles.oddsContainer}>
+          <View style={styles.oddUnit}><Text style={styles.oddType}>V1</Text><Text style={styles.oddVal}>1.63</Text></View>
+          <View style={styles.oddUnit}><Text style={styles.oddType}>X</Text><Text style={styles.oddVal}>4.08</Text></View>
+          <View style={styles.oddUnit}><Text style={styles.oddType}>V2</Text><Text style={styles.oddVal}>4.98</Text></View>
+        </View>
+
+        <View style={styles.btnHighlight}>
+          <Text style={styles.btnText}>🏆 SCORE EXACTE 🔥</Text>
+        </View>
+
+        <View style={styles.resultRow}>
+          <Text style={styles.resTeam}>Manchester...</Text>
+          <Text style={styles.resScore}>2 - 0</Text>
+          <Text style={styles.resTeam}>West H...</Text>
+        </View>
+        <Text style={styles.winnerAnnounce}>🏅 Manchester red</Text>
+      </View>
+
+      <TouchableOpacity onPress={() => setCurrentScreen('FOOTBALL_MENU')}>
+        <Text style={styles.btnBack}>⬅ Miverina amin'ny Menu</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="light-content" />
+      {currentScreen === 'HOME' && <HomeScreen />}
+      {currentScreen === 'CHOOSE_SPORT' && <ChooseSportScreen />}
+      {currentScreen === 'FOOTBALL_MENU' && <FootballMenuScreen />}
+      {currentScreen === 'MATCH_DETAIL' && <MatchDetailScreen />}
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  safeArea: { flex: 1, backgroundColor: '#000' },
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 },
+  brandTitle: { color: '#FFD700', fontSize: 32, fontWeight: '900', letterSpacing: 3 },
+  subBrand: { color: '#00FF41', fontSize: 14, marginTop: 5 },
+  tagline: { color: '#888', fontSize: 12, marginBottom: 30 },
+  mainMenuCard: { width: '100%', backgroundColor: '#121212', padding: 25, borderRadius: 25, borderWidth: 1, borderColor: '#333' },
+  cardHeader: { color: '#FF8C00', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginBottom: 25 },
+  btnSports: { backgroundColor: '#1B5E20', padding: 18, borderRadius: 12, marginBottom: 15 },
+  btnCombo: { backgroundColor: '#6A1B9A', padding: 18, borderRadius: 12 },
+  btnTennis: { backgroundColor: '#E65100', padding: 18, borderRadius: 12 },
+  btnText: { color: '#FFF', textAlign: 'center', fontWeight: 'bold', fontSize: 16 },
+  btnBack: { color: '#555', marginTop: 30, fontWeight: 'bold', textDecorationLine: 'underline' },
+  footer: { color: '#333', marginTop: 40, fontSize: 10 },
+  sportTitle: { color: '#00FF41', fontSize: 24, fontWeight: 'bold', marginBottom: 40 },
+  tabScroll: { maxHeight: 100 },
+  tabItem: { backgroundColor: '#1A1A1A', padding: 20, borderRadius: 15, marginRight: 12, minWidth: 100, height: 80, justifyContent: 'center', borderWidth: 1, borderColor: '#333' },
+  tabItemActive: { borderColor: '#FF8C00', borderWidth: 2 },
+  tabText: { color: '#AAA', textAlign: 'center', fontSize: 12, fontWeight: 'bold' },
+  matchCard: { width: '100%', backgroundColor: '#121212', padding: 20, borderRadius: 20 },
+  teamsHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 25 },
+  teamUnit: { width: '47%' },
+  teamLabel: { color: '#FF8C00', fontSize: 11, textAlign: 'center', marginBottom: 8 },
+  nameBox: { backgroundColor: '#1F1F1F', padding: 12, borderRadius: 10 },
+  teamName: { color: '#FFF', fontSize: 13, textAlign: 'center', fontWeight: 'bold' },
+  oddsContainer: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 25 },
+  oddUnit: { alignItems: 'center' },
+  oddType: { color: '#FF8C00', fontSize: 12 },
+  oddVal: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
+  btnHighlight: { backgroundColor: '#E65100', padding: 15, borderRadius: 10 },
+  resultRow: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 25 },
+  resScore: { color: '#00FF41', fontSize: 45, fontWeight: 'bold', marginHorizontal: 20 },
+  resTeam: { color: '#666', fontSize: 14 },
+  winnerAnnounce: { color: '#00FF41', textAlign: 'center', marginTop: 15, fontWeight: 'bold' }
+});
