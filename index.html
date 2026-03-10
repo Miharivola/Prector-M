@@ -1,175 +1,104 @@
-import React, { useState } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  TouchableOpacity, 
-  SafeAreaView, 
-  ScrollView, 
-  StatusBar,
-  Dimensions
-} from 'react-native';
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boss Bet - Analyse Pronostic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #000; color: white; font-family: sans-serif; }
+        .card { background-color: #121212; border: 1px solid #333; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
 
-const { width } = Dimensions.get('window');
-
-export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('HOME');
-
-  // --- COMPONENT: SCREEN HOME ---
-  const HomeScreen = () => (
-    <View style={styles.container}>
-      <Text style={styles.brandTitle}>BOSS BET</Text>
-      <Text style={styles.subBrand}>✅ Analyse Pronostic Sport ✅</Text>
-      <Text style={styles.tagline}>🤍 Virtuel et réel 🖤</Text>
-
-      <View style={styles.mainMenuCard}>
-        <Text style={styles.cardHeader}>📋 MENU PRÉDICTIONS</Text>
+    <div id="app" class="w-full max-w-md">
         
-        <TouchableOpacity 
-          style={styles.btnSports} 
-          onPress={() => setCurrentScreen('CHOOSE_SPORT')}
-        >
-          <Text style={styles.btnText}>LES SPORTS ⚽🏀🎾</Text>
-        </TouchableOpacity>
+        <div id="screen-home" class="flex flex-col items-center">
+            <h1 class="text-3xl font-black text-yellow-500 tracking-widest uppercase">Boss Bet</h1>
+            <p class="text-green-500 text-sm mt-1 font-bold">✅ Analyse Pronostic Sport ✅</p>
+            <p class="text-gray-500 text-xs mb-8">🤍 Virtuel et réel 🖤</p>
 
-        <TouchableOpacity style={styles.btnCombo}>
-          <Text style={styles.btnText}>⚽ PARIS COMBINÉE</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.footer}>© 2026 BOSS BET – Analyse Pronostic Sport</Text>
-    </View>
-  );
+            <div class="card w-full p-6 rounded-3xl text-center">
+                <h2 class="text-orange-500 font-bold mb-6 italic italic">📋 MENU PRÉDICTIONS</h2>
+                <button onclick="showScreen('screen-sports')" class="w-full bg-green-800 hover:bg-green-700 py-4 rounded-xl font-bold mb-4 transition">
+                    LES SPORTS ⚽🏀🎾
+                </button>
+                <button class="w-full bg-purple-800 hover:bg-purple-700 py-4 rounded-xl font-bold transition">
+                    ⚽ PARIS COMBINÉE
+                </button>
+            </div>
+            <p class="text-gray-800 text-[10px] mt-10">© 2026 BOSS BET – Analyse Pronostic Sport</p>
+        </div>
 
-  // --- COMPONENT: SCREEN CHOOSE SPORT ---
-  const ChooseSportScreen = () => (
-    <View style={styles.container}>
-      <Text style={styles.brandTitle}>BOSS BET</Text>
-      <View style={styles.mainMenuCard}>
-        <Text style={styles.cardHeader}>🏆 CHOISIR UN SPORT</Text>
-        
-        <TouchableOpacity 
-          style={styles.btnSports} 
-          onPress={() => setCurrentScreen('FOOTBALL_MENU')}
-        >
-          <Text style={styles.btnText}>FOOTBALL ⚽</Text>
-        </TouchableOpacity>
+        <div id="screen-sports" class="hidden flex flex-col items-center">
+            <h1 class="text-2xl font-black text-yellow-500 mb-8 uppercase">Boss Bet</h1>
+            <div class="card w-full p-6 rounded-3xl text-center">
+                <h2 class="text-orange-500 font-bold mb-6 italic">🏆 CHOISIR UN SPORT</h2>
+                <button onclick="showScreen('screen-football')" class="w-full bg-green-800 py-4 rounded-xl font-bold mb-4">
+                    FOOTBALL ⚽
+                </button>
+                <button class="w-full bg-orange-700 py-4 rounded-xl font-bold mb-4">
+                    TENNIS 🎾
+                </button>
+                <button onclick="showScreen('screen-home')" class="text-gray-500 text-sm underline mt-4">⬅ Miverina</button>
+            </div>
+        </div>
 
-        <TouchableOpacity style={styles.btnTennis}>
-          <Text style={styles.btnText}>TENNIS 🎾</Text>
-        </TouchableOpacity>
+        <div id="screen-football" class="hidden flex flex-col items-center">
+            <h1 class="text-green-500 text-xl font-bold mb-6 uppercase">🟢 Football 🟢</h1>
+            
+            <div class="flex overflow-x-auto w-full gap-3 mb-8 no-scrollbar">
+                <div class="min-w-[120px] bg-gray-900 p-4 rounded-xl text-center text-xs border border-gray-800">Standard 🎲</div>
+                <div class="min-w-[120px] bg-gray-900 p-4 rounded-xl text-center text-xs border-2 border-orange-500 font-bold">Score Exacte 🏆</div>
+                <div class="min-w-[120px] bg-gray-900 p-4 rounded-xl text-center text-xs border border-gray-800 text-gray-500">Score 1er MT 🟩</div>
+            </div>
 
-        <TouchableOpacity onPress={() => setCurrentScreen('HOME')}>
-          <Text style={styles.btnBack}>⬅ Miverina</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+            <div class="card w-full p-5 rounded-2xl">
+                <div class="flex justify-between mb-6">
+                    <div class="w-[45%] text-center">
+                        <p class="text-orange-500 text-[10px] mb-2 uppercase">Équipe 1</p>
+                        <div class="bg-zinc-900 p-3 rounded-lg text-xs font-bold">Manchester red</div>
+                    </div>
+                    <div class="w-[45%] text-center">
+                        <p class="text-orange-500 text-[10px] mb-2 uppercase">Équipe 2</p>
+                        <div class="bg-zinc-900 p-3 rounded-lg text-xs font-bold">West Ham</div>
+                    </div>
+                </div>
 
-  // --- COMPONENT: SCREEN FOOTBALL MENU ---
-  const FootballMenuScreen = () => (
-    <View style={styles.container}>
-      <Text style={styles.sportTitle}>🟢 FOOTBALL 🟢</Text>
-      
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabScroll}>
-        {['Standard 🎲', 'Score Exacte 🏆', 'Score 1er MT 🟩', 'MT/FT ⏱️', 'Total Buts ⚽'].map((item, index) => (
-          <TouchableOpacity 
-            key={index} 
-            style={[styles.tabItem, item.includes('Score Exacte') && styles.tabItemActive]}
-            onPress={() => item.includes('Score Exacte') && setCurrentScreen('MATCH_DETAIL')}
-          >
-            <Text style={styles.tabText}>{item}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+                <div class="flex justify-around mb-6 text-center">
+                    <div><p class="text-orange-500 text-xs">V1</p><p class="text-lg font-bold">1.63</p></div>
+                    <div><p class="text-orange-500 text-xs">X</p><p class="text-lg font-bold">4.08</p></div>
+                    <div><p class="text-orange-500 text-xs">V2</p><p class="text-lg font-bold">4.98</p></div>
+                </div>
 
-      <TouchableOpacity onPress={() => setCurrentScreen('CHOOSE_SPORT')}>
-        <Text style={styles.btnBack}>⬅ Mifidy Sport hafa</Text>
-      </TouchableOpacity>
-    </View>
-  );
+                <div class="bg-orange-600 py-3 rounded-lg text-center font-bold text-sm mb-6">
+                    🏆 SCORE EXACTE 🔥
+                </div>
 
-  // --- COMPONENT: SCREEN MATCH DETAIL ---
-  const MatchDetailScreen = () => (
-    <View style={styles.container}>
-      <View style={styles.matchCard}>
-        <View style={styles.teamsHeader}>
-          <View style={styles.teamUnit}>
-            <Text style={styles.teamLabel}>ÉQUIPE 1</Text>
-            <View style={styles.nameBox}><Text style={styles.teamName}>Manchester red</Text></View>
-          </View>
-          <View style={styles.teamUnit}>
-            <Text style={styles.teamLabel}>ÉQUIPE 2</Text>
-            <View style={styles.nameBox}><Text style={styles.teamName}>West Ham</Text></View>
-          </View>
-        </View>
+                <div class="flex items-center justify-center gap-6 mb-2">
+                    <span class="text-gray-600 text-sm">Manchester...</span>
+                    <span class="text-green-500 text-5xl font-black tracking-tighter">2 - 0</span>
+                    <span class="text-gray-600 text-sm">West H...</span>
+                </div>
+                <p class="text-center text-green-500 font-bold text-sm">🏅 Manchester red</p>
+            </div>
 
-        <View style={styles.oddsContainer}>
-          <View style={styles.oddUnit}><Text style={styles.oddType}>V1</Text><Text style={styles.oddVal}>1.63</Text></View>
-          <View style={styles.oddUnit}><Text style={styles.oddType}>X</Text><Text style={styles.oddVal}>4.08</Text></View>
-          <View style={styles.oddUnit}><Text style={styles.oddType}>V2</Text><Text style={styles.oddVal}>4.98</Text></View>
-        </View>
+            <button onclick="showScreen('screen-sports')" class="text-gray-500 text-sm underline mt-8">⬅ Mifidy Sport hafa</button>
+        </div>
 
-        <View style={styles.btnHighlight}>
-          <Text style={styles.btnText}>🏆 SCORE EXACTE 🔥</Text>
-        </View>
+    </div>
 
-        <View style={styles.resultRow}>
-          <Text style={styles.resTeam}>Manchester...</Text>
-          <Text style={styles.resScore}>2 - 0</Text>
-          <Text style={styles.resTeam}>West H...</Text>
-        </View>
-        <Text style={styles.winnerAnnounce}>🏅 Manchester red</Text>
-      </View>
-
-      <TouchableOpacity onPress={() => setCurrentScreen('FOOTBALL_MENU')}>
-        <Text style={styles.btnBack}>⬅ Miverina amin'ny Menu</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="light-content" />
-      {currentScreen === 'HOME' && <HomeScreen />}
-      {currentScreen === 'CHOOSE_SPORT' && <ChooseSportScreen />}
-      {currentScreen === 'FOOTBALL_MENU' && <FootballMenuScreen />}
-      {currentScreen === 'MATCH_DETAIL' && <MatchDetailScreen />}
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#000' },
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 },
-  brandTitle: { color: '#FFD700', fontSize: 32, fontWeight: '900', letterSpacing: 3 },
-  subBrand: { color: '#00FF41', fontSize: 14, marginTop: 5 },
-  tagline: { color: '#888', fontSize: 12, marginBottom: 30 },
-  mainMenuCard: { width: '100%', backgroundColor: '#121212', padding: 25, borderRadius: 25, borderWidth: 1, borderColor: '#333' },
-  cardHeader: { color: '#FF8C00', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginBottom: 25 },
-  btnSports: { backgroundColor: '#1B5E20', padding: 18, borderRadius: 12, marginBottom: 15 },
-  btnCombo: { backgroundColor: '#6A1B9A', padding: 18, borderRadius: 12 },
-  btnTennis: { backgroundColor: '#E65100', padding: 18, borderRadius: 12 },
-  btnText: { color: '#FFF', textAlign: 'center', fontWeight: 'bold', fontSize: 16 },
-  btnBack: { color: '#555', marginTop: 30, fontWeight: 'bold', textDecorationLine: 'underline' },
-  footer: { color: '#333', marginTop: 40, fontSize: 10 },
-  sportTitle: { color: '#00FF41', fontSize: 24, fontWeight: 'bold', marginBottom: 40 },
-  tabScroll: { maxHeight: 100 },
-  tabItem: { backgroundColor: '#1A1A1A', padding: 20, borderRadius: 15, marginRight: 12, minWidth: 100, height: 80, justifyContent: 'center', borderWidth: 1, borderColor: '#333' },
-  tabItemActive: { borderColor: '#FF8C00', borderWidth: 2 },
-  tabText: { color: '#AAA', textAlign: 'center', fontSize: 12, fontWeight: 'bold' },
-  matchCard: { width: '100%', backgroundColor: '#121212', padding: 20, borderRadius: 20 },
-  teamsHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 25 },
-  teamUnit: { width: '47%' },
-  teamLabel: { color: '#FF8C00', fontSize: 11, textAlign: 'center', marginBottom: 8 },
-  nameBox: { backgroundColor: '#1F1F1F', padding: 12, borderRadius: 10 },
-  teamName: { color: '#FFF', fontSize: 13, textAlign: 'center', fontWeight: 'bold' },
-  oddsContainer: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 25 },
-  oddUnit: { alignItems: 'center' },
-  oddType: { color: '#FF8C00', fontSize: 12 },
-  oddVal: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
-  btnHighlight: { backgroundColor: '#E65100', padding: 15, borderRadius: 10 },
-  resultRow: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 25 },
-  resScore: { color: '#00FF41', fontSize: 45, fontWeight: 'bold', marginHorizontal: 20 },
-  resTeam: { color: '#666', fontSize: 14 },
-  winnerAnnounce: { color: '#00FF41', textAlign: 'center', marginTop: 15, fontWeight: 'bold' }
-});
+    <script>
+        function showScreen(screenId) {
+            // Afeno daholo ny pejy rehetra
+            document.getElementById('screen-home').classList.add('hidden');
+            document.getElementById('screen-sports').classList.add('hidden');
+            document.getElementById('screen-football').classList.add('hidden');
+            
+            // Asehoy ilay pejy voafidy
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
