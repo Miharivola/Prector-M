@@ -3,85 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blizzard-Imperial Crystal V9</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Predictor VIP V5</title>
     <style>
-        body { background-color: #020617; color: white; font-family: 'Inter', sans-serif; }
-        .glass-card { background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(234, 179, 8, 0.4); border-radius: 28px; }
-        .input-field { background: #0f172a; border: 1px solid #1e293b; color: white; text-align: center; }
-        .btn-calc { background: linear-gradient(90deg, #fde68a, #f59e0b); color: #000; font-weight: 900; }
-        .result-box { border: 1px solid #1e293b; border-radius: 20px; background: rgba(30, 41, 59, 0.7); }
+        body { background: #050505; color: #d4af37; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; text-transform: uppercase; overflow: hidden; }
+        #floating-clock { position: fixed; top: 15px; left: 15px; background: rgba(0,0,0,0.8); border: 1px solid #f1c40f; padding: 6px 12px; border-radius: 8px; color: #fff; font-family: monospace; font-size: 15px; z-index: 1000; box-shadow: 0 0 10px rgba(241,196,15,0.4); }
+        .container { width: 92%; max-width: 360px; background: #111; padding: 25px; border-radius: 25px; border: 1px solid #222; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .lion-icon { font-size: 60px; margin-bottom: 10px; display: inline-block; filter: drop-shadow(0 0 10px #f1c40f); }
+        h1 { font-size: 20px; color: #f1c40f; margin-bottom: 20px; letter-spacing: 1px; }
+        .btn { display: block; width: 100%; padding: 16px; margin: 12px 0; background: linear-gradient(180deg, #f1c40f 0%, #d4af37 100%); border: none; border-radius: 12px; font-weight: 900; font-size: 15px; color: #000; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .btn:active { transform: scale(0.97); }
+        input { width: 100%; padding: 14px; margin-top: 8px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 10px; text-align: center; box-sizing: border-box; font-size: 16px; outline: none; }
+        label { font-size: 10px; color: #f1c40f; font-weight: bold; display: block; text-align: left; margin-left: 5px; }
+        .result-card { border: 2px solid #f1c40f; padding: 25px 20px; border-radius: 20px; margin-top: 20px; background: rgba(0,0,0,0.5); }
+        .timer-val { font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 15px; }
+        .row { display: flex; justify-content: space-between; margin: 12px 0; font-weight: bold; }
+        .val-gold { color: #f1c40f; font-size: 22px; }
     </style>
 </head>
-<body class="p-4 flex flex-col items-center justify-center min-h-screen">
+<body>
+    <div id="floating-clock">00:00:00</div>
+    <div class="container">
+        <div id="p1" class="page active">
+            <div class="lion-icon">🦁</div>
+            <h1>KING PREDICTOR VIP</h1>
+            <button class="btn" onclick="go(2, 'AVIATOR')">🚀 AVIATOR</button>
+            <button class="btn" onclick="go(2, 'JETX')">🚀 JETX</button>
+            <button class="btn" onclick="go(2, 'COSMOSX')">🚀 COSMOSX</button>
+        </div>
 
-    <div class="w-full max-w-sm">
-        <div class="glass-card p-6 border-t-4 border-t-yellow-500 shadow-2xl">
-            <h2 class="text-center text-xs font-black mb-6 tracking-[0.3em] text-yellow-500 uppercase">Algorithm Provably Sync V9</h2>
-
-            <div class="space-y-4">
-                <div>
-                    <label class="text-[10px] text-cyan-400 uppercase font-bold mb-1 block">N° de Tour (Farany vita)</label>
-                    <input id="tour" type="number" class="w-full input-field p-4 rounded-2xl text-2xl font-mono text-white" placeholder="Ohatra: 8032782">
-                </div>
-
-                <div class="space-y-3">
-                    <input id="dec" type="text" class="w-full input-field p-3 rounded-xl text-sm font-mono border-cyan-500/20" placeholder="Decimal farany (Hash)">
-                    <input id="cons" type="number" class="w-full input-field p-3 rounded-xl text-sm font-bold text-gray-500" value="4294967295" readonly>
-                </div>
-
-                <button onclick="calculate()" class="w-full btn-calc py-5 rounded-2xl uppercase text-sm active:scale-95 transition mt-2 shadow-lg shadow-yellow-500/20">
-                    SYNC & PREDICT
-                </button>
+        <div id="p2" class="page">
+            <h1 id="title">PREDICTION</h1>
+            <div style="margin-bottom:15px;">
+                <label>LERA IZAO (HEURE)</label>
+                <input type="text" id="time-in">
             </div>
+            <div style="margin-bottom:20px;">
+                <label>SEED SERVEUR (HASH)</label>
+                <input type="text" id="seed-in" placeholder="Ex: b2ce53">
+            </div>
+            <button class="btn" id="calc-btn" onclick="calc()">🔥 DECODER L'ALGORITHM</button>
+            <div id="loading" style="display:none; color:#fff; margin:15px; font-style:italic;">Analyse du serveur en cours...</div>
+            <p onclick="go(1)" style="font-size:11px; color:#555; cursor:pointer; margin-top:15px;">← RETOUR AU MENU</p>
+        </div>
 
-            <div class="mt-8 space-y-4">
-                <div class="result-box p-6 text-center border-yellow-500/30 bg-yellow-500/5">
-                    <p class="text-[10px] text-gray-500 font-bold mb-1 uppercase tracking-widest">Next Target Tour</p>
-                    <p id="res-tour" class="text-yellow-500 text-4xl font-black italic">-------</p>
-                    <p id="res-gap" class="text-[9px] text-cyan-400 mt-2 font-bold"></p>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="result-box p-4 text-center">
-                        <p class="text-[9px] text-gray-500 font-bold mb-1 uppercase">Côte Moyen</p>
-                        <p id="res-moy" class="text-white text-2xl font-black">0.00</p>
-                    </div>
-                    <div class="result-box p-4 text-center border-green-500/30">
-                        <p class="text-[9px] text-gray-500 font-bold mb-1 uppercase">Côte Max</p>
-                        <p id="res-max" class="text-green-400 text-2xl font-black">0.00</p>
-                    </div>
+        <div id="p3" class="page">
+            <div style="color:#2ecc71; font-size:12px; font-weight:bold; margin-bottom:5px;">✔ SIGNAL TROUVÉ</div>
+            <div class="result-card">
+                <div class="timer-val" id="res-t">00:00:00</div>
+                <div class="row"><span>CIBLE :</span><span class="val-gold" id="v-base">x0.00</span></div>
+                <div class="row"><span>SECURITE :</span><span style="color:#fff; font-size:22px;" id="v-secu">x0.00</span></div>
+                <div class="row" style="border-top:1px solid #333; padding-top:10px; margin-top:15px;">
+                    <span style="color:#ff4757;">RISQUE MAX :</span><span style="color:#ff4757; font-size:22px;" id="v-risk">x0.00</span>
                 </div>
             </div>
+            <button class="btn" style="margin-top:20px;" onclick="go(2)">NOUVELLE ANALYSE</button>
         </div>
     </div>
 
     <script>
-        function calculate() {
-            const tIn = document.getElementById('tour').value;
-            const decStr = document.getElementById('dec').value;
-            const cons = 4294967295;
-
-            if (!tIn || !decStr) return alert("Ampidiro ny Tour sy ny Decimal!");
-
-            // 1. KAJY JUMP (MIANIKINA AMIN'NY HASH)
-            // Raha lehibe ny Decimal dia midika fa lavitra ny elanelana
-            let hashSeed = parseInt(decStr.substring(0, 5)) || 12345;
-            let jump = 4 + (hashSeed % 6); // Elanelana 4 ka hatramin'ny 9
-            const targetT = parseInt(tIn) + jump;
-
-            // 2. KAJY COTE (PROVABLY LOGIC)
-            let core = (cons / (parseInt(decStr.slice(-6)) + 1));
-            let cMoy = 1.80 + (core % 2.5);
-            let cMax = (cMoy * 2.3) + (hashSeed % 10);
-
-            // UI UPDATE
-            document.getElementById('res-tour').innerText = targetT;
-            document.getElementById('res-gap').innerText = `ELANELANA +${jump} (Sync amin'ny Hash)`;
-            document.getElementById('res-moy').innerText = cMoy.toFixed(2);
-            document.getElementById('res-max').innerText = cMax.toFixed(2);
+        function update() {
+            const now = new Date();
+            document.getElementById('floating-clock').innerText = now.toTimeString().split(' ')[0];
         }
+        setInterval(update, 1000);
+
+        function go(n, t) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('p' + n).classList.add('active');
+            if(t) document.getElementById('title').innerText = t;
+        }
+
+        function calc() {
+            const seed = document.getElementById('seed-in').value || "777";
+            const timeVal = document.getElementById('time-in').value;
+            document.getElementById('calc-btn').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+
+            setTimeout(() => {
+                let seedVal = 0;
+                for(let i=0; i<seed.length; i++) seedVal += seed.charCodeAt(i);
+                
+                let p = timeVal.split(':');
+                let d = new Date();
+                d.setHours(p[0], p[1], p[2]);
+                d.setMinutes(d.getMinutes() + (seedVal % 3) + 1);
+                d.setSeconds((seedVal * 7) % 60);
+
+                document.getElementById('res-t').innerText = d.toTimeString().split(' ')[0];
+                document.getElementById('v-base').innerText = 'x' + (1.5 + (seedVal % 15)/10).toFixed(2);
+                document.getElementById('v-secu').innerText = 'x' + (2.8 + (seedVal % 20)/5).toFixed(2);
+                document.getElementById('v-risk').innerText = 'x' + (10 + (seedVal % 40)).toFixed(2);
+
+                document.getElementById('calc-btn').style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+                go(3);
+            }, 2500);
+        }
+
+        window.onload = () => {
+            document.getElementById('time-in').value = new Date().toTimeString().split(' ')[0];
+            update();
+        };
     </script>
 </body>
 </html>
