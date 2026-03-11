@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor Pro Dynamic</title>
+    <title>Last Predictor VIP</title>
     <style>
+        /* --- ENDRIKA ANKAPOBENY --- */
         body {
-            background-color: #0d0d0d;
+            background-color: #0a0a0a;
             color: #d4af37;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,187 +21,196 @@
         .container {
             width: 90%;
             max-width: 360px;
-            background: #151515;
+            background: #121212;
             padding: 25px;
-            border-radius: 20px;
+            border-radius: 25px;
             text-align: center;
-            border: 1px solid #2a2a2a;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border: 1px solid #222;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+            position: relative;
         }
 
-        .page { display: none; }
+        .page { display: none; animation: fadeIn 0.4s ease; }
         .active { display: block; }
 
-        h1 { font-size: 20px; margin-bottom: 20px; color: #f1c40f; }
-
-        .input-group { text-align: left; margin-bottom: 15px; }
-        label { display: block; color: #b8860b; font-size: 11px; margin-bottom: 5px; font-weight: bold; }
-        input {
-            width: 100%;
-            padding: 12px;
-            background: #222;
-            border: 1px solid #444;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 16px;
-            text-align: center;
-            box-sizing: border-box;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        h1 { font-size: 22px; margin-bottom: 5px; color: #f1c40f; letter-spacing: 1px; }
+        .subtitle { color: #777; font-size: 11px; margin-bottom: 25px; text-transform: none; }
+
+        /* --- BOKOTRA --- */
         .btn {
             display: block;
             width: 100%;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 16px;
+            margin: 12px 0;
             border: none;
-            border-radius: 10px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 16px;
             cursor: pointer;
-            background: linear-gradient(to bottom, #f1c40f, #d4af37);
+            background: linear-gradient(180deg, #f1c40f 0%, #d4af37 100%);
             color: #000;
             transition: 0.2s;
         }
 
-        .btn:active { transform: scale(0.95); }
+        .btn:active { transform: scale(0.96); }
 
-        /* VOKATRA STYLE */
-        .result-box {
-            background: rgba(20, 20, 20, 0.95);
-            padding: 20px;
+        /* --- INPUTS --- */
+        .input-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; color: #b8860b; font-size: 10px; margin-bottom: 6px; font-weight: bold; }
+        input {
+            width: 100%;
+            padding: 14px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        /* --- VOKATRA --- */
+        .result-card {
+            background-color: rgba(15, 15, 15, 0.95);
+            background-image: url('https://i.ibb.co/L6V6RzS/lion-logo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 60%;
+            background-blend-mode: overlay;
+            padding: 25px 20px;
             border: 2px solid #d4af37;
-            border-radius: 15px;
-            margin-top: 20px;
-            position: relative;
+            border-radius: 20px;
+            margin-top: 15px;
         }
 
-        /* Ny liona ao aoriana */
-        .lion-bg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 150px;
-            opacity: 0.1;
-            z-index: 0;
-        }
-
-        .result-content { position: relative; z-index: 1; }
-
-        .timer-result {
-            font-size: 38px;
+        .timer-val {
+            font-size: 42px;
             font-weight: 900;
             color: #fff;
-            text-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
-        .prediction-line {
+        .row {
             display: flex;
             justify-content: space-between;
-            margin: 10px 0;
-            font-size: 14px;
+            align-items: center;
+            margin: 12px 0;
+            font-size: 15px;
             font-weight: bold;
         }
 
-        .val-base { color: #f1c40f; font-size: 20px; }
-        .val-secu { color: #fff; font-size: 20px; }
-        .val-risque { color: #ff4d4d; font-size: 20px; }
+        .val-gold { color: #f1c40f; font-size: 22px; }
+        .val-white { color: #ffffff; font-size: 22px; }
+        .val-red { color: #ff4757; font-size: 22px; }
 
-        .back-btn { margin-top: 20px; color: #555; cursor: pointer; font-size: 11px; }
-
-        /* Animation kely rehefa miandry */
-        #loading-text { display: none; color: #fff; font-style: italic; margin-top: 10px; }
+        .loading { display: none; color: #fff; font-size: 13px; margin: 15px 0; font-style: italic; }
+        .back-link { margin-top: 25px; color: #555; cursor: pointer; font-size: 11px; display: inline-block; }
     </style>
 </head>
 <body>
 
     <div id="page1" class="container page active">
         <h1>💛 LAST PREDICTOR 💛</h1>
-        <button class="btn" onclick="goToPage('page2')">🚀 AVIATOR</button>
-        <button class="btn">🚀 JETX</button>
-        <button class="btn">🚀 COSMOSX</button>
+        <p class="subtitle">Choisissez votre jeu de prédiction</p>
+        <button class="btn" onclick="showPage('page2', 'AVIATOR')">🚀 AVIATOR</button>
+        <button class="btn" onclick="showPage('page2', 'JETX')">🚀 JETX</button>
+        <button class="btn" onclick="showPage('page2', 'COSMOSX')">🚀 COSMOSX</button>
     </div>
 
     <div id="page2" class="container page">
-        <h1>PRÉDICTION AVIATOR</h1>
+        <h1 id="game-name">PRÉDICTION</h1>
+        <p class="subtitle">Entrez les données du serveur</p>
         <div class="input-group">
             <label>HEURE DE DÉPART</label>
-            <input type="text" id="time-in" placeholder="00:00:00">
+            <input type="text" id="input-time" placeholder="HH:MM:SS">
         </div>
         <div class="input-group">
-            <label>GRAINE DE SERVEUR</label>
-            <input type="text" id="seed-in" placeholder="Ex: 403245">
+            <label>GRAINE DE SERVEUR (6 CARACT)</label>
+            <input type="text" id="input-seed" placeholder="Ex: B2CE53">
         </div>
-        
-        <button class="btn" id="predict-btn" onclick="processPrediction()">🚀 PREDICTOR 🖤</button>
-        <div id="loading-text">Analyse du serveur...</div>
-        
-        <div class="back-btn" onclick="goToPage('page1')">← Retour</div>
+        <button class="btn" id="btn-calc" onclick="startCalculating()">🚀 PREDICTOR 🖤</button>
+        <div id="loader" class="loading">Analyse des algorithmes...</div>
+        <div class="back-link" onclick="showPage('page1')">← RETOUR</div>
     </div>
 
     <div id="page3" class="container page">
         <div style="color: #2ecc71; font-weight: bold; margin-bottom: 10px; font-size: 12px;">■ PRÉDICTION GÉNÉRÉE</div>
-        
-        <div class="result-box">
-            <img src="https://img.freepik.com/premium-vector/lion-head-shield-heraldic-logo_214532-13.jpg" class="lion-bg">
-            <div class="result-content">
-                <div class="timer-result" id="res-time">00:00:00</div>
-                
-                <div class="prediction-line">
-                    <span>🤍 BASE :</span>
-                    <span class="val-base" id="val-base">x1.00</span>
-                </div>
-                
-                <div class="prediction-line">
-                    <span>🤍 SÉCURITÉ :</span>
-                    <span class="val-secu" id="val-secu">x1.00</span>
-                </div>
-                
-                <div class="prediction-line" style="border-top: 1px solid #333; padding-top: 10px;">
-                    <span>💜 RISQUE :</span>
-                    <span class="val-risque" id="val-risque">x1.00</span>
-                </div>
+        <div class="result-card">
+            <div class="timer-val" id="res-time">00:00:00</div>
+            <div class="row"><span>🤍 BASE :</span><span class="val-gold" id="val-base">x0.00</span></div>
+            <div class="row"><span>🤍 SÉCURITÉ :</span><span class="val-white" id="val-secu">x0.00</span></div>
+            <div class="row" style="border-top: 1px solid #333; padding-top: 10px; margin-top: 15px;">
+                <span>💜 RISQUE :</span><span class="val-red" id="val-risque">x0.00</span>
             </div>
         </div>
-
-        <div class="back-btn" onclick="goToPage('page2')">← Nouveau Calcul</div>
+        <div class="back-link" onclick="showPage('page2')">← NOUVEAU CALCUL</div>
     </div>
 
     <script>
-        function goToPage(pageId) {
+        function showPage(pageId, title = "") {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
+            if(title) document.getElementById('game-name').innerText = "PRÉDICTION " + title;
         }
 
-        // Ity ny fomba fikajiana ireo isa kisendrasendra
-        function getRandomMultiplier(min, max) {
-            return (Math.random() * (max - min) + min).toFixed(2);
+        // Ity no mikajy ny ora vaovao aorian'ny ora nampidirinao
+        function calculateFutureTime(startTime) {
+            try {
+                let parts = startTime.split(':');
+                let date = new Date();
+                date.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
+                
+                // Manampy 1 hatramin'ny 5 minitra kisendrasendra
+                let addMinutes = Math.floor(Math.random() * 5) + 1;
+                let addSeconds = Math.floor(Math.random() * 59);
+                date.setMinutes(date.getMinutes() + addMinutes);
+                date.setSeconds(date.getSeconds() + addSeconds);
+
+                return date.toTimeString().split(' ')[0];
+            } catch (e) {
+                return startTime; // Raha misy diso dia mamerina ny teo aloha
+            }
         }
 
-        function processPrediction() {
-            const timeIn = document.getElementById('time-in').value;
-            if(!timeIn) { alert("Ampidiro ny ora!"); return; }
+        function rand(min, max) { return (Math.random() * (max - min) + min).toFixed(2); }
 
-            // Mampiseho "loading" kely
-            document.getElementById('predict-btn').style.display = 'none';
-            document.getElementById('loading-text').style.display = 'block';
+        function startCalculating() {
+            const timeInput = document.getElementById('input-time').value;
+            if(!timeInput || !timeInput.includes(':')) {
+                alert("Ampiasao ny endrika HH:MM:SS (ohatra: 10:50:00)");
+                return;
+            }
+
+            document.getElementById('btn-calc').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
 
             setTimeout(() => {
-                // Ovaina ny ora (segondra vitsy aorian'ny ora nampidirina)
-                document.getElementById('res-time').innerText = timeIn;
+                // Manova ny ora ho ora ho avy (future time)
+                document.getElementById('res-time').innerText = calculateFutureTime(timeInput);
+                
+                // Isa kisendrasendra
+                document.getElementById('val-base').innerText = 'x' + rand(1.5, 4.0);
+                document.getElementById('val-secu').innerText = 'x' + rand(4.1, 10.0);
+                document.getElementById('val-risque').innerText = 'x' + rand(10.1, 50.0);
 
-                // Mamorona isa kisendrasendra (Random)
-                document.getElementById('val-base').innerText = 'x' + getRandomMultiplier(1.5, 5.0);
-                document.getElementById('val-secu').innerText = 'x' + getRandomMultiplier(5.5, 15.0);
-                document.getElementById('val-risque').innerText = 'x' + getRandomMultiplier(20.0, 99.0);
-
-                // Miverina amin'ny bokotra ary mandeha amin'ny pejy vokatra
-                document.getElementById('predict-btn').style.display = 'block';
-                document.getElementById('loading-text').style.display = 'none';
-                goToPage('page3');
-            }, 1500); // Miandry 1.5 segondra (simulation)
+                document.getElementById('btn-calc').style.display = 'block';
+                document.getElementById('loader').style.display = 'none';
+                showPage('page3');
+            }, 2000);
         }
-    </script>
 
+        // Mameno ny ora amin'izao fotoana izao ho automatique
+        window.onload = function() {
+            let n = new Date();
+            document.getElementById('input-time').value = n.toTimeString().split(' ')[0];
+        };
+    </script>
 </body>
 </html>
