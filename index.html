@@ -3,86 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boss Bet Predictor</title>
+    <title>Boss Bet - Aviator Predictor</title>
     <style>
+        :root {
+            --primary-red: #e63946;
+            --dark-bg: #121212;
+            --card-bg: rgba(40, 40, 40, 0.9);
+            --text-gray: #b0b0b0;
+        }
+
         body {
-            background-color: #1a1a1a;
+            background-color: var(--dark-bg);
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            margin: 0;
         }
+
+        .header {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, #1a1a1a, transparent);
+        }
+
         .container {
             width: 90%;
             max-width: 400px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 20px;
             text-align: center;
-            border: 1px solid #444;
         }
-        .logo {
-            width: 150px;
-            height: 150px;
-            background: #333; /* Azonao ovaina sary liona eto */
-            border-radius: 50%;
-            margin-bottom: 20px;
-            border: 5px solid #d32f2f;
+
+        /* Ny sarin'ny liona ao aoriana */
+        .main-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 30px 20px;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
         }
-        .status-box {
-            background: #333;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .prediction {
-            font-size: 3rem;
+
+        .logo-area {
+            font-size: 1.5rem;
             font-weight: bold;
-            color: #ff5252;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            margin-bottom: 30px;
+        }
+
+        .prediction-display {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 20px;
             margin: 20px 0;
         }
-        .btn-live {
-            background-color: #d32f2f;
+
+        .prediction-value {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--primary-red);
+            text-shadow: 0 0 15px rgba(230, 57, 70, 0.4);
+        }
+
+        .btn-signal {
+            background-color: var(--primary-red);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
+            padding: 18px;
+            width: 100%;
+            border-radius: 12px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            width: 100%;
-            font-size: 1.1rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
         }
-        .btn-live:active {
-            transform: scale(0.98);
+
+        .btn-signal:hover {
+            background-color: #ff4d5a;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            background: #1a1a1a;
+            border-top: 1px solid #333;
         }
     </style>
 </head>
 <body>
 
+    <div class="header">
+        <div style="color: var(--primary-red); font-weight: bold;">BOSS BET</div>
+    </div>
+
     <div class="container">
-        <h2>BOSS BET</h2>
-        <p>AVIATOR PREDICTOR</p>
-        
-        <div class="logo">
+        <div class="main-card">
+            <div class="logo-area">ADMIN</div>
+            <div class="subtitle">PREDICTOR ULTIME</div>
+            
+            <div class="prediction-display">
+                <div id="loading" style="display:none; font-size: 0.9rem;">RECHERCHE DU SIGNAL...</div>
+                <div id="result" class="prediction-value">1.00x</div>
             </div>
 
-        <div class="status-box">
-            <small>PROCHAINE PRÉDICTION</small>
-            <div class="prediction" id="result">1.00x</div>
+            <button class="btn-signal" onclick="getSignal()">🎯 SIGNAL LIVE</button>
         </div>
 
-        <button class="btn-live" onclick="generatePrediction()">🎯 SIGNAL LIVE</button>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div style="color: var(--text-gray)">TOUR TSARA</div>
+                <div id="tour-tsara">--</div>
+            </div>
+            <div class="stat-item">
+                <div style="color: var(--text-gray)">CIBLE MOYENNE</div>
+                <div>2.50x</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <span>🏠</span>
+        <span>📊</span>
+        <span>🎯</span>
+        <span>👤</span>
     </div>
 
     <script>
-        function generatePrediction() {
-            // Maka isa kisendrasendra eo anelanelan'ny 1.00 sy 5.00
-            const randomValue = (Math.random() * 4 + 1).toFixed(2);
-            document.getElementById('result').innerText = randomValue + 'x';
+        function getSignal() {
+            const btn = document.querySelector('.btn-signal');
+            const result = document.getElementById('result');
+            const loading = document.getElementById('loading');
+            
+            btn.disabled = true;
+            loading.style.display = 'block';
+            result.style.opacity = '0.3';
+
+            // Manao simulation hoe mikaroka signal (2 segondra)
+            setTimeout(() => {
+                const val = (Math.random() * 9 + 1.1).toFixed(2);
+                result.innerText = val + 'x';
+                result.style.opacity = '1';
+                loading.style.display = 'none';
+                btn.disabled = false;
+                
+                // Ovaina koa ny stats kely
+                document.getElementById('tour-tsara').innerText = (Math.random() * 5 + 1).toFixed(2) + 'x';
+            }, 2000);
         }
     </script>
 </body>
