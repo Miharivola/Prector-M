@@ -3,160 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor Bot VIP</title>
+    <title>Last Predictor VIP</title>
     <style>
-        body { 
-            background-color: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; 
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
-            background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('images.jpeg');
-            background-size: cover; background-position: center;
-        }
-        .container { width: 92%; max-width: 400px; text-align: center; }
-        .page { display: none; } .active { display: block; }
-        .input-card { background: #111; border-radius: 20px; padding: 25px; border: 1px solid #222; margin-bottom: 20px; }
-        .label { color: #d4af37; font-size: 11px; font-weight: bold; text-align: left; margin-bottom: 8px; text-transform: uppercase; }
-        
-        .entry-field {
-            background: #1a1a1a; border: 1px solid #333; border-radius: 12px;
-            color: #fff; font-size: 20px; width: 100%; padding: 15px;
-            text-align: center; margin-bottom: 20px; outline: none; box-sizing: border-box;
+        body {
+            background-color: #0a0a0a;
+            color: #d4af37;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-transform: uppercase;
         }
 
-        .btn-predict { 
-            background: linear-gradient(180deg, #f1c40f, #d4af37); border: none; border-radius: 12px; 
-            color: #000; width: 100%; padding: 18px; font-weight: bold; font-size: 18px; cursor: pointer; text-transform: uppercase;
+        .container {
+            width: 90%;
+            max-width: 360px;
+            background: #121212;
+            padding: 25px;
+            border-radius: 25px;
+            text-align: center;
+            border: 1px solid #222;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+            position: relative;
         }
 
-        #result-area { 
-            display: none; border: 1px solid #f1c40f; border-radius: 20px; padding: 20px; 
-            background: rgba(15, 15, 15, 0.95); margin-top: 15px;
-        }
-        .val-row { font-size: 19px; font-weight: bold; margin: 12px 0; }
-        .base { color: #fff; } .secu { color: #2ecc71; } .risk { color: #9b59b6; }
-        
-        .btn-group { display: flex; justify-content: space-between; margin-top: 25px; gap: 10px; }
-        .btn-check { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: #fff; cursor: pointer; }
-        .correct { background-color: #2ecc71; } .fausse { background-color: #e74c3c; }
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .active { display: block; }
 
-        #status-text { margin: 15px 0; font-weight: bold; font-size: 16px; padding: 10px; border-radius: 8px; }
-        .back-link { color: #555; display: block; margin-top: 25px; text-decoration: none; font-size: 12px; text-transform: uppercase; }
-        .logo-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 15px; object-fit: cover; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { font-size: 22px; margin-bottom: 5px; color: #f1c40f; letter-spacing: 1px; }
+        .subtitle { color: #777; font-size: 11px; margin-bottom: 25px; text-transform: none; }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin: 12px 0;
+            border: none;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 16px;
+            cursor: pointer;
+            background: linear-gradient(180deg, #f1c40f 0%, #d4af37 100%);
+            color: #000;
+            transition: 0.2s;
+        }
+
+        .btn:active { transform: scale(0.96); }
+
+        .input-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; color: #b8860b; font-size: 10px; margin-bottom: 6px; font-weight: bold; }
+        input {
+            width: 100%;
+            padding: 14px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .result-card {
+            background-color: rgba(15, 15, 15, 0.95);
+            background-image: url('https://i.ibb.co/L6V6RzS/lion-logo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 60%;
+            background-blend-mode: overlay;
+            padding: 25px 20px;
+            border: 2px solid #d4af37;
+            border-radius: 20px;
+            margin-top: 15px;
+        }
+
+        .timer-val {
+            font-size: 42px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 12px 0;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .val-gold { color: #f1c40f; font-size: 22px; }
+        .val-white { color: #ffffff; font-size: 22px; }
+        .val-red { color: #ff4757; font-size: 22px; }
+
+        .loading { display: none; color: #fff; font-size: 13px; margin: 15px 0; font-style: italic; }
+        .back-link { margin-top: 25px; color: #555; cursor: pointer; font-size: 11px; display: inline-block; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div id="page-menu" class="page active">
-            <img src="images.jpeg" class="logo-img">
-            <h2 style="color: #d4af37;">LAST PREDICTOR</h2>
-            <button class="btn-predict" style="width:100%; margin-bottom:15px;" onclick="openPredictor('AVIATOR')">🚀 AVIATOR</button>
-            <button class="btn-predict" style="width:100%; margin-bottom:15px;" onclick="openPredictor('JETX')">🚀 JETX</button>
-            <button class="btn-predict" style="width:100%;" onclick="openPredictor('COSMOSX')">🚀 COSMOSX</button>
+    <div id="page1" class="container page active">
+        <h1>💛 LAST PREDICTOR 💛</h1>
+        <p class="subtitle">Choisissez votre jeu de prédiction</p>
+        <button class="btn" onclick="showPage('page2', 'AVIATOR')">🚀 AVIATOR</button>
+        <button class="btn" onclick="showPage('page2', 'JETX')">🚀 JETX</button>
+        <button class="btn" onclick="showPage('page2', 'COSMOSX')">🚀 COSMOSX</button>
+    </div>
+
+    <div id="page2" class="container page">
+        <h1 id="game-name">PRÉDICTION</h1>
+        <p class="subtitle">Entrez les données du serveur</p>
+        <div class="input-group">
+            <label>HEURE DE DÉPART</label>
+            <input type="text" id="input-time" placeholder="HH:MM:SS">
         </div>
-
-        <div id="page-predict" class="page">
-            <h2 id="game-title" style="color:#f1c40f; text-transform:uppercase;">PRÉDICTION</h2>
-            
-            <div class="input-card">
-                <div class="label">HEURE DE DÉPART</div>
-                <input type="text" id="input-time" class="entry-field" placeholder="00:00:00">
-
-                <div class="label">GRAINE DE SERVEUR (6 CARACT)</div>
-                <input type="text" id="input-seed" class="entry-field" value="P536C5">
-
-                <button class="btn-predict" style="width:100%;" onclick="generatePrediction()">🚀 PREDICTOR 🖤</button>
-            </div>
-
-            <div id="result-area">
-                <div style="color: #2ecc71; font-size: 12px; font-weight: bold; margin-bottom: 5px;">■ PRÉDICTION VALIDE</div>
-                <div id="res-hour" style="font-size: 35px; font-weight: bold; margin-bottom: 15px; color: #fff;"></div>
-                
-                <div class="val-row base">🤍 BASE : <span id="v1"></span></div>
-                <div class="val-row secu">💚 SÉCURITÉ : <span id="v2"></span></div>
-                <div class="val-row risk">💜 RISQUE : <span id="v3"></span></div>
-
-                <div id="status-text"></div>
-
-                <div class="btn-group">
-                    <button class="correct btn-check" onclick="alert('Misaotra!')">✅ Correcte</button>
-                    <button class="fausse btn-check" onclick="alert('Misaotra!')">❌ Fausse</button>
-                </div>
-            </div>
-
-            <a href="#" class="back-link" onclick="location.reload()">← RETOUR AU MENU</a>
+        <div class="input-group">
+            <label>GRAINE DE SERVEUR (6 CARACT)</label>
+            <input type="text" id="input-seed" placeholder="Ex: B2CE53">
         </div>
+        <button class="btn" id="btn-calc" onclick="startCalculating()">🚀 PREDICTOR 🖤</button>
+        <div id="loader" class="loading">Analyse des algorithmes...</div>
+        <div class="back-link" onclick="showPage('page1')">← RETOUR</div>
+    </div>
+
+    <div id="page3" class="container page">
+        <div style="color: #2ecc71; font-weight: bold; margin-bottom: 10px; font-size: 12px;">■ PRÉDICTION GÉNÉRÉE</div>
+        <div class="result-card">
+            <div class="timer-val" id="res-time">00:00:00</div>
+            <div class="row"><span>🤍 BASE :</span><span class="val-gold" id="val-base">x0.00</span></div>
+            <div class="row"><span>🤍 SÉCURITÉ :</span><span class="val-white" id="val-secu">x0.00</span></div>
+            <div class="row" style="border-top: 1px solid #333; padding-top: 10px; margin-top: 15px;">
+                <span>💜 RISQUE :</span><span class="val-red" id="val-risque">x0.00</span>
+            </div>
+        </div>
+        <div class="back-link" onclick="showPage('page2')">← NOUVEAU CALCUL</div>
     </div>
 
     <script>
-        function openPredictor(name) {
-            document.getElementById('page-menu').classList.remove('active');
-            document.getElementById('page-predict').classList.add('active');
-            document.getElementById('game-title').innerText = "PRÉDICTION " + name;
-            
-            const now = new Date();
-            document.getElementById('input-time').value = now.toLocaleTimeString('fr-FR', { hour12: false });
+        function showPage(pageId, title = "") {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            if(title) document.getElementById('game-name').innerText = "PRÉDICTION " + title;
         }
 
-        function generatePrediction() {
-            const userTime = document.getElementById('input-time').value;
-            const seed = document.getElementById('input-seed').value;
-            
-            if(!userTime || !seed) { 
-                alert("Fenoy ny Heure sy ny Graine azafady!"); 
-                return; 
-            }
+        function calculateFutureTime(startTime) {
+            try {
+                let parts = startTime.split(':');
+                let date = new Date();
+                date.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
+                
+                let addMinutes = Math.floor(Math.random() * 5) + 1;
+                let addSeconds = Math.floor(Math.random() * 59);
+                date.setMinutes(date.getMinutes() + addMinutes);
+                date.setSeconds(date.getSeconds() + addSeconds);
 
-            // 1. KAJY NY LERA (Lojika miampy 2 minitra sy segondra random)
-            let parts = userTime.split(':');
-            let date = new Date();
-            date.setHours(parseInt(parts[0]) || 0, parseInt(parts[1]) || 0, parseInt(parts[2]) || 0);
-            
-            date.setMinutes(date.getMinutes() + 2);
-            let secRandom = Math.floor(Math.random() * 60);
-            date.setSeconds(secRandom);
-            const predictionTime = date.toLocaleTimeString('fr-FR', { hour12: false });
-
-            // 2. ALGORITHM PROVABLY REALISTIC
-            let hashSeed = 0;
-            for (let i = 0; i < seed.length; i++) {
-                hashSeed += seed.charCodeAt(i);
-            }
-            let combinedFactor = (hashSeed + date.getMinutes() + secRandom) % 100;
-
-            let baseVal, secuVal, riskVal;
-
-            if (combinedFactor < 40) { // BLUE
-                baseVal = (1.01 + (Math.random() * 0.19)).toFixed(2);
-                secuVal = (1.20 + (Math.random() * 0.50)).toFixed(2);
-                riskVal = (2.00 + (Math.random() * 2.00)).toFixed(2);
-            } else if (combinedFactor < 85) { // PURPLE
-                baseVal = (1.20 + (Math.random() * 0.30)).toFixed(2);
-                secuVal = (2.50 + (Math.random() * 4.00)).toFixed(2);
-                riskVal = (8.00 + (Math.random() * 10.00)).toFixed(2);
-            } else { // ROSE
-                baseVal = (1.50 + (Math.random() * 0.40)).toFixed(2);
-                secuVal = (6.00 + (Math.random() * 10.00)).toFixed(2);
-                riskVal = (20.00 + (Math.random() * 80.00)).toFixed(2);
-            }
-
-            // 3. ASEHOY NY VALINY
-            document.getElementById('result-area').style.display = 'block';
-            document.getElementById('res-hour').innerText = predictionTime;
-            document.getElementById('v1').innerText = "x" + baseVal;
-            document.getElementById('v2').innerText = "x" + secuVal;
-            document.getElementById('v3').innerText = "x" + riskVal;
-
-            const st = document.getElementById('status-text');
-            if(combinedFactor >= 60) {
-                st.innerHTML = "💛 TOUR HO TSARA";
-                st.style.color = "#2ecc71";
-                st.style.backgroundColor = "rgba(46, 204, 113, 0.1)";
-            } else {
-                st.innerHTML = "💔 TOUR HO RATSY";
-                st.style.color = "#e74c3c";
-                st.style.backgroundColor = "rgba(231, 76, 60, 0.1)";
-            }
+                return date.toTimeString().split(' ')[0];
+            } catch (e) { return startTime; }
         }
+
+        function rand(min, max) { return (Math.random() * (max - min) + min).toFixed(2); }
+
+        function startCalculating() {
+            const timeInput = document.getElementById('input-time').value;
+            if(!timeInput || !timeInput.includes(':')) {
+                alert("Ampiasao ny endrika HH:MM:SS");
+                return;
+            }
+
+            document.getElementById('btn-calc').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('res-time').innerText = calculateFutureTime(timeInput);
+                document.getElementById('val-base').innerText = 'x' + rand(1.5, 4.0);
+                document.getElementById('val-secu').innerText = 'x' + rand(4.1, 10.0);
+                document.getElementById('val-risque').innerText = 'x' + rand(10.1, 50.0);
+
+                document.getElementById('btn-calc').style.display = 'block';
+                document.getElementById('loader').style.display = 'none';
+                showPage('page3');
+            }, 2000);
+        }
+
+        window.onload = function() {
+            let n = new Date();
+            document.getElementById('input-time').value = n.toTimeString().split(' ')[0];
+        };
     </script>
 </body>
 </html>
