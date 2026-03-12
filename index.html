@@ -19,23 +19,25 @@
             font-weight: bold; font-size: 18px; cursor: pointer;
         }
 
-        /* Vata amboniny (Input) */
         .input-card { background: #151515; border-radius: 15px; padding: 20px; border: 1px solid #333; margin-bottom: 20px; }
         .clock-display { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
         .seed-box { background: #222; padding: 12px; border-radius: 8px; color: #d4af37; font-size: 20px; letter-spacing: 2px; }
 
-        /* Vata ambany (Resultat - Miafina aloha) */
+        /* Vata Prediction */
         #result-area { 
-            display: none; /* Miafina */
+            display: none;
             border: 2px solid #d4af37; border-radius: 20px; padding: 20px; 
             background: rgba(20, 20, 20, 0.9); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-            animation: slideUp 0.4s ease-out;
         }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .val-row { font-size: 18px; font-weight: bold; margin: 12px 0; }
         .base { color: #fff; } .secu { color: #4cd137; } .risk { color: #a55eea; }
+
+        /* Bokotra vaovao (Correcte/Fausse) */
+        .btn-group { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
+        .btn-check { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: #fff; }
+        .correct { background-color: #4cd137; }
+        .fausse { background-color: #e84118; }
 
         .back { color: #555; font-size: 12px; margin-top: 30px; cursor: pointer; display: block; text-decoration: none; }
     </style>
@@ -53,10 +55,8 @@
         <div id="page-predict" class="page">
             <div class="input-card">
                 <div id="live-clock" class="clock-display">00:00:00</div>
-                
                 <div style="font-size: 11px; color: #888; margin-top: 10px;">Graine de serveur</div>
                 <div id="seed-val" class="seed-box">403245</div>
-                
                 <button class="btn-gold" style="margin-top: 15px;" onclick="doPredict()">🚀 PREDICTOR 🖤</button>
             </div>
 
@@ -67,6 +67,13 @@
                 <div class="val-row base">🤍 BASE : <span id="v1">x0.00</span></div>
                 <div class="val-row secu">💚 SÉCURITÉ : <span id="v2">x0.00</span></div>
                 <div class="val-row risk">💜 RISQUE : <span id="v3">x0.00</span></div>
+
+                <div id="status-text" style="margin-top: 15px; font-weight: bold; font-size: 14px;"></div>
+
+                <div class="btn-group">
+                    <button class="correct btn-check" onclick="alert('Noté: Correcte!')">✅ Correcte</button>
+                    <button class="fausse btn-check" onclick="alert('Noté: Fausse!')">❌ Fausse</button>
+                </div>
             </div>
 
             <a href="#" class="back" onclick="location.reload()">← Retour au menu</a>
@@ -74,10 +81,8 @@
     </div>
 
     <script>
-        // Mampiseho ny lera mandeha
         setInterval(() => {
-            const now = new Date();
-            document.getElementById('live-clock').innerText = now.toLocaleTimeString();
+            document.getElementById('live-clock').innerText = new Date().toLocaleTimeString();
         }, 1000);
 
         function openPredictor(name) {
@@ -87,21 +92,24 @@
         }
 
         function doPredict() {
-            // Mampipoitra ilay vata valiny
             document.getElementById('result-area').style.display = 'block';
+            
+            const b = (Math.random() * 2 + 1.2).toFixed(2);
+            document.getElementById('v1').innerText = "x" + b;
+            document.getElementById('v2').innerText = "x" + (Math.random() * 7 + 5).toFixed(2);
+            document.getElementById('v3').innerText = "x" + (Math.random() * 35 + 20).toFixed(2);
 
-            // Maka lera ho an'ilay prediction (jera miampy 5 mn ohatra)
+            const st = document.getElementById('status-text');
+            if(parseFloat(b) > 2.0) {
+                st.innerHTML = "💛 <span style='color:#4cd137'>TOUR HO TSARA</span>";
+            } else {
+                st.innerHTML = "💔 <span style='color:#e84118'>TOUR HO RATSY</span>";
+            }
+
             const d = new Date();
             d.setMinutes(d.getMinutes() + 5);
             document.getElementById('predict-time').innerText = d.toLocaleTimeString();
-
-            // Manova ny Seed
             document.getElementById('seed-val').innerText = Math.floor(100000 + Math.random() * 900000);
-
-            // Manova ny isa Base, Secu, Risk
-            document.getElementById('v1').innerText = "x" + (Math.random() * 2 + 1.2).toFixed(2);
-            document.getElementById('v2').innerText = "x" + (Math.random() * 7 + 5).toFixed(2);
-            document.getElementById('v3').innerText = "x" + (Math.random() * 35 + 20).toFixed(2);
         }
     </script>
 </body>
