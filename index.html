@@ -1,204 +1,818 @@
 <!DOCTYPE html>
-<html lang="mg">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Last Predictor VIP</title>
+    <title>BOSS BET FIDERANA - Virtual Football Analysis</title>
     <style>
+        :root {
+            --bg-purple: #4c1d95;
+            --header-purple: #3b0764;
+            --card-bg: #ffffff;
+            --text-dark: #1e1b4b;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
+            --accent-purple: #6d28d9;
+            --btn-light: #ede9fe;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
         body {
-            background-color: #0a0a0a;
-            color: #d4af37;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-purple);
+            color: var(--text-dark);
             display: flex;
             justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            margin: 0;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background: #f5f3ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        /* Top Header */
+        .app-header {
+            background: var(--header-purple);
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #a855f7, #6b21a8);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .logo-title h1 {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-title p {
+            font-size: 10px;
+            color: #d8b4fe;
             text-transform: uppercase;
         }
 
-        .container {
-            width: 90%;
-            max-width: 360px;
-            background: #121212;
-            padding: 25px;
-            border-radius: 25px;
-            text-align: center;
-            border: 1px solid #222;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
-            position: relative;
+        .header-nav {
+            display: flex;
+            gap: 8px;
         }
 
-        .page { display: none; animation: fadeIn 0.4s ease; }
-        .active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h1 { font-size: 22px; margin-bottom: 5px; color: #f1c40f; letter-spacing: 1px; }
-        .subtitle { color: #777; font-size: 11px; margin-bottom: 25px; text-transform: none; }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            margin: 12px 0;
+        .nav-icon-btn {
+            background: rgba(255,255,255,0.15);
             border: none;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 16px;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            background: linear-gradient(180deg, #f1c40f 0%, #d4af37 100%);
-            color: #000;
-            transition: 0.2s;
         }
 
-        .btn:active { transform: scale(0.96); }
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(180deg, var(--header-purple) 0%, var(--bg-purple) 100%);
+            color: white;
+            padding: 16px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+        }
 
-        .input-group { text-align: left; margin-bottom: 15px; }
-        label { display: block; color: #b8860b; font-size: 10px; margin-bottom: 6px; font-weight: bold; }
-        input {
-            width: 100%;
-            padding: 14px;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 10px;
-            color: #fff;
+        .hero-banner h2 {
             font-size: 16px;
-            text-align: center;
-            box-sizing: border-box;
-            outline: none;
+            margin-bottom: 4px;
         }
 
-        .result-card {
-            background-color: rgba(15, 15, 15, 0.95);
-            background-image: url('https://i.ibb.co/L6V6RzS/lion-logo.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 60%;
-            background-blend-mode: overlay;
-            padding: 25px 20px;
-            border: 2px solid #d4af37;
+        .hero-banner p {
+            font-size: 11px;
+            color: #e9d5ff;
+            margin-bottom: 12px;
+        }
+
+        .badge-access {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
             border-radius: 20px;
-            margin-top: 15px;
+            font-size: 11px;
+            font-weight: 600;
         }
 
-        .timer-val {
-            font-size: 42px;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        /* League Grid */
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #4c1d95;
+            padding: 16px 16px 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .row {
+        .league-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 0 16px;
+        }
+
+        .league-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 95px;
+        }
+
+        .league-card:hover {
+            border-color: #a855f7;
+            background: #faf5ff;
+        }
+
+        .league-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .league-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .league-btn-sm {
+            background: var(--accent-purple);
+            color: white;
+            border: none;
+            padding: 4px 0;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Views */
+        .view-section {
+            display: none;
+            padding: 12px 16px;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        .view-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .back-btn, .refresh-btn {
+            background: white;
+            border: 1px solid #ddd6fe;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--accent-purple);
+            cursor: pointer;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #e9d5ff;
+            padding: 3px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 6px 0;
+            font-size: 11px;
+            font-weight: 700;
+            color: #6b21a8;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: var(--accent-purple);
+            color: white;
+        }
+
+        .round-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 12px 0;
-            font-size: 15px;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--accent-purple);
+        }
+
+        .round-timer {
+            color: var(--accent-red);
+        }
+
+        /* Match Card */
+        .match-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .match-header-tag {
+            font-size: 10px;
+            font-weight: 800;
+            color: #9333ea;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .teams-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .team-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            width: 42%;
+        }
+
+        .team-box.away {
+            justify-content: flex-end;
+        }
+
+        .team-badge {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #c084fc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: white;
             font-weight: bold;
         }
 
-        .val-gold { color: #f1c40f; font-size: 22px; }
-        .val-white { color: #ffffff; font-size: 22px; }
-        .val-red { color: #ff4757; font-size: 22px; }
+        .vs-text {
+            font-size: 10px;
+            color: #9ca3af;
+            font-weight: bold;
+        }
 
-        .loading { display: none; color: #fff; font-size: 13px; margin: 15px 0; font-style: italic; }
-        .back-link { margin-top: 25px; color: #555; cursor: pointer; font-size: 11px; display: inline-block; }
+        .odds-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .odd-box {
+            border: 1px solid #e9d5ff;
+            background: #faf5ff;
+            border-radius: 8px;
+            padding: 6px;
+            text-align: center;
+        }
+
+        .odd-label {
+            font-size: 9px;
+            color: #6b7280;
+            font-weight: bold;
+        }
+
+        .odd-val {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .form-row {
+            margin-top: 6px;
+            font-size: 10px;
+            color: #4b5563;
+        }
+
+        .dots {
+            display: flex;
+            gap: 3px;
+            margin-top: 3px;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .dot.w { background: var(--accent-green); }
+        .dot.l { background: var(--accent-red); }
+
+        .match-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-profile {
+            flex: 1;
+            background: #f3e8ff;
+            border: none;
+            color: #6b21a8;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-predict {
+            flex: 1;
+            background: var(--accent-purple);
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        /* Modal Prediction */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 100;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 480px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 20px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #f3e8ff;
+            padding-bottom: 8px;
+        }
+
+        .modal-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--accent-purple);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .pred-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .pred-box {
+            background: #faf5ff;
+            border: 1px solid #e9d5ff;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .pred-label {
+            font-size: 10px;
+            color: #6b7280;
+            font-weight: bold;
+        }
+
+        .pred-value {
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--accent-purple);
+            margin-top: 2px;
+        }
+
+        .badge-over {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .analysis-box {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 11px;
+            color: #475569;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .btn-save {
+            width: 100%;
+            background: var(--accent-purple);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Contact Section */
+        .contact-card {
+            background: white;
+            margin: 16px;
+            padding: 14px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .contact-card h3 {
+            font-size: 12px;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .contact-card p {
+            font-size: 10px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f9fafb;
+            border: 1px solid #f3f4f6;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .footer-installed {
+            background: var(--header-purple);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
 
-    <div id="page1" class="container page active">
-        <h1>💛 LAST PREDICTOR 💛</h1>
-        <p class="subtitle">Choisissez votre jeu de prédiction</p>
-        <button class="btn" onclick="showPage('page2', 'AVIATOR')">🚀 AVIATOR</button>
-        <button class="btn" onclick="showPage('page2', 'JETX')">🚀 JETX</button>
-        <button class="btn" onclick="showPage('page2', 'COSMOSX')">🚀 COSMOSX</button>
-    </div>
-
-    <div id="page2" class="container page">
-        <h1 id="game-name">PRÉDICTION</h1>
-        <p class="subtitle">Entrez les données du serveur</p>
-        <div class="input-group">
-            <label>HEURE DE DÉPART</label>
-            <input type="text" id="input-time" placeholder="HH:MM:SS">
-        </div>
-        <div class="input-group">
-            <label>GRAINE DE SERVEUR (6 CARACT)</label>
-            <input type="text" id="input-seed" placeholder="Ex: B2CE53">
-        </div>
-        <button class="btn" id="btn-calc" onclick="startCalculating()">🚀 PREDICTOR 🖤</button>
-        <div id="loader" class="loading">Analyse des algorithmes...</div>
-        <div class="back-link" onclick="showPage('page1')">← RETOUR</div>
-    </div>
-
-    <div id="page3" class="container page">
-        <div style="color: #2ecc71; font-weight: bold; margin-bottom: 10px; font-size: 12px;">■ PRÉDICTION GÉNÉRÉE</div>
-        <div class="result-card">
-            <div class="timer-val" id="res-time">00:00:00</div>
-            <div class="row"><span>🤍 BASE :</span><span class="val-gold" id="val-base">x0.00</span></div>
-            <div class="row"><span>🤍 SÉCURITÉ :</span><span class="val-white" id="val-secu">x0.00</span></div>
-            <div class="row" style="border-top: 1px solid #333; padding-top: 10px; margin-top: 15px;">
-                <span>💜 RISQUE :</span><span class="val-red" id="val-risque">x0.00</span>
+<div class="app-container">
+    <!-- Header -->
+    <div class="app-header">
+        <div class="logo-area">
+            <div class="logo-icon">BB</div>
+            <div class="logo-title">
+                <h1>BOSS BET</h1>
+                <p>FIDERANA - accès illimité</p>
             </div>
         </div>
-        <div class="back-link" onclick="showPage('page2')">← NOUVEAU CALCUL</div>
+        <div class="header-nav">
+            <button class="nav-icon-btn">⌂</button>
+            <button class="nav-icon-btn">↺</button>
+            <button class="nav-icon-btn">⚙</button>
+        </div>
     </div>
 
-    <script>
-        function showPage(pageId, title = "") {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            if(title) document.getElementById('game-name').innerText = "PRÉDICTION " + title;
+    <!-- MAIN HOME VIEW -->
+    <div id="homeView">
+        <div class="hero-banner">
+            <h2>Application analyse match Virtuel Foot</h2>
+            <p>Choisissez une ligue pour afficher les matchs simulés.</p>
+            <span class="badge-access">Accès restant: ILLIMITÉ</span>
+        </div>
+
+        <div class="section-title">🏆 Ligues disponibles</div>
+        <div class="league-grid">
+            <div class="league-card" onclick="openLeague('English League')">
+                <div class="league-icon">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div>
+                <div class="league-name">English League</div>
+                <button class="league-btn-sm">OUVRIR →</button>
+            </div>
+            <div class="league-card" onclick="openLeague('Champions League')">
+                <div class="league-icon">⭐</div>
+                <div class="league-name">Champions League</div>
+                <button class="league-btn-sm">OUVRIR →</button>
+            </div>
+            <div class="league-card" onclick="openLeague('Coupe d\'Afrique')">
+                <div class="league-icon">🌍</div>
+                <div class="league-name">Coupe d'Afrique</div>
+                <button class="league-btn-sm">OUVRIR →</button>
+            </div>
+        </div>
+
+        <div class="section-title">⚡ League Fast</div>
+        <div class="league-grid">
+            <div class="league-card" onclick="openLeague('English Fast League')">
+                <div class="league-icon">⚡</div>
+                <div class="league-name">English Fast League</div>
+                <button class="league-btn-sm">OUVRIR →</button>
+            </div>
+            <div class="league-card" onclick="openLeague('Italian Fast League')">
+                <div class="league-icon">🇮🇹</div>
+                <div class="league-name">Italian Fast League</div>
+                <button class="league-btn-sm">OUVRIR →</button>
+            </div>
+            <div class="league-card" onclick="openLeague('Spanish Fast League')">
+                <div class="league-icon">🇪🇸</div>
+                <div class="league-name">Spanish Fast League</div>
+                <button class="league-btn-sm">OUVRIR →</button>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-card">
+            <h3>🎧 Contact L'admin</h3>
+            <p>Besoin d'aide ou une question concernant l'application ? Contactez l'administrateur.</p>
+            <a href="https://wa.me/261342777505" target="_blank" class="contact-btn">
+                <span>💬 WHATSAPP</span>
+                <span>+261 34 27 77 505</span>
+            </a>
+            <a href="#" class="contact-btn">
+                <span>👍 FACEBOOK</span>
+                <span>Boss Bet Fiderana</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- LEAGUE DETAIL VIEW -->
+    <div id="leagueView" class="view-section">
+        <div class="view-header">
+            <button class="back-btn" onclick="closeLeague()">← Retour</button>
+            <button class="refresh-btn" onclick="refreshMatches()">↻ Actualiser</button>
+        </div>
+
+        <h2 id="leagueTitle" style="font-size: 18px; color: var(--header-purple); margin-bottom: 4px;">English League</h2>
+        <p style="font-size: 11px; color: #6b7280; margin-bottom: 12px;">Analyse match virtuel foot - BET261</p>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active">Match actuel</button>
+            <button class="tab-btn">Round futur</button>
+            <button class="tab-btn">Résultats</button>
+            <button class="tab-btn">Classement</button>
+        </div>
+
+        <div class="round-bar">
+            <span>Round 8</span>
+            <span class="round-timer" id="roundTimer">Début dans 05:34</span>
+        </div>
+
+        <!-- Container for Matches -->
+        <div id="matchesContainer"></div>
+    </div>
+
+    <!-- Footer Status -->
+    <div class="footer-installed">
+        ✓ APPLICATION INSTALLÉE
+    </div>
+</div>
+
+<!-- Modal Prediction -->
+<div class="modal-overlay" id="predModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="modalMatchTitle">Brighton vs Brentford</div>
+            <button class="close-modal" onclick="closeModal()">✕</button>
+        </div>
+
+        <div class="pred-grid">
+            <div class="pred-box">
+                <div class="pred-label">SCORE EXACT</div>
+                <div class="pred-value" id="predScore">5 - 0 / 2 - 1</div>
+            </div>
+            <div class="pred-box">
+                <div class="pred-label">MI-TEMPS / FIN</div>
+                <div class="pred-value" id="predHTFT">1/1 (2-0)</div>
+            </div>
+        </div>
+
+        <div class="badge-over" id="predOver">
+            OVER / UNDER : OVER 2.5
+        </div>
+
+        <div style="font-size: 11px; font-weight: bold; color: var(--accent-purple); margin-bottom: 4px;">
+            ANALYSE IA - LE PLUS PROBABLE
+        </div>
+        <div class="analysis-box" id="predAnalysis">
+            Basé sur 10 matchs déjà joués des deux équipes (5 avec score complet) : score exact le plus fréquent 5-0 (3 fois), mi-temps 2-0 (2 fois), HT/FT 1/1.
+        </div>
+
+        <button class="btn-save" onclick="closeModal()">SAUVEGARDER</button>
+    </div>
+</div>
+
+<script>
+    const leagueTeams = {
+        'English League': ['Brighton', 'Brentford', 'London Reds', 'Liverpool', 'Manchester Blue', 'Chelsea'],
+        'Champions League': ['Real Madrid', 'Bayern Munich', 'PSG', 'Man City'],
+        'Coupe d\'Afrique': ['Madagascar', 'Senegal', 'Cote d\'Ivoire', 'Egypt'],
+        'English Fast League': ['Arsenal', 'Chelsea', 'Everton', 'Liverpool'],
+        'Italian Fast League': ['Juventus', 'AC Milan', 'Inter Milan', 'Napoli'],
+        'Spanish Fast League': ['Real Madrid', 'Barcelona', 'Atletico', 'Sevilla']
+    };
+
+    let currentLeague = '';
+
+    function openLeague(name) {
+        currentLeague = name;
+        document.getElementById('homeView').style.display = 'none';
+        document.getElementById('leagueView').style.display = 'block';
+        document.getElementById('leagueTitle').innerText = name;
+        renderMatches(name);
+    }
+
+    function closeLeague() {
+        document.getElementById('leagueView').style.display = 'none';
+        document.getElementById('homeView').style.display = 'block';
+    }
+
+    function refreshMatches() {
+        if(currentLeague) renderMatches(currentLeague);
+    }
+
+    function renderMatches(leagueName) {
+        const container = document.getElementById('matchesContainer');
+        container.innerHTML = '';
+        let teams = leagueTeams[leagueName] || ['Equipe A', 'Equipe B', 'Equipe C', 'Equipe D'];
+
+        for (let i = 0; i < teams.length; i += 2) {
+            let t1 = teams[i];
+            let t2 = teams[i+1];
+            if (!t2) break;
+
+            let c1 = (Math.random() * 1.5 + 1.5).toFixed(2);
+            let cX = (Math.random() * 1.5 + 3.0).toFixed(2);
+            let c2 = (Math.random() * 1.5 + 2.2).toFixed(2);
+
+            let card = document.createElement('div');
+            card.className = 'match-card';
+            card.innerHTML = `
+                <div class="match-header-tag">
+                    <span>${leagueName}</span>
+                    <span>ROUND 8</span>
+                </div>
+                <div class="teams-row">
+                    <div class="team-box">
+                        <div class="team-badge">${t1.substring(0,2)}</div>
+                        <span>${t1}</span>
+                    </div>
+                    <span class="vs-text">VS</span>
+                    <div class="team-box away">
+                        <span>${t2}</span>
+                        <div class="team-badge">${t2.substring(0,2)}</div>
+                    </div>
+                </div>
+                <div class="odds-row">
+                    <div class="odd-box">
+                        <div class="odd-label">COTE 1</div>
+                        <div class="odd-val">${c1}</div>
+                    </div>
+                    <div class="odd-box">
+                        <div class="odd-label">COTE X</div>
+                        <div class="odd-val">${cX}</div>
+                    </div>
+                    <div class="odd-box">
+                        <div class="odd-label">COTE 2</div>
+                        <div class="odd-val">${c2}</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    ÉQUIPE 1 - 10 DERNIERS MATCHS
+                    <div class="dots">
+                        <span class="dot w">✓</span><span class="dot w">✓</span><span class="dot w">✓</span><span class="dot w">✓</span><span class="dot w">✓</span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    ÉQUIPE 2 - 10 DERNIERS MATCHS
+                    <div class="dots">
+                        <span class="dot w">✓</span><span class="dot l">✕</span><span class="dot w">✓</span><span class="dot w">✓</span><span class="dot l">✕</span>
+                    </div>
+                </div>
+                <div class="match-actions">
+                    <button class="btn-profile">PROFIL</button>
+                    <button class="btn-predict" onclick="openPredictModal('${t1}', '${t2}')">PRÉDIRE</button>
+                </div>
+            `;
+            container.appendChild(card);
         }
+    }
 
-        function calculateFutureTime(startTime) {
-            try {
-                let parts = startTime.split(':');
-                let date = new Date();
-                date.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
-                
-                let addMinutes = Math.floor(Math.random() * 5) + 1;
-                let addSeconds = Math.floor(Math.random() * 59);
-                date.setMinutes(date.getMinutes() + addMinutes);
-                date.setSeconds(date.getSeconds() + addSeconds);
+    function openPredictModal(t1, t2) {
+        document.getElementById('modalMatchTitle').innerText = t1 + ' vs ' + t2;
+        document.getElementById('predModal').style.display = 'flex';
+    }
 
-                return date.toTimeString().split(' ')[0];
-            } catch (e) { return startTime; }
-        }
+    function closeModal() {
+        document.getElementById('predModal').style.display = 'none';
+    }
+</script>
 
-        function rand(min, max) { return (Math.random() * (max - min) + min).toFixed(2); }
-
-        function startCalculating() {
-            const timeInput = document.getElementById('input-time').value;
-            if(!timeInput || !timeInput.includes(':')) {
-                alert("Ampiasao ny endrika HH:MM:SS");
-                return;
-            }
-
-            document.getElementById('btn-calc').style.display = 'none';
-            document.getElementById('loader').style.display = 'block';
-
-            setTimeout(() => {
-                document.getElementById('res-time').innerText = calculateFutureTime(timeInput);
-                document.getElementById('val-base').innerText = 'x' + rand(1.5, 4.0);
-                document.getElementById('val-secu').innerText = 'x' + rand(4.1, 10.0);
-                document.getElementById('val-risque').innerText = 'x' + rand(10.1, 50.0);
-
-                document.getElementById('btn-calc').style.display = 'block';
-                document.getElementById('loader').style.display = 'none';
-                showPage('page3');
-            }, 2000);
-        }
-
-        window.onload = function() {
-            let n = new Date();
-            document.getElementById('input-time').value = n.toTimeString().split(' ')[0];
-        };
-    </script>
 </body>
 </html>
